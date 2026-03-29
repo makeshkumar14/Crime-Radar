@@ -4,6 +4,9 @@ import os
 
 # ── Tamil Nadu district coordinates
 TN_COORDINATES = {
+    "VILUPPURAM":       (11.9392, 79.4933),
+    "CHENGAI":          (12.8185, 79.6947),
+    "CHENNAISUBURBAN":  (13.0827, 80.2707),
     "CHENNAI":              (13.0827, 80.2707),
     "CHENNAI RLY.":         (13.0827, 80.2707),
     "COIMBATORE RURAL":     (11.0168, 76.9558),
@@ -151,7 +154,7 @@ def load_csv_to_db(csv_path: str, db_path: str = "crimeradar.db"):
         print(f"  Could not find state column. Columns: {list(df.columns)}")
         return
 
-    df = df[df[state_col] == "Tamil Nadu"].copy()
+    df = df[df[state_col].str.upper().str.strip() == "TAMIL NADU"].copy()
 
     # Remove total row
     # Handle different column names for district

@@ -54,3 +54,14 @@ def get_categories():
     rows = cursor.fetchall()
     conn.close()
     return {"categories": [r["category"] for r in rows]}
+
+@router.get("/years")
+def get_years():
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute(
+        "SELECT DISTINCT year FROM fir_records ORDER BY year"
+    )
+    rows = cursor.fetchall()
+    conn.close()
+    return {"years": [r["year"] for r in rows]}

@@ -27,15 +27,22 @@ function getRadius(count) {
   return 7;
 }
 
-export default function Map() {
+export default function Map({ filters = {} }) {
   const [markers, setMarkers] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const params = new URLSearchParams();
+    if (filters.year) params.append("year", filters.year);
+    if (filters.district) params.append("district", filters.district);
+    if (filters.category) params.append("category", filters.category);
+
+    const url = `http://localhost:8000/api/fir/all?${params.toString()}`;
+
+    setLoading(true);
     axios
-      .get("http://localhost:8000/api/fir/all")
+      .get(url)
       .then((res) => {
-        // Group by district and sum counts
         const districtMap = {};
         res.data.data.forEach((record) => {
           const key = record.district;
@@ -59,7 +66,7 @@ export default function Map() {
         console.error("API error:", err);
         setLoading(false);
       });
-  }, []);
+  }, [filters]);
 
   if (loading)
     return (

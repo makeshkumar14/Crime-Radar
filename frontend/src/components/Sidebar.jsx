@@ -4,6 +4,7 @@ import axios from "axios";
 export default function Sidebar({ onFilter }) {
   const [districts, setDistricts] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [years, setYears] = useState([]);
   const [selected, setSelected] = useState({
     district: "",
     category: "",
@@ -17,6 +18,9 @@ export default function Sidebar({ onFilter }) {
     axios
       .get("http://localhost:8000/api/fir/categories")
       .then((res) => setCategories(res.data.categories));
+    axios
+      .get("http://localhost:8000/api/fir/years")
+      .then((res) => setYears(res.data.years));
   }, []);
 
   return (
@@ -74,13 +78,16 @@ export default function Sidebar({ onFilter }) {
           <label className="text-gray-400 text-xs mb-1 block">Year</label>
           <select
             className="w-full bg-gray-800 text-white text-xs 
-                       rounded px-2 py-2 border border-gray-600"
+             rounded px-2 py-2 border border-gray-600"
             value={selected.year}
             onChange={(e) => setSelected({ ...selected, year: e.target.value })}
           >
             <option value="">All Years</option>
-            <option value="2013">2013</option>
-            <option value="2014">2014</option>
+            {years.map((y) => (
+              <option key={y} value={y}>
+                {y}
+              </option>
+            ))}
           </select>
         </div>
 
