@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-export default function Sidebar({ onFilter }) {
+export default function Sidebar({ onFilter, activeView, onViewChange }) {
   const [districts, setDistricts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [years, setYears] = useState([]);
@@ -47,19 +47,25 @@ export default function Sidebar({ onFilter }) {
 
       {/* Nav */}
       <div className="p-3 border-b border-gray-700">
-        {["Map View", "Analytics", "Risk Zones", "Reports"].map((item, i) => (
+        {[
+          { label: "Map View", icon: "🗺", view: "map" },
+          { label: "Analytics", icon: "📊", view: "analytics" },
+          { label: "Risk Zones", icon: "⚠️", view: "map" },
+          { label: "Reports", icon: "📋", view: "map" },
+        ].map((item, i) => (
           <div
             key={i}
             className={`flex items-center gap-2 px-3 py-2 
-                       rounded-lg mb-1 cursor-pointer text-sm
-                       ${
-                         i === 0
-                           ? "bg-blue-600 text-white"
-                           : "text-gray-400 hover:bg-gray-800"
-                       }`}
+                 rounded-lg mb-1 cursor-pointer text-sm
+                 ${
+                   activeView === item.view && i < 2
+                     ? "bg-blue-600 text-white"
+                     : "text-gray-400 hover:bg-gray-800"
+                 }`}
+            onClick={() => onViewChange(item.view)}
           >
-            {["🗺", "📊", "⚠️", "📋"][i]}
-            <span>{item}</span>
+            {item.icon}
+            <span>{item.label}</span>
           </div>
         ))}
       </div>
