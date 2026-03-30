@@ -4,7 +4,6 @@ import {
   TileLayer,
   CircleMarker,
   Circle,
-  Popup,
   ZoomControl,
   useMap,
 } from "react-leaflet";
@@ -46,12 +45,13 @@ function MapController({ markers, filters }) {
   return null;
 }
 
-export default function Map({ filters = {} }) {
+export default function Map({ filters = {}, onDistrictClick }) {
   const [markers, setMarkers] = useState([]);
   const [hotspots, setHotspots] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showHotspots, setShowHotspots] = useState(true);
   const [showDistricts, setShowDistricts] = useState(true);
+  const [activeDistrict, setActiveDistrict] = useState(null);
 
   useEffect(() => {
     const params = new URLSearchParams();
@@ -60,7 +60,6 @@ export default function Map({ filters = {} }) {
     if (filters.category) params.append("category", filters.category);
 
     const url = `http://localhost:8000/api/fir/all?${params.toString()}`;
-
     setLoading(true);
     axios
       .get(url)
@@ -97,6 +96,11 @@ export default function Map({ filters = {} }) {
       .catch((err) => console.error("Hotspot error:", err));
   }, []);
 
+  const handleDistrictClick = (district) => {
+    setActiveDistrict(district);
+    onDistrictClick && onDistrictClick(district);
+  };
+
   if (loading)
     return (
       <div className="flex-1 flex items-center justify-center bg-gray-950">
@@ -127,46 +131,31 @@ export default function Map({ filters = {} }) {
           markers.map((m, i) => {
             const risk = getRiskLevel(m.total);
             const color = RISK_COLORS[risk];
-            const topCrime = Object.entries(m.categories).sort(
-              (a, b) => b[1] - a[1],
-            )[0];
+            const isActive = activeDistrict === m.district;
 
             return (
               <CircleMarker
                 key={i}
                 center={[m.lat, m.lng]}
-                radius={getRadius(m.total)}
+                radius={isActive ? getRadius(m.total) + 4 : getRadius(m.total)}
                 pathOptions={{
-                  color: color,
+                  color: isActive ? "#ffffff" : color,
                   fillColor: color,
-                  fillOpacity: 0.7,
-                  weight: 2,
+                  fillOpacity: isActive ? 1 : 0.7,
+                  weight: isActive ? 3 : 2,
                 }}
-              >
-                <Popup>
-                  <div style={{ minWidth: "160px" }}>
-                    <strong style={{ fontSize: "14px" }}>{m.district}</strong>
-                    <br />
-                    <span style={{ color: color, fontWeight: "bold" }}>
-                      {risk} RISK
-                    </span>
-                    <br />
-                    Total crimes: <strong>{m.total.toLocaleString()}</strong>
-                    <br />
-                    Top crime: <strong>{topCrime ? topCrime[0] : "N/A"}</strong>
-                    <br />
-                    <hr style={{ margin: "6px 0" }} />
-                    {Object.entries(m.categories)
-                      .sort((a, b) => b[1] - a[1])
-                      .slice(0, 4)
-                      .map(([cat, count]) => (
-                        <div key={cat} style={{ fontSize: "11px" }}>
-                          {cat}: <strong>{count.toLocaleString()}</strong>
-                        </div>
-                      ))}
-                  </div>
-                </Popup>
-              </CircleMarker>
+                eventHandlers={{
+                  click: () => handleDistrictClick(m.district),
+                  mouseover: (e) => {
+                    e.target.setStyle({ fillOpacity: 1, weight: 3 });
+                  },
+                  mouseout: (e) => {
+                    if (activeDistrict !== m.district) {
+                      e.target.setStyle({ fillOpacity: 0.7, weight: 2 });
+                    }
+                  },
+                }}
+              />
             );
           })}
 
@@ -184,29 +173,7 @@ export default function Map({ filters = {} }) {
                 weight: 2,
                 dashArray: "6 4",
               }}
-            >
-              <Popup>
-                <div style={{ minWidth: "180px" }}>
-                  <strong style={{ fontSize: "14px" }}>
-                    Hotspot Zone {h.cluster_id + 1}
-                  </strong>
-                  <br />
-                  <span
-                    style={{
-                      color: RISK_COLORS[h.risk_level],
-                      fontWeight: "bold",
-                    }}
-                  >
-                    {h.risk_level} RISK · Score {h.risk_score}/100
-                  </span>
-                  <br />
-                  Total crimes:{" "}
-                  <strong>{h.crime_count.toLocaleString()}</strong>
-                  <br />
-                  Top crime: <strong>{h.top_crime}</strong>
-                </div>
-              </Popup>
-            </Circle>
+            />
           ))}
       </MapContainer>
 
@@ -257,6 +224,9 @@ export default function Map({ filters = {} }) {
           />
           <span className="text-gray-300 text-xs">ML Hotspot</span>
         </div>
+        <p className="text-gray-500 text-xs mt-2">
+          Click a dot to see risk profile
+        </p>
       </div>
     </div>
   );

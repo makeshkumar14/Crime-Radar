@@ -14,8 +14,7 @@ def get_risk_score(
 
     cursor.execute("""
         SELECT district, category,
-               SUM(count) as total_crimes,
-               COUNT(DISTINCT year) as years_active
+               SUM(count) as total_crimes
         FROM fir_records
         WHERE district = ?
         GROUP BY district, category
@@ -23,31 +22,50 @@ def get_risk_score(
     """, [district])
 
     rows = cursor.fetchall()
+
+    # Get max crimes across all districts for normalization
+    cursor.execute("""
+        SELECT district, SUM(count) as total
+        FROM fir_records
+        GROUP BY district
+        ORDER BY total DESC
+    """)
+    all_districts = cursor.fetchall()
     conn.close()
 
     if not rows:
-        return {"district": district, "risk_score": 0, "risk_level": "LOW"}
+        return {"district": district, "risk_score": 0, "risk_level": "LOW", "total_crimes": 0, "breakdown": []}
 
     total = sum(r["total_crimes"] for r in rows)
+    max_total = all_districts[0]["total"] if all_districts else total
+    min_total = all_districts[-1]["total"] if all_districts else 0
 
-    if total > 1000:
+    # Normalize score between 10 and 95
+    if max_total == min_total:
+        risk_score = 50
+    else:
+        risk_score = int(10 + ((total - min_total) / (max_total - min_total)) * 85)
+    risk_score = max(10, min(95, risk_score))
+
+    # Risk level based on normalized score
+    if risk_score >= 65:
         risk_level = "HIGH"
-        risk_score = min(95, 70 + (total // 100))
-    elif total > 500:
+    elif risk_score >= 35:
         risk_level = "MEDIUM"
-        risk_score = min(69, 40 + (total // 50))
     else:
         risk_level = "LOW"
-        risk_score = min(39, total // 20)
+
+    # Count unique categories
+    unique_categories = len(set(r["category"] for r in rows))
 
     return {
-        "district": district,
+        "district":   district,
         "risk_score": risk_score,
         "risk_level": risk_level,
         "total_crimes": total,
-        "breakdown": [dict(r) for r in rows]
+        "categories": unique_categories,
+        "breakdown":  [dict(r) for r in rows]
     }
-
 
 @router.get("/high-risk-districts")
 def get_high_risk_districts():
