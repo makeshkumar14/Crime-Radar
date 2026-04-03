@@ -157,12 +157,7 @@ export default function Sidebar({ onFilter, activeView, onViewChange }) {
         </button>
       </div>
 
-      {/* Footer */}
-      <div className="p-3 border-t border-gray-700">
-        <p className="text-gray-600 text-xs text-center">
-          RedShield '26 · PS 5
-        </p>
-      </div>
+
     </div>
   );
 }

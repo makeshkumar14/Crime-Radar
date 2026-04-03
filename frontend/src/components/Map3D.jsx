@@ -184,29 +184,32 @@ export default function Map3D({ filters = {}, onDistrictClick }) {
       <div ref={mapContainer} style={{ height: "100%", width: "100%" }} />
 
       {/* STYLE SWITCH */}
-      <div className="absolute top-4 left-4 z-50 bg-gray-900 p-2 rounded">
-        {Object.entries(MAP_STYLES).map(([key, style]) => (
-          <button
-            key={key}
-            onClick={() => changeStyle(key)}
-            className={`block text-xs px-3 py-1 mb-1 rounded ${
-              mapStyle === key
-                ? "bg-blue-600 text-white"
-                : "text-gray-400 hover:bg-gray-800"
-            }`}
-          >
-            {style.label}
-          </button>
-        ))}
+      <div className="absolute top-4 left-4 z-50 bg-gray-900/40 backdrop-blur-md border border-gray-600/30 shadow-lg p-2 rounded-lg">
+        <p className="text-white text-sm font-bold mb-3 tracking-wide drop-shadow-md px-1">MAP STYLE</p>
+        <div className="flex flex-col gap-1.5">
+          {Object.entries(MAP_STYLES).map(([key, style]) => (
+            <button
+              key={key}
+              onClick={() => changeStyle(key)}
+              className={`text-sm font-semibold px-3 py-1.5 rounded-md text-left transition-all duration-200 drop-shadow-md ${
+                mapStyle === key
+                  ? "bg-blue-600 text-white shadow-md shadow-blue-500/20"
+                  : "text-white/90 hover:bg-white/20"
+              }`}
+            >
+              {style.label}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* LEGEND */}
-      <div className="absolute bottom-8 left-4 bg-gray-900 p-3 rounded text-xs">
-        <p className="text-white font-bold mb-2">Risk Level</p>
+      <div className="absolute bottom-8 left-4 z-50 bg-gray-900/40 backdrop-blur-md border border-gray-600/30 shadow-lg p-3 rounded-lg text-xs">
+        <p className="text-white text-sm font-bold mb-3 tracking-wide drop-shadow-md">RISK LEVEL</p>
         {Object.entries(RISK_COLORS).map(([k, v]) => (
-          <div key={k} className="flex items-center gap-2 mb-1">
-            <div className="w-3 h-3 rounded-full" style={{ background: v }} />
-            <span className="text-gray-300">{k}</span>
+          <div key={k} className="flex items-center gap-2 mb-2">
+            <div className="w-3.5 h-3.5 rounded-full shadow-sm" style={{ background: v }} />
+            <span className="text-white font-semibold text-sm drop-shadow-md">{k}</span>
           </div>
         ))}
       </div>

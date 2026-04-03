@@ -42,7 +42,7 @@ export default function StatsBar({ activeView, is3D, setIs3D }) {
       color: "text-blue-400",
     },
     { label: "Top Crime Type", value: stats.topCrime, color: "text-amber-400" },
-    { label: "Data Years", value: "2013 - 2014", color: "text-green-400" },
+    { label: "Data Years", value: "2001 - 2014", color: "text-green-400" },
   ];
 
   return (
@@ -96,7 +96,7 @@ export default function StatsBar({ activeView, is3D, setIs3D }) {
             >
               3D Map
             </button>
-            <span className="text-[#475569] text-[10px] ml-1">
+            <span className="text-[#64748b] text-[11px] font-semibold ml-2">
               {is3D
                 ? "Drag to rotate · Right click to tilt"
                 : "Click district to see risk profile"}
