@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-export default function StatsBar() {
+export default function StatsBar({ activeView, is3D, setIs3D }) {
   const [stats, setStats] = useState({
     total: 0,
     topCrime: "N/A",
@@ -60,6 +60,50 @@ export default function StatsBar() {
           <span className={`${color} text-sm font-bold`}>{value}</span>
         </div>
       ))}
+
+      {activeView === "map" && (
+        <>
+          <div className="h-8 w-px bg-gray-700 mx-2" />
+          <div className="flex items-center gap-2">
+            <span className="text-[#64748b] text-[11px] font-semibold">
+              MAP MODE:
+            </span>
+            <button
+              onClick={() => setIs3D(false)}
+              style={{
+                fontSize: "11px",
+                padding: "2px 12px",
+                borderRadius: "4px",
+                border: "none",
+                cursor: "pointer",
+                background: !is3D ? "#3B82F6" : "#1e293b",
+                color: !is3D ? "white" : "#64748b",
+              }}
+            >
+              2D Map
+            </button>
+            <button
+              onClick={() => setIs3D(true)}
+              style={{
+                fontSize: "11px",
+                padding: "2px 12px",
+                borderRadius: "4px",
+                border: "none",
+                cursor: "pointer",
+                background: is3D ? "#3B82F6" : "#1e293b",
+                color: is3D ? "white" : "#64748b",
+              }}
+            >
+              3D Map
+            </button>
+            <span className="text-[#475569] text-[10px] ml-1">
+              {is3D
+                ? "Drag to rotate · Right click to tilt"
+                : "Click district to see risk profile"}
+            </span>
+          </div>
+        </>
+      )}
 
       <div className="ml-auto flex items-center gap-2 bg-green-900 px-3 py-1 rounded-full">
         <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />

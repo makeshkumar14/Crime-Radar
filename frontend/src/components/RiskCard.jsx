@@ -126,8 +126,9 @@ export default function RiskCard({ district }) {
       >
         <div
           style={{
-            fontSize: "10px",
-            color: "#94a3b8",
+            fontSize: "11px",
+            color: "#ffffff",
+            fontWeight: "bold",
             letterSpacing: "2px",
             marginBottom: "4px",
           }}
@@ -157,8 +158,9 @@ export default function RiskCard({ district }) {
       >
         <div
           style={{
-            fontSize: "10px",
-            color: "#64748b",
+            fontSize: "11px",
+            color: "#ffffff",
+            fontWeight: "bold",
             letterSpacing: "1px",
             marginBottom: "4px",
           }}
@@ -219,8 +221,9 @@ export default function RiskCard({ district }) {
       <div style={{ padding: "12px 16px", borderBottom: "1px solid #1e293b" }}>
         <div
           style={{
-            fontSize: "10px",
-            color: "#64748b",
+            fontSize: "11px",
+            color: "#ffffff",
+            fontWeight: "bold",
             letterSpacing: "1px",
             marginBottom: "8px",
           }}
@@ -241,9 +244,9 @@ export default function RiskCard({ district }) {
               marginBottom: "6px",
             }}
           >
-            <span style={{ fontSize: "11px", color: "#94a3b8" }}>{label}</span>
+            <span style={{ fontSize: "12px", color: "#ffffff", fontWeight: "bold" }}>{label}</span>
             <span
-              style={{ fontSize: "11px", fontWeight: "bold", color: "#f1f5f9" }}
+              style={{ fontSize: "12px", fontWeight: "bold", color: "#f1f5f9" }}
             >
               {value}
             </span>
@@ -255,8 +258,9 @@ export default function RiskCard({ district }) {
       <div style={{ padding: "12px 16px", flex: 1 }}>
         <div
           style={{
-            fontSize: "10px",
-            color: "#64748b",
+            fontSize: "11px",
+            color: "#ffffff",
+            fontWeight: "bold",
             letterSpacing: "1px",
             marginBottom: "8px",
           }}
@@ -286,7 +290,7 @@ export default function RiskCard({ district }) {
                   marginBottom: "3px",
                 }}
               >
-                <span style={{ fontSize: "10px", color: "#94a3b8" }}>
+                <span style={{ fontSize: "10px", color: catColor }}>
                   {item.category}
                 </span>
                 <span style={{ fontSize: "10px", color: catColor }}>
