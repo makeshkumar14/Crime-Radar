@@ -47,58 +47,7 @@ function App() {
 
       {/* Main content */}
       <div className="flex flex-col flex-1 overflow-hidden">
-        <StatsBar />
-
-        {/* 2D / 3D toggle bar */}
-        {activeView === "map" && (
-          <div
-            style={{
-              background: "#0f172a",
-              borderBottom: "1px solid #1e293b",
-              padding: "4px 16px",
-              display: "flex",
-              alignItems: "center",
-              gap: "8px",
-            }}
-          >
-            <span style={{ color: "#64748b", fontSize: "11px" }}>
-              MAP MODE:
-            </span>
-            <button
-              onClick={() => setIs3D(false)}
-              style={{
-                fontSize: "11px",
-                padding: "2px 12px",
-                borderRadius: "4px",
-                border: "none",
-                cursor: "pointer",
-                background: !is3D ? "#3B82F6" : "#1e293b",
-                color: !is3D ? "white" : "#64748b",
-              }}
-            >
-              2D Map
-            </button>
-            <button
-              onClick={() => setIs3D(true)}
-              style={{
-                fontSize: "11px",
-                padding: "2px 12px",
-                borderRadius: "4px",
-                border: "none",
-                cursor: "pointer",
-                background: is3D ? "#3B82F6" : "#1e293b",
-                color: is3D ? "white" : "#64748b",
-              }}
-            >
-              3D Map ✨
-            </button>
-            <span style={{ color: "#475569", fontSize: "10px" }}>
-              {is3D
-                ? "Drag to rotate · Right click to tilt"
-                : "Click district to see risk profile"}
-            </span>
-          </div>
-        )}
+        <StatsBar activeView={activeView} is3D={is3D} setIs3D={setIs3D} />
 
         <div className="flex flex-1 overflow-hidden">
           {activeView === "map" && (
