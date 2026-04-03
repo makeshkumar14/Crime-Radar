@@ -43,6 +43,33 @@ export default function Map3D({ filters = {}, onDistrictClick }) {
   const [markers, setMarkers] = useState([]);
   const [mapStyle, setMapStyle] = useState("street");
 
+  const handleSearch = async (query) => {
+    if (!query) return;
+
+    try {
+      const res = await fetch(
+        `https://api.maptiler.com/geocoding/${query}.json?key=jYCiT4YmtkMVvqlo7hnB`,
+      );
+
+      const data = await res.json();
+
+      if (!data.features || data.features.length === 0) {
+        alert("Location not found");
+        return;
+      }
+
+      const [lng, lat] = data.features[0].center;
+
+      map.current.flyTo({
+        center: [lng, lat],
+        zoom: 10,
+        duration: 2000,
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   // ✅ INIT MAP
   useEffect(() => {
     if (map.current) return;
@@ -180,7 +207,32 @@ export default function Map3D({ filters = {}, onDistrictClick }) {
   };
 
   return (
-    <div className="flex-1 relative">
+    <div className="relative h-screen w-full">
+      <div
+        style={{
+          position: "absolute",
+          top: "20px",
+          left: "50%",
+          transform: "translateX(-50%)",
+          zIndex: 9999,
+        }}
+      >
+        <input
+          type="text"
+          placeholder="Search Tamil Nadu location..."
+          style={{
+            padding: "10px",
+            width: "300px",
+            borderRadius: "8px",
+            border: "1px solid gray",
+            background: "black",
+            color: "white",
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") handleSearch(e.target.value);
+          }}
+        />
+      </div>
       <div ref={mapContainer} style={{ height: "100%", width: "100%" }} />
 
       {/* STYLE SWITCH */}
