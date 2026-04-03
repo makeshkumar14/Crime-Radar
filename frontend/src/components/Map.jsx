@@ -283,21 +283,21 @@ export default function Map({ filters = {}, onDistrictClick }) {
 
       {/* Map style switcher - top left */}
       <div
-        className="absolute top-4 left-4 z-[1000] bg-gray-900
-                      rounded-lg p-2 border border-gray-700"
+        className="absolute top-4 left-4 z-[1000] bg-gray-900/40 backdrop-blur-md
+                      rounded-lg p-2 border border-gray-600/30 shadow-lg"
       >
-        <p className="text-white text-xs font-bold mb-2">MAP STYLE</p>
-        <div className="flex flex-col gap-1">
+        <p className="text-white text-sm font-bold mb-3 tracking-wide drop-shadow-md">MAP STYLE</p>
+        <div className="flex flex-col gap-1.5">
           {Object.entries(MAP_STYLES).map(([key, style]) => (
             <button
               key={key}
               onClick={() => setMapStyle(key)}
-              className={`text-xs px-3 py-1 rounded text-left
-                         transition-colors duration-200
+              className={`text-sm font-semibold px-3 py-1.5 rounded-md text-left
+                         transition-all duration-200 drop-shadow-md
                          ${
                            mapStyle === key
                              ? "bg-blue-600 text-white"
-                             : "text-gray-400 hover:bg-gray-800"
+                             : "text-white/90 hover:bg-white/20"
                          }`}
             >
               {style.label}
@@ -308,73 +308,77 @@ export default function Map({ filters = {}, onDistrictClick }) {
 
       {/* Layer toggles - top right */}
       <div
-        className="absolute top-4 right-4 z-[1000] bg-gray-900
-                      rounded-lg p-3 border border-gray-700"
+        className="absolute top-4 right-4 z-[1000] bg-gray-900/40 backdrop-blur-md
+                      rounded-lg p-3 border border-gray-600/30 shadow-lg"
       >
-        <p className="text-white text-xs font-bold mb-2">LAYERS</p>
-        <label className="flex items-center gap-2 mb-2 cursor-pointer">
+        <p className="text-white text-sm font-bold mb-3 tracking-wide drop-shadow-md">LAYERS</p>
+        <label className="flex items-center gap-2 mb-3 cursor-pointer">
           <input
             type="checkbox"
             checked={showDistricts}
             onChange={(e) => setShowDistricts(e.target.checked)}
+            className="w-4 h-4 cursor-pointer"
           />
-          <span className="text-gray-300 text-xs">District markers</span>
+          <span className="text-white font-semibold text-sm drop-shadow-md">District markers</span>
         </label>
-        <label className="flex items-center gap-2 mb-2 cursor-pointer">
+        <label className="flex items-center gap-2 mb-3 cursor-pointer">
           <input
             type="checkbox"
             checked={showHotspots}
             onChange={(e) => setShowHotspots(e.target.checked)}
+            className="w-4 h-4 cursor-pointer"
           />
-          <span className="text-gray-300 text-xs">ML Hotspot zones</span>
+          <span className="text-white font-semibold text-sm drop-shadow-md">ML Hotspot zones</span>
         </label>
-        <label className="flex items-center gap-2 mb-2 cursor-pointer">
+        <label className="flex items-center gap-2 mb-3 cursor-pointer">
           <input
             type="checkbox"
             checked={showWomenSafety}
             onChange={(e) => setShowWomenSafety(e.target.checked)}
+            className="w-4 h-4 cursor-pointer"
           />
-          <span className="text-pink-400 text-xs">Women safety zones</span>
+          <span className="text-pink-300 font-semibold text-sm drop-shadow-md">Women safety zones</span>
         </label>
         <label className="flex items-center gap-2 cursor-pointer">
           <input
             type="checkbox"
             checked={showAccident}
             onChange={(e) => setShowAccident(e.target.checked)}
+            className="w-4 h-4 cursor-pointer"
           />
-          <span className="text-orange-400 text-xs">Accident prone areas</span>
+          <span className="text-orange-300 font-semibold text-sm drop-shadow-md">Accident prone areas</span>
         </label>
       </div>
 
       {/* Legend - bottom left */}
       <div
-        className="absolute bottom-8 left-4 z-[1000] bg-gray-900
-                      rounded-lg p-3 border border-gray-700"
+        className="absolute bottom-8 left-4 z-[1000] bg-gray-900/40 backdrop-blur-md
+                      rounded-lg p-3 border border-gray-600/30 shadow-lg"
       >
-        <p className="text-white text-xs font-bold mb-2">RISK LEVEL</p>
+        <p className="text-white text-sm font-bold mb-3 tracking-wide drop-shadow-md">RISK LEVEL</p>
         {Object.entries(RISK_COLORS).map(([level, color]) => (
-          <div key={level} className="flex items-center gap-2 mb-1">
+          <div key={level} className="flex items-center gap-2 mb-2">
             <div
-              className="w-3 h-3 rounded-full"
+              className="w-3.5 h-3.5 rounded-full shadow-sm"
               style={{ backgroundColor: color }}
             />
-            <span className="text-gray-300 text-xs">{level}</span>
+            <span className="text-white font-semibold text-sm drop-shadow-md">{level}</span>
           </div>
         ))}
-        <hr className="border-gray-700 my-2" />
-        <div className="flex items-center gap-2 mb-1">
-          <div className="w-3 h-3 rounded-full border-2 border-red-500 bg-transparent" />
-          <span className="text-gray-300 text-xs">ML Hotspot</span>
+        <hr className="border-white/20 my-3" />
+        <div className="flex items-center gap-2 mb-2">
+          <div className="w-3.5 h-3.5 rounded-full border-2 border-red-500 bg-transparent shadow-sm" />
+          <span className="text-white font-semibold text-sm drop-shadow-md">ML Hotspot</span>
         </div>
-        <div className="flex items-center gap-2 mb-1">
-          <div className="w-3 h-3 rounded-full border-2 border-pink-400 bg-transparent" />
-          <span className="text-gray-300 text-xs">Women safety</span>
+        <div className="flex items-center gap-2 mb-2">
+          <div className="w-3.5 h-3.5 rounded-full border-2 border-pink-400 bg-transparent shadow-sm" />
+          <span className="text-white font-semibold text-sm drop-shadow-md">Women safety</span>
         </div>
-        <div className="flex items-center gap-2 mb-1">
-          <div className="w-3 h-3 rounded-full border-2 border-orange-400 bg-transparent" />
-          <span className="text-gray-300 text-xs">Accident prone</span>
+        <div className="flex items-center gap-2 mb-2">
+          <div className="w-3.5 h-3.5 rounded-full border-2 border-orange-400 bg-transparent shadow-sm" />
+          <span className="text-white font-semibold text-sm drop-shadow-md">Accident prone</span>
         </div>
-        <p className="text-gray-500 text-xs mt-2">
+        <p className="text-gray-300 font-medium text-xs mt-3 drop-shadow-md">
           Click a dot to see risk profile
         </p>
       </div>
