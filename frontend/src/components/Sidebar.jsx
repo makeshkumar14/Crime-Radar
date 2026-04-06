@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 const NAV_ITEMS = [
@@ -15,7 +15,8 @@ const INITIAL_FILTERS = {
 };
 
 export default function Sidebar({ onFilter, activeView, onViewChange }) {
-  const [filters, setFilters] = useState(INITIAL_FILTERS);
+  const [pendingFilters, setPendingFilters] = useState(INITIAL_FILTERS);
+  const [appliedFilters, setAppliedFilters] = useState(INITIAL_FILTERS);
   const [options, setOptions] = useState({
     years: [],
     districts: [],
@@ -40,31 +41,32 @@ export default function Sidebar({ onFilter, activeView, onViewChange }) {
       });
   }, []);
 
-  const activeFilters = useMemo(() => {
-    const next = {};
-    if (filters.year) next.year = Number(filters.year);
-    if (filters.district) next.district = filters.district;
-    if (filters.category) next.category = filters.category;
-    return next;
-  }, [filters]);
-
   useEffect(() => {
-    onFilter(activeFilters);
-  }, [activeFilters, onFilter]);
+    const next = {};
+    if (appliedFilters.year) next.year = Number(appliedFilters.year);
+    if (appliedFilters.district) next.district = appliedFilters.district;
+    if (appliedFilters.category) next.category = appliedFilters.category;
+    onFilter(next);
+  }, [appliedFilters, onFilter]);
 
-  const setFilterValue = (key, value) => {
-    setFilters((prev) => ({
-      ...prev,
-      [key]: value,
-    }));
+  const setPendingValue = (key, value) => {
+    setPendingFilters((prev) => ({ ...prev, [key]: value }));
+  };
+
+  const applyFilters = () => {
+    setAppliedFilters(pendingFilters);
   };
 
   const resetFilters = () => {
-    setFilters(INITIAL_FILTERS);
+    setPendingFilters(INITIAL_FILTERS);
+    setAppliedFilters(INITIAL_FILTERS);
   };
 
+  const hasPendingChanges =
+    JSON.stringify(pendingFilters) !== JSON.stringify(appliedFilters);
+
   return (
-    <aside className="flex h-full w-[320px] flex-col border-r border-gray-800 bg-gray-950 text-white">
+    <aside className="flex h-full w-[280px] flex-col border-r border-gray-800 bg-gray-950 text-white">
       <div className="border-b border-blue-500/50 bg-[#0b1423] px-5 py-4">
         <div className="leading-[0.92]">
           <p className="text-[2.15rem] font-black uppercase tracking-[0.04em] text-white">
@@ -79,32 +81,32 @@ export default function Sidebar({ onFilter, activeView, onViewChange }) {
         </p>
       </div>
 
-      <div className="border-b border-gray-800 px-4 py-4">
-        <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.28em] text-gray-500">
-          Views
-        </p>
-        <div className="space-y-2">
-          {NAV_ITEMS.map((item) => {
-            const active = activeView === item.id;
-            return (
-              <button
-                key={item.id}
-                onClick={() => onViewChange(item.id)}
-                className={`w-full rounded-xl border px-4 py-3 text-left transition ${
-                  active
-                    ? "border-blue-500 bg-blue-600/15"
-                    : "border-gray-800 bg-gray-900/60 hover:border-gray-700 hover:bg-gray-900"
-                }`}
-              >
-                <p className="text-sm font-semibold text-white">{item.label}</p>
-                <p className="mt-1 text-xs text-gray-400">{item.description}</p>
-              </button>
-            );
-          })}
+      <div className="flex-1 overflow-y-auto px-4 py-4 space-y-6">
+        <div>
+          <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.28em] text-gray-500">
+            Views
+          </p>
+          <div className="space-y-2">
+            {NAV_ITEMS.map((item) => {
+              const active = activeView === item.id;
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => onViewChange(item.id)}
+                  className={`w-full rounded-xl border px-4 py-3 text-left transition ${
+                    active
+                      ? "border-blue-500 bg-blue-600/15"
+                      : "border-gray-800 bg-gray-900/60 hover:border-gray-700 hover:bg-gray-900"
+                  }`}
+                >
+                  <p className="text-sm font-semibold text-white">{item.label}</p>
+                  <p className="mt-1 text-xs text-gray-400">{item.description}</p>
+                </button>
+              );
+            })}
+          </div>
         </div>
-      </div>
 
-      <div className="flex-1 overflow-y-auto px-4 py-4">
         <div className="rounded-2xl border border-gray-800 bg-gray-900/70 p-4">
           <div className="mb-4 flex items-center justify-between">
             <div>
@@ -129,8 +131,8 @@ export default function Sidebar({ onFilter, activeView, onViewChange }) {
                 Year
               </label>
               <select
-                value={filters.year}
-                onChange={(event) => setFilterValue("year", event.target.value)}
+                value={pendingFilters.year}
+                onChange={(event) => setPendingValue("year", event.target.value)}
                 className="w-full rounded-xl border border-gray-700 bg-gray-950 px-3 py-2.5 text-sm text-white"
               >
                 <option value="">All years</option>
@@ -147,8 +149,8 @@ export default function Sidebar({ onFilter, activeView, onViewChange }) {
                 District
               </label>
               <select
-                value={filters.district}
-                onChange={(event) => setFilterValue("district", event.target.value)}
+                value={pendingFilters.district}
+                onChange={(event) => setPendingValue("district", event.target.value)}
                 className="w-full rounded-xl border border-gray-700 bg-gray-950 px-3 py-2.5 text-sm text-white"
               >
                 <option value="">All districts</option>
@@ -165,8 +167,8 @@ export default function Sidebar({ onFilter, activeView, onViewChange }) {
                 Crime Category
               </label>
               <select
-                value={filters.category}
-                onChange={(event) => setFilterValue("category", event.target.value)}
+                value={pendingFilters.category}
+                onChange={(event) => setPendingValue("category", event.target.value)}
                 className="w-full rounded-xl border border-gray-700 bg-gray-950 px-3 py-2.5 text-sm text-white"
               >
                 <option value="">All categories</option>
@@ -178,6 +180,23 @@ export default function Sidebar({ onFilter, activeView, onViewChange }) {
               </select>
             </div>
           </div>
+
+          {/* Apply Filters button */}
+          <button
+            onClick={applyFilters}
+            className={`mt-4 w-full rounded-xl px-4 py-2.5 text-sm font-semibold transition ${
+              hasPendingChanges
+                ? "bg-blue-600 text-white hover:bg-blue-500 shadow-[0_0_12px_rgba(59,130,246,0.4)]"
+                : "bg-gray-800 text-gray-500 cursor-default"
+            }`}
+          >
+            <span className="flex items-center justify-center gap-2">
+              {hasPendingChanges && (
+                <span className="h-2 w-2 animate-pulse rounded-full bg-blue-300" />
+              )}
+              Apply Filters
+            </span>
+          </button>
         </div>
       </div>
     </aside>
