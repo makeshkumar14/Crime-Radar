@@ -1,0 +1,211 @@
+{
+  "TIRUVALLUR|PALLIPET": [
+    {
+      "query": "Pallipet, Tiruvallur, Tamil Nadu, India",
+      "results": []
+    },
+    {
+      "query": "Pallipattu, Tiruvallur, Tamil Nadu, India",
+      "results": []
+    }
+  ],
+  "TIRUVALLUR|R.K. PET": [
+    {
+      "query": "R K Pet, Tiruvallur, Tamil Nadu, India",
+      "results": []
+    },
+    {
+      "query": "RK Pet, Tiruvallur, Tamil Nadu, India",
+      "results": []
+    },
+    {
+      "query": "R.K. Pet, Tiruvallur, Tamil Nadu, India",
+      "results": []
+    }
+  ],
+  "TIRUVANNAMALAI|THANDARAMPATTU": [
+    {
+      "query": "Thandarampattu, Tiruvannamalai, Tamil Nadu, India",
+      "results": []
+    },
+    {
+      "query": "Thandrampet, Tiruvannamalai, Tamil Nadu, India",
+      "results": [
+        {
+          "place_id": 231920593,
+          "licence": "Data \u00a9 OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "osm_type": "relation",
+          "osm_id": 10325746,
+          "lat": "12.1166418",
+          "lon": "78.8856937",
+          "category": "boundary",
+          "type": "administrative",
+          "place_rank": 12,
+          "importance": 0.23648094285300414,
+          "addresstype": "county",
+          "name": "Thandrampet",
+          "display_name": "Thandrampet, Tiruvannamalai, Tamil Nadu, India",
+          "boundingbox": [
+            "11.9833879",
+            "12.2499340",
+            "78.6622381",
+            "79.0428114"
+          ]
+        },
+        {
+          "place_id": 233512534,
+          "licence": "Data \u00a9 OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "osm_type": "node",
+          "osm_id": 7001703685,
+          "lat": "12.1534585",
+          "lon": "78.9468956",
+          "category": "place",
+          "type": "village",
+          "place_rank": 19,
+          "importance": 0.14670416800183103,
+          "addresstype": "village",
+          "name": "Thandrampet",
+          "display_name": "Thandrampet, Tiruvannamalai, Tamil Nadu, 606707, India",
+          "boundingbox": [
+            "12.1334585",
+            "12.1734585",
+            "78.9268956",
+            "78.9668956"
+          ]
+        }
+      ]
+    }
+  ],
+  "VILLUPPURAM|THIRUVENNAINALLUR": [
+    {
+      "query": "Thiruvennainallur, Viluppuram, Tamil Nadu, India",
+      "results": [
+        {
+          "place_id": 234967399,
+          "licence": "Data \u00a9 OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "osm_type": "relation",
+          "osm_id": 10822554,
+          "lat": "11.8664270",
+          "lon": "79.4053467",
+          "category": "boundary",
+          "type": "administrative",
+          "place_rank": 12,
+          "importance": 0.10540294855860563,
+          "addresstype": "county",
+          "name": "Thiruvennainallur",
+          "display_name": "Thiruvennainallur, Viluppuram, Tamil Nadu, India",
+          "boundingbox": [
+            "11.7816615",
+            "11.9504105",
+            "79.2086791",
+            "79.4822216"
+          ]
+        }
+      ]
+    },
+    {
+      "query": "Tiruvennainallur, Viluppuram, Tamil Nadu, India",
+      "results": [
+        {
+          "place_id": 232614826,
+          "licence": "Data \u00a9 OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "osm_type": "node",
+          "osm_id": 5303165643,
+          "lat": "11.8412704",
+          "lon": "79.4130531",
+          "category": "railway",
+          "type": "station",
+          "place_rank": 30,
+          "importance": 3.750133516437045e-05,
+          "addresstype": "railway",
+          "name": "Tiruvennainallur Road",
+          "display_name": "Tiruvennainallur Road, Cuddalore - Thirukoilur - Sankarapuram Road, Arasur, Thiruvennainallur, Viluppuram, Tamil Nadu, India",
+          "boundingbox": [
+            "11.8362704",
+            "11.8462704",
+            "79.4080531",
+            "79.4180531"
+          ]
+        }
+      ]
+    }
+  ],
+  "RAMANATHAPURAM|RAJASINGAMANGALAM": [
+    {
+      "query": "Rajasingamangalam, Ramanathapuram, Tamil Nadu, India",
+      "results": []
+    },
+    {
+      "query": "Rajasingamangalam",
+      "results": []
+    },
+    {
+      "query": "Rajasingamangalam, Tamil Nadu, India",
+      "results": []
+    }
+  ],
+  "KANYAKUMARI|KILLIYOOR": [
+    {
+      "query": "Killiyoor, Kanniyakumari, Tamil Nadu, India",
+      "results": [
+        {
+          "place_id": 235325336,
+          "licence": "Data \u00a9 OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "osm_type": "node",
+          "osm_id": 9666491257,
+          "lat": "8.2653222",
+          "lon": "77.2132679",
+          "category": "place",
+          "type": "village",
+          "place_rank": 19,
+          "importance": 0.14671268253604938,
+          "addresstype": "village",
+          "name": "Killiyoor",
+          "display_name": "Killiyoor, Vilavancode, Kanniyakumari, Tamil Nadu, 629162, India",
+          "boundingbox": [
+            "8.2453222",
+            "8.2853222",
+            "77.1932679",
+            "77.2332679"
+          ]
+        }
+      ]
+    },
+    {
+      "query": "Killiyur, Kanniyakumari, Tamil Nadu, India",
+      "results": [
+        {
+          "place_id": 234770823,
+          "licence": "Data \u00a9 OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "osm_type": "node",
+          "osm_id": 7249361647,
+          "lat": "8.2682408",
+          "lon": "77.2151344",
+          "category": "healthcare",
+          "type": "centre",
+          "place_rank": 30,
+          "importance": 4.6015869382727056e-05,
+          "addresstype": "healthcare",
+          "name": "UPHC, Killiyur",
+          "display_name": "UPHC, Killiyur, Paraseri - Monday Market - Puthukadai Road, Kiliyoor, Killiyoor, Vilavancode, Kanniyakumari, Tamil Nadu, 629157, India",
+          "boundingbox": [
+            "8.2681908",
+            "8.2682908",
+            "77.2150844",
+            "77.2151844"
+          ]
+        }
+      ]
+    }
+  ],
+  "KALLAKURICHI|KALVARAYAN HILLS": [
+    {
+      "query": "Kalvarayan Hills, Kallakurichi, Tamil Nadu, India",
+      "results": []
+    },
+    {
+      "query": "Kalvarayan Hills, Tamil Nadu, India",
+      "results": []
+    }
+  ]
+}

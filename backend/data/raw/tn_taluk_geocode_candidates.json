@@ -1,0 +1,721 @@
+{
+  "TIRUVALLUR|PALLIPET": [],
+  "TIRUVALLUR|R.K. PET": [],
+  "KANCHEEPURAM|KUNDRATHUR": [
+    {
+      "place_id": 228867771,
+      "licence": "Data \u00a9 OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+      "osm_type": "node",
+      "osm_id": 7257421610,
+      "lat": "12.9959652",
+      "lon": "80.0975672",
+      "category": "healthcare",
+      "type": "centre",
+      "place_rank": 30,
+      "importance": 5.509498741126142e-05,
+      "addresstype": "healthcare",
+      "name": "PHC, Kundrathur",
+      "display_name": "PHC, Kundrathur, Perumal Koil Street, Kundrathur, Pallavaram, Chengalpattu, Tamil Nadu, 600069, India",
+      "boundingbox": [
+        "12.9959152",
+        "12.9960152",
+        "80.0975172",
+        "80.0976172"
+      ]
+    }
+  ],
+  "VELLORE|K.V. KUPPAM": [
+    {
+      "place_id": 233437784,
+      "licence": "Data \u00a9 OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+      "osm_type": "way",
+      "osm_id": 208954200,
+      "lat": "12.9472667",
+      "lon": "78.9919917",
+      "category": "highway",
+      "type": "tertiary",
+      "place_rank": 26,
+      "importance": 0.053386939040207484,
+      "addresstype": "road",
+      "name": "K V Kuppam - Kavasampattu Road",
+      "display_name": "K V Kuppam - Kavasampattu Road, Katpadi, Vellore, Tamil Nadu, 632201, India",
+      "boundingbox": [
+        "12.9342712",
+        "12.9572448",
+        "78.9878369",
+        "78.9996097"
+      ]
+    },
+    {
+      "place_id": 233922605,
+      "licence": "Data \u00a9 OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+      "osm_type": "node",
+      "osm_id": 7257421579,
+      "lat": "12.9622000",
+      "lon": "78.9870910",
+      "category": "amenity",
+      "type": "hospital",
+      "place_rank": 30,
+      "importance": 5.360570687414385e-05,
+      "addresstype": "amenity",
+      "name": "Government Hospital K.V.Kuppam",
+      "display_name": "Government Hospital K.V.Kuppam, Melmoil - Alanganery - Melmankuppam Road, Katpadi, Vellore, Tamil Nadu, 632201, India",
+      "boundingbox": [
+        "12.9621500",
+        "12.9622500",
+        "78.9870410",
+        "78.9871410"
+      ]
+    }
+  ],
+  "TIRUVANNAMALAI|THANDARAMPATTU": [],
+  "VILLUPPURAM|THIRUVENNAINALLUR": [],
+  "SALEM|THALAIVASAL": [
+    {
+      "place_id": 241839174,
+      "licence": "Data \u00a9 OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+      "osm_type": "way",
+      "osm_id": 94123496,
+      "lat": "11.4967211",
+      "lon": "78.7487620",
+      "category": "highway",
+      "type": "secondary",
+      "place_rank": 26,
+      "importance": 0.05337263065537495,
+      "addresstype": "road",
+      "name": "Thalaivasal - Veeraganur Road",
+      "display_name": "Thalaivasal - Veeraganur Road, Veeraganur, Gangavalli, Salem, Tamil Nadu, 621722, India",
+      "boundingbox": [
+        "11.4758779",
+        "11.5175688",
+        "78.7386624",
+        "78.7582072"
+      ]
+    },
+    {
+      "place_id": 234701060,
+      "licence": "Data \u00a9 OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+      "osm_type": "way",
+      "osm_id": 94123501,
+      "lat": "11.5522813",
+      "lon": "78.7538022",
+      "category": "highway",
+      "type": "secondary",
+      "place_rank": 26,
+      "importance": 0.05337263065537495,
+      "addresstype": "road",
+      "name": "Thalaivasal - Veeraganur Road",
+      "display_name": "Thalaivasal - Veeraganur Road, Attur, Salem, Tamil Nadu, 636101, India",
+      "boundingbox": [
+        "11.5399425",
+        "11.5635154",
+        "78.7481084",
+        "78.7563731"
+      ]
+    },
+    {
+      "place_id": 234343760,
+      "licence": "Data \u00a9 OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+      "osm_type": "way",
+      "osm_id": 94123507,
+      "lat": "11.5262487",
+      "lon": "78.7570179",
+      "category": "highway",
+      "type": "secondary",
+      "place_rank": 26,
+      "importance": 0.05337263065537495,
+      "addresstype": "road",
+      "name": "Thalaivasal - Veeraganur Road",
+      "display_name": "Thalaivasal - Veeraganur Road, Gangavalli, Salem, Tamil Nadu, 636101, India",
+      "boundingbox": [
+        "11.5179644",
+        "11.5346691",
+        "78.7561362",
+        "78.7586031"
+      ]
+    }
+  ],
+  "COIMBATORE|PERUR": [
+    {
+      "place_id": 234411410,
+      "licence": "Data \u00a9 OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+      "osm_type": "node",
+      "osm_id": 294521062,
+      "lat": "10.9764060",
+      "lon": "76.9141784",
+      "category": "place",
+      "type": "town",
+      "place_rank": 18,
+      "importance": 0.16006338521400776,
+      "addresstype": "town",
+      "name": "Perur",
+      "display_name": "Perur, Coimbatore South, Coimbatore, Tamil Nadu, 641010, India",
+      "boundingbox": [
+        "10.9364060",
+        "11.0164060",
+        "76.8741784",
+        "76.9541784"
+      ]
+    }
+  ],
+  "DINDIGUL|GUJILIAMPARAI": [
+    {
+      "place_id": 234344591,
+      "licence": "Data \u00a9 OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+      "osm_type": "way",
+      "osm_id": 1207712579,
+      "lat": "10.4536904",
+      "lon": "78.0227375",
+      "category": "highway",
+      "type": "primary",
+      "place_rank": 26,
+      "importance": 0.05338385824368654,
+      "addresstype": "road",
+      "name": "Dindigul - Gujiliamparai - Karur Road",
+      "display_name": "Dindigul - Gujiliamparai - Karur Road, Vedasandur, Dindigul, Tamil Nadu, India",
+      "boundingbox": [
+        "10.4484386",
+        "10.4584435",
+        "78.0194545",
+        "78.0265104"
+      ]
+    },
+    {
+      "place_id": 234127670,
+      "licence": "Data \u00a9 OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+      "osm_type": "way",
+      "osm_id": 1196770977,
+      "lat": "10.3785822",
+      "lon": "77.9892981",
+      "category": "highway",
+      "type": "primary",
+      "place_rank": 26,
+      "importance": 0.05338385824368654,
+      "addresstype": "road",
+      "name": "Dindigul - Gujiliamparai - Karur Road",
+      "display_name": "Dindigul - Gujiliamparai - Karur Road, Nandhavanapatti, Dindigul, Tamil Nadu, 624001, India",
+      "boundingbox": [
+        "10.3767253",
+        "10.3804764",
+        "77.9880125",
+        "77.9905310"
+      ]
+    },
+    {
+      "place_id": 422766147,
+      "licence": "Data \u00a9 OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+      "osm_type": "way",
+      "osm_id": 980518077,
+      "lat": "10.3723079",
+      "lon": "77.9852611",
+      "category": "highway",
+      "type": "primary",
+      "place_rank": 26,
+      "importance": 0.05338385824368654,
+      "addresstype": "road",
+      "name": "Dindigul - Gujiliamparai - Karur Road Underpass",
+      "display_name": "Dindigul - Gujiliamparai - Karur Road Underpass, Nandhavanapatti, Dindigul, Tamil Nadu, 624001, India",
+      "boundingbox": [
+        "10.3715557",
+        "10.3731303",
+        "77.9846814",
+        "77.9857445"
+      ]
+    }
+  ],
+  "KARUR|PUGALUR": [
+    {
+      "place_id": 233280124,
+      "licence": "Data \u00a9 OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+      "osm_type": "node",
+      "osm_id": 772811700,
+      "lat": "11.0762440",
+      "lon": "78.0040454",
+      "category": "place",
+      "type": "town",
+      "place_rank": 18,
+      "importance": 0.16005236820019836,
+      "addresstype": "town",
+      "name": "Pugalur",
+      "display_name": "Pugalur, Karur, Tamil Nadu, 639117, India",
+      "boundingbox": [
+        "11.0362440",
+        "11.1162440",
+        "77.9640454",
+        "78.0440454"
+      ]
+    }
+  ],
+  "THIRUVARUR|MUTHUPETTAI": [
+    {
+      "place_id": 400749368,
+      "licence": "Data \u00a9 OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+      "osm_type": "way",
+      "osm_id": 1364445342,
+      "lat": "10.5692280",
+      "lon": "79.5305922",
+      "category": "highway",
+      "type": "tertiary",
+      "place_rank": 26,
+      "importance": 0.053370834668497714,
+      "addresstype": "road",
+      "name": "Muthupettai",
+      "display_name": "Muthupettai, Valacheri, Keelaputhur, Mannargudi, Thiruvarur, Tamil Nadu, 614717, India",
+      "boundingbox": [
+        "10.5688473",
+        "10.5732518",
+        "79.5249881",
+        "79.5374295"
+      ]
+    }
+  ],
+  "THANJAVUR|BUDALUR": [
+    {
+      "place_id": 232639911,
+      "licence": "Data \u00a9 OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+      "osm_type": "node",
+      "osm_id": 2048647833,
+      "lat": "10.7886490",
+      "lon": "78.9789575",
+      "category": "place",
+      "type": "village",
+      "place_rank": 19,
+      "importance": 0.2923164171266958,
+      "addresstype": "village",
+      "name": "Budalur",
+      "display_name": "Budalur, Thanjavur, Tamil Nadu, 613602, India",
+      "boundingbox": [
+        "10.7686490",
+        "10.8086490",
+        "78.9589575",
+        "78.9989575"
+      ]
+    }
+  ],
+  "THANJAVUR|THIRUVONAM": [
+    {
+      "place_id": 234739456,
+      "licence": "Data \u00a9 OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+      "osm_type": "way",
+      "osm_id": 568370718,
+      "lat": "10.5886560",
+      "lon": "79.2047817",
+      "category": "highway",
+      "type": "secondary",
+      "place_rank": 26,
+      "importance": 0.053370834668497714,
+      "addresstype": "road",
+      "name": "Mannargudi - Orathanadu - Thiruvonam Road",
+      "display_name": "Mannargudi - Orathanadu - Thiruvonam Road, Sepparithoppu, Keelakakkaraikottai, Orathanadu, Thanjavur, Tamil Nadu, 614902, India",
+      "boundingbox": [
+        "10.5721497",
+        "10.6064720",
+        "79.1947907",
+        "79.2104495"
+      ]
+    },
+    {
+      "place_id": 234970399,
+      "licence": "Data \u00a9 OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+      "osm_type": "way",
+      "osm_id": 568370742,
+      "lat": "10.6142792",
+      "lon": "79.2327870",
+      "category": "highway",
+      "type": "secondary",
+      "place_rank": 26,
+      "importance": 0.053370834668497714,
+      "addresstype": "road",
+      "name": "Mannargudi - Orathanadu - Thiruvonam Road",
+      "display_name": "Mannargudi - Orathanadu - Thiruvonam Road, Naduvakkottai, Orathanadu, Thanjavur, Tamil Nadu, 614625, India",
+      "boundingbox": [
+        "10.6096323",
+        "10.6190499",
+        "79.2267928",
+        "79.2395782"
+      ]
+    },
+    {
+      "place_id": 234928015,
+      "licence": "Data \u00a9 OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+      "osm_type": "way",
+      "osm_id": 548435626,
+      "lat": "10.6285744",
+      "lon": "79.3280394",
+      "category": "highway",
+      "type": "secondary",
+      "place_rank": 26,
+      "importance": 0.053370834668497714,
+      "addresstype": "road",
+      "name": "Mannargudi - Orathanadu - Thiruvonam Road",
+      "display_name": "Mannargudi - Orathanadu - Thiruvonam Road, Devapuram, Okkanadu keelaiyur, Orathanadu, Thanjavur, Tamil Nadu, 614632, India",
+      "boundingbox": [
+        "10.6260818",
+        "10.6294533",
+        "79.3125618",
+        "79.3421592"
+      ]
+    }
+  ],
+  "VIRUDHUNAGAR|WATRAP": [
+    {
+      "place_id": 232777214,
+      "licence": "Data \u00a9 OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+      "osm_type": "node",
+      "osm_id": 4891479418,
+      "lat": "9.6365403",
+      "lon": "77.6397064",
+      "category": "place",
+      "type": "village",
+      "place_rank": 19,
+      "importance": 0.22742205121143227,
+      "addresstype": "village",
+      "name": "Watrap",
+      "display_name": "Watrap, Srivilliputhur, Virudhunagar, Tamil Nadu, 626132, India",
+      "boundingbox": [
+        "9.6165403",
+        "9.6565403",
+        "77.6197064",
+        "77.6597064"
+      ]
+    }
+  ],
+  "RAMANATHAPURAM|RAJASINGAMANGALAM": [],
+  "THOOTHUKKUDI|ERAL": [
+    {
+      "place_id": 233805390,
+      "licence": "Data \u00a9 OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+      "osm_type": "way",
+      "osm_id": 84141347,
+      "lat": "8.7963521",
+      "lon": "78.0284059",
+      "category": "highway",
+      "type": "primary",
+      "place_rank": 26,
+      "importance": 0.05338637140459293,
+      "addresstype": "road",
+      "name": "Kovilpatti - Ottapidaram - Puducottai - Eral - Mukkani Road",
+      "display_name": "Kovilpatti - Ottapidaram - Puducottai - Eral - Mukkani Road, Pudukottai, Thoothukkudi, Thoothukudi, Tamil Nadu, 628103, India",
+      "boundingbox": [
+        "8.7558958",
+        "8.8476302",
+        "78.0171025",
+        "78.0659589"
+      ]
+    },
+    {
+      "place_id": 234898565,
+      "licence": "Data \u00a9 OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+      "osm_type": "way",
+      "osm_id": 178119147,
+      "lat": "8.7340584",
+      "lon": "78.0622035",
+      "category": "highway",
+      "type": "primary",
+      "place_rank": 26,
+      "importance": 0.05338637140459293,
+      "addresstype": "road",
+      "name": "Kovilpatti - Ottapidaram - Puducottai - Eral - Mukkani Road",
+      "display_name": "Kovilpatti - Ottapidaram - Puducottai - Eral - Mukkani Road, Kootampuli, Thoothukkudi, Thoothukudi, Tamil Nadu, 628101, India",
+      "boundingbox": [
+        "8.7190209",
+        "8.7471643",
+        "78.0548825",
+        "78.0661197"
+      ]
+    },
+    {
+      "place_id": 234495957,
+      "licence": "Data \u00a9 OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+      "osm_type": "way",
+      "osm_id": 375219739,
+      "lat": "8.7188131",
+      "lon": "78.0661802",
+      "category": "highway",
+      "type": "primary",
+      "place_rank": 26,
+      "importance": 0.05338637140459293,
+      "addresstype": "road",
+      "name": "Kovilpatti - Ottapidaram - Puducottai - Eral - Mukkani Road",
+      "display_name": "Kovilpatti - Ottapidaram - Puducottai - Eral - Mukkani Road, Kootampuli, Thoothukkudi, Thoothukudi, Tamil Nadu, 628251, India",
+      "boundingbox": [
+        "8.7186053",
+        "8.7190209",
+        "78.0661197",
+        "78.0662406"
+      ]
+    }
+  ],
+  "TIRUNELVELI|THISAYANVILAI": [
+    {
+      "place_id": 234159392,
+      "licence": "Data \u00a9 OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+      "osm_type": "node",
+      "osm_id": 1688765503,
+      "lat": "8.3355721",
+      "lon": "77.8668199",
+      "category": "place",
+      "type": "town",
+      "place_rank": 18,
+      "importance": 0.16003838330663003,
+      "addresstype": "town",
+      "name": "Thisayanvilai",
+      "display_name": "Thisayanvilai, Tisayanvilai, Tirunelveli, Tamil Nadu, 635308, India",
+      "boundingbox": [
+        "8.2955721",
+        "8.3755721",
+        "77.8268199",
+        "77.9068199"
+      ]
+    }
+  ],
+  "KANYAKUMARI|KILLIYOOR": [],
+  "KANYAKUMARI|THIRUVATTAR": [
+    {
+      "place_id": 431889532,
+      "licence": "Data \u00a9 OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+      "osm_type": "node",
+      "osm_id": 5329281408,
+      "lat": "8.3305895",
+      "lon": "77.2655506",
+      "category": "place",
+      "type": "town",
+      "place_rank": 18,
+      "importance": 0.319279276758968,
+      "addresstype": "town",
+      "name": "Thiruvattar",
+      "display_name": "Thiruvattar, Kalkulam, Kanniyakumari, Tamil Nadu, 629177, India",
+      "boundingbox": [
+        "8.2905895",
+        "8.3705895",
+        "77.2255506",
+        "77.3055506"
+      ]
+    }
+  ],
+  "KRISHNAGIRI|ANCHETTY": [
+    {
+      "place_id": 234053033,
+      "licence": "Data \u00a9 OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+      "osm_type": "relation",
+      "osm_id": 10325513,
+      "lat": "12.3142332",
+      "lon": "77.7206605",
+      "category": "boundary",
+      "type": "administrative",
+      "place_rank": 12,
+      "importance": 0.24000999999999997,
+      "addresstype": "county",
+      "name": "Anchetty",
+      "display_name": "Anchetty, Krishnagiri, Tamil Nadu, India",
+      "boundingbox": [
+        "12.1467249",
+        "12.4874081",
+        "77.4706385",
+        "77.8752135"
+      ]
+    },
+    {
+      "place_id": 232716630,
+      "licence": "Data \u00a9 OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+      "osm_type": "node",
+      "osm_id": 4689130686,
+      "lat": "12.3540721",
+      "lon": "77.7219620",
+      "category": "place",
+      "type": "village",
+      "place_rank": 19,
+      "importance": 0.14670416800183103,
+      "addresstype": "village",
+      "name": "Anchetty",
+      "display_name": "Anchetty, Krishnagiri, Tamil Nadu, 635102, India",
+      "boundingbox": [
+        "12.3340721",
+        "12.3740721",
+        "77.7019620",
+        "77.7419620"
+      ]
+    }
+  ],
+  "KALLAKURICHI|KALVARAYAN HILLS": [],
+  "KALLAKURICHI|VANAPURAM": [
+    {
+      "place_id": 234435228,
+      "licence": "Data \u00a9 OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+      "osm_type": "node",
+      "osm_id": 7262595382,
+      "lat": "11.9267389",
+      "lon": "79.0113595",
+      "category": "healthcare",
+      "type": "centre",
+      "place_rank": 30,
+      "importance": 9.99999999995449e-06,
+      "addresstype": "healthcare",
+      "name": "Vanapuram PHC",
+      "display_name": "Vanapuram PHC, Pagandai X Road to Mamandhur Road, Agarakottalam, Thondanandal, Viluppuram, Kallakurichi, Tamil Nadu, 605801, India",
+      "boundingbox": [
+        "11.9266889",
+        "11.9267889",
+        "79.0113095",
+        "79.0114095"
+      ]
+    }
+  ],
+  "CHENGALPATTU|VANDALUR": [
+    {
+      "place_id": 232132756,
+      "licence": "Data \u00a9 OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+      "osm_type": "node",
+      "osm_id": 306117874,
+      "lat": "12.8921486",
+      "lon": "80.0829603",
+      "category": "place",
+      "type": "town",
+      "place_rank": 18,
+      "importance": 0.4465821188617377,
+      "addresstype": "town",
+      "name": "Vandalur",
+      "display_name": "Vandalur, Chengalpattu, Tamil Nadu, 603210, India",
+      "boundingbox": [
+        "12.8521486",
+        "12.9321486",
+        "80.0429603",
+        "80.1229603"
+      ]
+    },
+    {
+      "place_id": 233930748,
+      "licence": "Data \u00a9 OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+      "osm_type": "node",
+      "osm_id": 5311775879,
+      "lat": "12.8916061",
+      "lon": "80.0849740",
+      "category": "railway",
+      "type": "station",
+      "place_rank": 30,
+      "importance": 0.38292359884245514,
+      "addresstype": "railway",
+      "name": "Vandalur",
+      "display_name": "Vandalur, Perungalathur Flyover Ramp, Vandalur, Chengalpattu, Tamil Nadu, 603210, India",
+      "boundingbox": [
+        "12.8866061",
+        "12.8966061",
+        "80.0799740",
+        "80.0899740"
+      ]
+    }
+  ],
+  "RANIPET|KALAVAI": [
+    {
+      "place_id": 231259403,
+      "licence": "Data \u00a9 OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+      "osm_type": "node",
+      "osm_id": 5084154359,
+      "lat": "12.7690720",
+      "lon": "79.4195652",
+      "category": "place",
+      "type": "village",
+      "place_rank": 19,
+      "importance": 0.14670416800183103,
+      "addresstype": "village",
+      "name": "Kalavai",
+      "display_name": "Kalavai, Arcot, Ranipet, Tamil Nadu, 632506, India",
+      "boundingbox": [
+        "12.7490720",
+        "12.7890720",
+        "79.3995652",
+        "79.4395652"
+      ]
+    }
+  ],
+  "RANIPET|SHOLINGHUR": [
+    {
+      "place_id": 231375837,
+      "licence": "Data \u00a9 OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+      "osm_type": "node",
+      "osm_id": 2694478652,
+      "lat": "13.1151925",
+      "lon": "79.4231084",
+      "category": "place",
+      "type": "town",
+      "place_rank": 18,
+      "importance": 0.3832630312172756,
+      "addresstype": "town",
+      "name": "Sholinghur",
+      "display_name": "Sholinghur, Wallajah, Ranipet, Tamil Nadu, 631102, India",
+      "boundingbox": [
+        "13.0751925",
+        "13.1551925",
+        "79.3831084",
+        "79.4631084"
+      ]
+    }
+  ],
+  "RANIPET|WALAJAPET": [
+    {
+      "place_id": 233357388,
+      "licence": "Data \u00a9 OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+      "osm_type": "node",
+      "osm_id": 256778069,
+      "lat": "12.9254734",
+      "lon": "79.3637892",
+      "category": "place",
+      "type": "town",
+      "place_rank": 18,
+      "importance": 0.16004763942931258,
+      "addresstype": "town",
+      "name": "Walajapet",
+      "display_name": "Walajapet, Wallajah, Ranipet, Tamil Nadu, 632513, India",
+      "boundingbox": [
+        "12.8854734",
+        "12.9654734",
+        "79.3237892",
+        "79.4037892"
+      ]
+    }
+  ],
+  "MAYILADUTHURAI|SIRKAZHI": [
+    {
+      "place_id": 234030121,
+      "licence": "Data \u00a9 OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+      "osm_type": "node",
+      "osm_id": 891394184,
+      "lat": "11.2377794",
+      "lon": "79.7395752",
+      "category": "place",
+      "type": "town",
+      "place_rank": 18,
+      "importance": 0.3972123942177393,
+      "addresstype": "town",
+      "name": "Sirkazhi",
+      "display_name": "Sirkazhi, Sirkali, Mayiladuthurai, Tamil Nadu, 609100, India",
+      "boundingbox": [
+        "11.1977794",
+        "11.2777794",
+        "79.6995752",
+        "79.7795752"
+      ]
+    },
+    {
+      "place_id": 234971332,
+      "licence": "Data \u00a9 OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+      "osm_type": "node",
+      "osm_id": 5300686653,
+      "lat": "11.2430382",
+      "lon": "79.7283976",
+      "category": "railway",
+      "type": "station",
+      "place_rank": 30,
+      "importance": 0.35014937101674926,
+      "addresstype": "railway",
+      "name": "Sirkazhi",
+      "display_name": "Sirkazhi, Sirkali - Panangattangudi Road, Kondal, Sirkali, Mayiladuthurai, Tamil Nadu, 609101, India",
+      "boundingbox": [
+        "11.2380382",
+        "11.2480382",
+        "79.7233976",
+        "79.7333976"
+      ]
+    }
+  ]
+}

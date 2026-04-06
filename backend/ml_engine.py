@@ -2,6 +2,7 @@ import heapq
 import json
 import math
 from collections import defaultdict
+from itertools import combinations
 from datetime import date
 from pathlib import Path
 
@@ -285,6 +286,117 @@ def haversine_km(lat1, lng1, lat2, lng2):
     return radius * 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
 
 
+def _load_district_centroids():
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT district, lat, lng FROM districts")
+    rows = {row["district"]: dict(row) for row in cursor.fetchall()}
+    conn.close()
+    return rows
+
+
+def _project_to_km(lat, lng, ref_lat):
+    radius = 6371.0
+    x = math.radians(lng) * radius * math.cos(math.radians(ref_lat))
+    y = math.radians(lat) * radius
+    return x, y
+
+
+def _distance_point_to_segment_km(point, start, end):
+    ref_lat = (point["lat"] + start["lat"] + end["lat"]) / 3.0
+    px, py = _project_to_km(point["lat"], point["lng"], ref_lat)
+    ax, ay = _project_to_km(start["lat"], start["lng"], ref_lat)
+    bx, by = _project_to_km(end["lat"], end["lng"], ref_lat)
+    abx = bx - ax
+    aby = by - ay
+    apx = px - ax
+    apy = py - ay
+    ab_len_sq = (abx * abx) + (aby * aby)
+    if ab_len_sq <= 1e-9:
+        return math.sqrt((px - ax) ** 2 + (py - ay) ** 2)
+    t = max(0.0, min(1.0, ((apx * abx) + (apy * aby)) / ab_len_sq))
+    closest_x = ax + abx * t
+    closest_y = ay + aby * t
+    return math.sqrt((px - closest_x) ** 2 + (py - closest_y) ** 2)
+
+
+def _route_scope_districts(origin_district, destination_district, limit=8):
+    district_centroids = _load_district_centroids()
+    start = district_centroids.get(origin_district)
+    end = district_centroids.get(destination_district)
+
+    if not start or not end:
+        return sorted({origin_district, destination_district})
+
+    if origin_district == destination_district:
+        return [origin_district]
+
+    ranked = []
+    for district, centroid in district_centroids.items():
+        corridor_distance = _distance_point_to_segment_km(centroid, start, end)
+        endpoint_distance = min(
+            haversine_km(centroid["lat"], centroid["lng"], start["lat"], start["lng"]),
+            haversine_km(centroid["lat"], centroid["lng"], end["lat"], end["lng"]),
+        )
+        ranked.append(
+            (
+                corridor_distance,
+                endpoint_distance,
+                district,
+            )
+        )
+
+    ranked.sort()
+    selected = []
+    required = {origin_district, destination_district}
+    for corridor_distance, endpoint_distance, district in ranked:
+        if district in required:
+            selected.append(district)
+            continue
+        if corridor_distance <= 110 or endpoint_distance <= 135 or len(selected) < 6:
+            selected.append(district)
+        if len(selected) >= limit:
+            break
+
+    for district in sorted(required):
+        if district not in selected:
+            selected.insert(0, district)
+
+    return selected[:limit]
+
+
+def _build_route_safety_zones(snapshot, scope_districts):
+    scope_lookup = set(scope_districts)
+    zones = []
+    for node in snapshot:
+        if node["district"] not in scope_lookup:
+            continue
+        zones.append(
+            {
+                "taluk_id": node["taluk_id"],
+                "taluk": node["taluk"],
+                "district": node["district"],
+                "risk_score": node["risk_score"],
+                "risk_level": node["risk_level"],
+                "radius_km": node["radius_km"],
+                "predicted_total": node["predicted_total"],
+                "predicted_accident": node["predicted_accident"],
+                "predicted_top_category": node["predicted_top_category"],
+                "location_query": f"{node['taluk']}, {node['district']}, Tamil Nadu, India",
+            }
+        )
+
+    zones.sort(
+        key=lambda item: (
+            item["district"],
+            -item["predicted_accident"],
+            -item["risk_score"],
+            item["taluk"],
+        )
+    )
+    return zones
+
+
 def _build_graph(snapshot):
     graph = defaultdict(list)
     for node in snapshot:
@@ -322,6 +434,135 @@ def _dijkstra(start_id, end_id, nodes, graph, risk_factor):
     return None, []
 
 
+def _prune_graph(graph, banned_ids):
+    return {
+        node_id: [next_id for next_id in neighbours if next_id not in banned_ids]
+        for node_id, neighbours in graph.items()
+        if node_id not in banned_ids
+    }
+
+
+def _serialize_path(path, nodes):
+    return [nodes[node_id] for node_id in path if node_id in nodes]
+
+
+def _route_metrics(items):
+    if not items:
+        return 0.0, 0.0, 0.0, 0
+
+    distance = 0.0
+    for index in range(len(items) - 1):
+        distance += haversine_km(
+            items[index]["lat"],
+            items[index]["lng"],
+            items[index + 1]["lat"],
+            items[index + 1]["lng"],
+        )
+
+    avg_risk = sum(node["risk_score"] for node in items) / len(items)
+    max_risk = max(node["risk_score"] for node in items)
+    high_risk_stops = sum(1 for node in items[1:-1] if node["risk_score"] >= 65)
+    return round(distance, 2), round(avg_risk, 1), round(max_risk, 1), high_risk_stops
+
+
+def _path_overlap_ratio(primary_path, candidate_path):
+    primary_nodes = set(primary_path[1:-1])
+    candidate_nodes = set(candidate_path[1:-1])
+    if not primary_nodes and not candidate_nodes:
+        return 1.0 if tuple(primary_path) == tuple(candidate_path) else 0.0
+    shared = primary_nodes & candidate_nodes
+    return len(shared) / max(len(primary_nodes), len(candidate_nodes), 1)
+
+
+def _find_safer_path(start_id, end_id, nodes, graph, baseline_path):
+    if len(baseline_path) < 2:
+        return baseline_path
+
+    baseline_items = _serialize_path(baseline_path, nodes)
+    baseline_distance, baseline_risk, baseline_max_risk, baseline_high_risk = _route_metrics(
+        baseline_items
+    )
+    risky_intermediates = sorted(
+        baseline_path[1:-1],
+        key=lambda node_id: nodes[node_id]["risk_score"],
+        reverse=True,
+    )[:6]
+
+    seen = {tuple(baseline_path)}
+    candidates = []
+
+    def register(path):
+        if not path or tuple(path) in seen:
+            return
+        seen.add(tuple(path))
+        items = _serialize_path(path, nodes)
+        distance, avg_risk, max_risk, high_risk_stops = _route_metrics(items)
+        overlap = _path_overlap_ratio(baseline_path, path)
+        safety_score = (
+            avg_risk
+            + max_risk * 0.12
+            + high_risk_stops * 2.5
+            + max(0.0, distance - baseline_distance) * 0.18
+            + overlap * 2.2
+        )
+        candidates.append(
+            {
+                "path": path,
+                "distance": distance,
+                "avg_risk": avg_risk,
+                "max_risk": max_risk,
+                "high_risk_stops": high_risk_stops,
+                "overlap": overlap,
+                "safety_score": round(safety_score, 3),
+            }
+        )
+
+    for risk_factor in (1.4, 2.1, 2.8):
+        _, path = _dijkstra(start_id, end_id, nodes, graph, risk_factor=risk_factor)
+        register(path)
+
+    for ban_size in (1, 2):
+        for banned in combinations(risky_intermediates, ban_size):
+            pruned_graph = _prune_graph(graph, set(banned))
+            _, path = _dijkstra(
+                start_id,
+                end_id,
+                nodes,
+                pruned_graph,
+                risk_factor=2.2 + ban_size * 0.45,
+            )
+            register(path)
+
+    if not candidates:
+        return baseline_path
+
+    accepted = [
+        candidate
+        for candidate in candidates
+        if candidate["avg_risk"] <= baseline_risk - 0.8
+        or (
+            candidate["avg_risk"] <= baseline_risk - 0.3
+            and (
+                candidate["high_risk_stops"] < baseline_high_risk
+                or candidate["max_risk"] <= baseline_max_risk - 2.0
+            )
+        )
+    ]
+
+    if not accepted:
+        return baseline_path
+
+    best_candidate = min(
+        accepted,
+        key=lambda candidate: (
+            candidate["safety_score"],
+            candidate["distance"],
+            candidate["overlap"],
+        ),
+    )
+    return best_candidate["path"]
+
+
 def route_safety_advisory(origin_taluk_id, destination_taluk_id, target_year=None, target_month=None):
     today = date.today()
     target_year = target_year or today.year
@@ -331,15 +572,32 @@ def route_safety_advisory(origin_taluk_id, destination_taluk_id, target_year=Non
     if origin_taluk_id not in nodes or destination_taluk_id not in nodes:
         return {"status": "error", "message": "Origin or destination zone not found"}
 
+    origin_node = nodes[origin_taluk_id]
+    destination_node = nodes[destination_taluk_id]
+    scope_districts = _route_scope_districts(
+        origin_node["district"],
+        destination_node["district"],
+    )
+    safety_zones = _build_route_safety_zones(snapshot, scope_districts)
+
     graph = _build_graph(snapshot)
-    fastest_cost, fastest_path = _dijkstra(origin_taluk_id, destination_taluk_id, nodes, graph, risk_factor=0.15)
-    safe_cost, safe_path = _dijkstra(origin_taluk_id, destination_taluk_id, nodes, graph, risk_factor=1.15)
+    _, fastest_path = _dijkstra(
+        origin_taluk_id,
+        destination_taluk_id,
+        nodes,
+        graph,
+        risk_factor=0.05,
+    )
+    safe_path = _find_safer_path(
+        origin_taluk_id,
+        destination_taluk_id,
+        nodes,
+        graph,
+        fastest_path,
+    )
 
-    def serialize(path):
-        return [nodes[node_id] for node_id in path]
-
-    fastest_nodes = serialize(fastest_path)
-    safe_nodes = serialize(safe_path)
+    fastest_nodes = _serialize_path(fastest_path, nodes)
+    safe_nodes = _serialize_path(safe_path, nodes)
     if not fastest_nodes:
         fastest_nodes = [nodes[origin_taluk_id], nodes[destination_taluk_id]]
     if not safe_nodes:
@@ -358,34 +616,55 @@ def route_safety_advisory(origin_taluk_id, destination_taluk_id, target_year=Non
                 }
             )
 
-    def route_metrics(items):
-        distance = 0.0
-        for i in range(len(items) - 1):
-            distance += haversine_km(items[i]["lat"], items[i]["lng"], items[i + 1]["lat"], items[i + 1]["lng"])
-        avg_risk = sum(node["risk_score"] for node in items) / len(items)
-        return round(distance, 2), round(avg_risk, 1)
+    fastest_distance, fastest_risk, fastest_max_risk, fastest_high_risk = _route_metrics(
+        fastest_nodes
+    )
+    safe_distance, safe_risk, safe_max_risk, safe_high_risk = _route_metrics(safe_nodes)
+    route_diverges = fastest_path != safe_path
+    route_overlap_ratio = round(_path_overlap_ratio(fastest_path, safe_path), 2)
+    risk_reduction = round(max(0.0, fastest_risk - safe_risk), 1)
+    distance_delta_km = round(safe_distance - fastest_distance, 2)
 
-    fastest_distance, fastest_risk = route_metrics(fastest_nodes)
-    safe_distance, safe_risk = route_metrics(safe_nodes)
+    if not route_diverges:
+        recommendation = "No clearly safer detour was found. Stay alert on the main route."
+    elif safe_risk + 3 <= fastest_risk:
+        recommendation = "Use the safer detour. It reduces exposure across the route."
+    else:
+        recommendation = "The safer corridor is only a mild improvement. Use either route with caution."
 
     return {
         "status": "ok",
         "target_year": target_year,
         "target_month": target_month,
-        "origin": nodes[origin_taluk_id],
-        "destination": nodes[destination_taluk_id],
+        "origin": origin_node,
+        "destination": destination_node,
+        "origin_query": f"{origin_node['taluk']}, {origin_node['district']}, Tamil Nadu, India",
+        "destination_query": f"{destination_node['taluk']}, {destination_node['district']}, Tamil Nadu, India",
+        "scope_districts": scope_districts,
+        "safety_zones": safety_zones,
+        "accident_zones": [
+            zone for zone in safety_zones if zone["predicted_accident"] > 0
+        ],
+        "route_diverges": route_diverges,
+        "route_overlap_ratio": route_overlap_ratio,
+        "risk_reduction": risk_reduction,
+        "distance_delta_km": distance_delta_km,
         "current_path": {
             "distance_km": fastest_distance,
             "risk_score": fastest_risk,
+            "max_risk_score": fastest_max_risk,
+            "high_risk_stops": fastest_high_risk,
             "route": fastest_nodes,
         },
         "safer_path": {
             "distance_km": safe_distance,
             "risk_score": safe_risk,
+            "max_risk_score": safe_max_risk,
+            "high_risk_stops": safe_high_risk,
             "route": safe_nodes,
         },
         "alerts": alerts[:6],
-        "recommendation": "Use the safer path" if safe_risk + 4 < fastest_risk else "Current path is acceptable with caution",
+        "recommendation": recommendation,
     }
 
 
