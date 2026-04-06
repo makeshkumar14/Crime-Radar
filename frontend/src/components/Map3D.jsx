@@ -259,40 +259,23 @@ export default function Map3D({ filters = {}, onDistrictClick }) {
     <div className="relative flex-1">
       <div ref={mapContainer} style={{ height: "100%", width: "100%" }} />
 
-      <div className="absolute top-4 left-4 z-50 rounded-xl border border-gray-700/70 bg-gray-950/80 p-3 shadow-xl backdrop-blur-md">
-        <p className="mb-2 text-xs font-bold tracking-[0.2em] text-cyan-300">
-          3D OPS VIEW
-        </p>
-        <div className="grid grid-cols-2 gap-2 text-xs text-white">
-          <div className="rounded-lg bg-gray-900/80 px-3 py-2">
-            <p className="text-gray-400">Districts</p>
-            <p className="text-base font-bold">{layers?.summary?.districts || 0}</p>
-          </div>
-          <div className="rounded-lg bg-gray-900/80 px-3 py-2">
-            <p className="text-gray-400">Taluks</p>
-            <p className="text-base font-bold">{layers?.summary?.taluks || 0}</p>
-          </div>
-          <div className="rounded-lg bg-gray-900/80 px-3 py-2">
-            <p className="text-gray-400">Stations</p>
-            <p className="text-base font-bold">{layers?.summary?.stations || 0}</p>
-          </div>
-          <div className="rounded-lg bg-gray-900/80 px-3 py-2">
-            <p className="text-gray-400">Incident Load</p>
-            <p className="text-base font-bold">
-              {(layers?.summary?.incidents || 0).toLocaleString()}
-            </p>
-          </div>
-        </div>
-      </div>
 
-      <div className="absolute top-4 left-[18rem] z-50 rounded-xl border border-gray-700/70 bg-gray-950/80 p-3 shadow-xl backdrop-blur-md">
-        <p className="mb-2 text-xs font-bold tracking-[0.2em] text-white/70">STYLE</p>
-        <div className="flex gap-2">
+
+
+
+
+
+      {/* CONTROLS (Map Style, Demo FIR, Layers) - Positioned at top right */}
+      <div className="absolute top-4 right-4 z-50 w-36 rounded-xl border border-white/10 bg-slate-900/40 p-2 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] backdrop-blur-xl transition-all hover:bg-slate-900/50">
+        <p className="mb-1.5 text-[8px] font-black uppercase tracking-[0.3em] text-white/50">
+          STYLE
+        </p>
+        <div className="mb-2 flex flex-col gap-1">
           {Object.entries(MAP_STYLES).map(([key, style]) => (
             <button
               key={key}
               onClick={() => setMapStyle(key)}
-              className={`rounded-lg px-3 py-1.5 text-xs font-semibold ${
+              className={`rounded px-1.5 py-1 text-[9px] font-semibold transition ${
                 mapStyle === key
                   ? "bg-blue-600 text-white"
                   : "bg-gray-900 text-gray-300 hover:bg-gray-800"
@@ -302,81 +285,119 @@ export default function Map3D({ filters = {}, onDistrictClick }) {
             </button>
           ))}
         </div>
-      </div>
 
-      <div className="absolute top-4 right-4 z-50 w-72 rounded-xl border border-gray-700/70 bg-gray-950/80 p-3 shadow-xl backdrop-blur-md">
-        <p className="mb-3 text-xs font-bold tracking-[0.2em] text-white/70">LIVE DEMO FIR</p>
-        <p className="mb-3 text-xs text-gray-400">
-          Synthetic FIR activity with real Tamil Nadu geography coverage.
+        <div className="mb-2 h-px w-full bg-white/10" />
+
+        <p className="mb-1.5 text-[8px] font-black uppercase tracking-[0.3em] text-white/50">
+          LAYERS
         </p>
-        <select
-          value={demoCategory}
-          onChange={(event) => setDemoCategory(event.target.value)}
-          className="mb-3 w-full rounded-lg border border-gray-700 bg-gray-900 px-3 py-2 text-sm text-white"
-        >
-          {Object.keys(CATEGORY_COLORS).map((category) => (
-            <option key={category} value={category}>
-              {category}
-            </option>
-          ))}
-        </select>
-        <input
-          type="range"
-          min="1"
-          max="20"
-          value={demoCount}
-          onChange={(event) => setDemoCount(event.target.value)}
-          className="mb-1 w-full"
-        />
-        <p className="mb-3 text-xs text-gray-400">{demoCount} synthetic incidents</p>
-        <button
-          onClick={handleDemoEntry}
-          disabled={submittingDemo || loading}
-          className="w-full rounded-lg bg-emerald-600 px-3 py-2 text-sm font-semibold text-white hover:bg-emerald-500 disabled:cursor-not-allowed disabled:opacity-60"
-        >
-          {submittingDemo ? "Injecting FIR..." : "Inject Demo FIR"}
-        </button>
-      </div>
-
-      <div className="absolute right-4 bottom-8 z-50 rounded-xl border border-gray-700/70 bg-gray-950/80 p-3 shadow-xl backdrop-blur-md">
-        <p className="mb-3 text-xs font-bold tracking-[0.2em] text-white/70">LAYERS</p>
-        <div className="grid grid-cols-2 gap-2 text-xs text-white">
+        <div className="mb-2 flex flex-col gap-1 text-xs text-white">
           {[
             ["Districts", showDistricts, setShowDistricts],
             ["Taluk zones", showZones, setShowZones],
             ["Stations", showStations, setShowStations],
             ["Hotspots", showHotspots, setShowHotspots],
           ].map(([label, value, setter]) => (
-            <label key={label} className="flex items-center gap-2 rounded-lg bg-gray-900/80 px-2 py-2">
+            <label key={label} className="flex items-center gap-1.5 rounded bg-gray-900/80 px-1.5 py-1 cursor-pointer transition hover:bg-gray-800">
               <input
                 type="checkbox"
                 checked={value}
                 onChange={(event) => setter(event.target.checked)}
-                className="h-4 w-4"
+                className="h-2.5 w-2.5 accent-blue-500"
               />
-              <span>{label}</span>
+              <span className="text-[9px] font-medium">{label}</span>
             </label>
           ))}
         </div>
+
+        <div className="mb-2 h-px w-full bg-white/10" />
+
+        <p className="mb-1 text-[8px] font-black uppercase tracking-[0.3em] text-white/50">
+          DEMO FIR
+        </p>
+        <div className="mb-2 flex flex-col gap-1.5">
+            <div>
+                <label className="mb-0.5 block text-[8px] font-semibold text-gray-400">Category</label>
+                <select
+                  value={demoCategory}
+                  onChange={(event) => setDemoCategory(event.target.value)}
+                  className="w-full rounded border border-gray-700 bg-gray-900 px-1.5 py-0.5 text-[8.5px] text-white"
+                >
+                  {Object.keys(CATEGORY_COLORS).map((category) => (
+                    <option key={category} value={category}>
+                      {category}
+                    </option>
+                  ))}
+                </select>
+            </div>
+            <div>
+                <label className="mb-0.5 block text-[8px] font-semibold text-gray-400">Cases ({demoCount})</label>
+                <input
+                  type="range"
+                  min="1"
+                  max="20"
+                  value={demoCount}
+                  onChange={(event) => setDemoCount(event.target.value)}
+                  className="w-full accent-blue-500"
+                />
+            </div>
+        </div>
+        <button
+          onClick={handleDemoEntry}
+          disabled={submittingDemo || loading}
+          className="w-full rounded bg-emerald-600 px-1.5 py-1 text-[9px] font-semibold text-white transition hover:bg-emerald-500 disabled:cursor-not-allowed disabled:opacity-60"
+        >
+          {submittingDemo ? "Wait..." : "Inject FIR"}
+        </button>
       </div>
 
-      <div className="absolute bottom-8 left-4 z-50 rounded-xl border border-gray-700/70 bg-gray-950/80 p-3 shadow-xl backdrop-blur-md">
-        <p className="mb-2 text-xs font-bold tracking-[0.2em] text-white/70">LEGEND</p>
-        <div className="mb-3 flex flex-wrap gap-3">
-          {Object.entries(RISK_COLORS).map(([level, color]) => (
-            <div key={level} className="flex items-center gap-2">
-              <div className="h-3.5 w-3.5 rounded-full" style={{ backgroundColor: color }} />
-              <span className="text-xs text-white">{level} risk</span>
-            </div>
-          ))}
+      {/* COMBINED OPS & LEGEND - Positioned at bottom left */}
+      <div className="absolute bottom-4 left-4 z-50 w-fit min-w-[220px] max-w-[280px] rounded-xl border border-white/10 bg-slate-900/40 p-2 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] backdrop-blur-xl transition-all hover:bg-slate-900/50">
+        <div className="mb-1.5 flex items-center justify-between">
+          <p className="text-[8px] font-black uppercase tracking-[0.2em] text-cyan-400/90">
+            3D OPS VIEW
+          </p>
         </div>
-        <div className="flex flex-wrap gap-3">
-          {Object.entries(CATEGORY_COLORS).slice(0, 4).map(([label, color]) => (
-            <div key={label} className="flex items-center gap-2">
-              <div className="h-3.5 w-3.5 rounded-full" style={{ backgroundColor: color }} />
-              <span className="text-xs text-white">{label}</span>
-            </div>
-          ))}
+        <div className="mb-1.5 grid grid-cols-2 gap-1 text-[8.5px] uppercase tracking-wider text-gray-300">
+          <div className="flex items-center justify-between rounded bg-white/5 px-1.5 py-0.5">
+            <span>Dist:</span>
+            <span className="font-bold text-white">{layers?.summary?.districts || 0}</span>
+          </div>
+          <div className="flex items-center justify-between rounded bg-white/5 px-1.5 py-0.5">
+            <span>Zones:</span>
+            <span className="font-bold text-white">{layers?.summary?.taluks || 0}</span>
+          </div>
+          <div className="flex items-center justify-between rounded bg-white/5 px-1.5 py-0.5">
+            <span>Stns:</span>
+            <span className="font-bold text-white">{layers?.summary?.stations || 0}</span>
+          </div>
+          <div className="flex items-center justify-between rounded bg-white/5 px-1.5 py-0.5">
+            <span>Load:</span>
+            <span className="font-bold text-white">{(layers?.summary?.incidents || 0).toLocaleString()}</span>
+          </div>
+        </div>
+
+        <div className="mb-1.5 h-px w-full bg-white/10" />
+
+        <div className="flex flex-col gap-1">
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[8px]">
+            <span className="font-bold uppercase tracking-widest text-white/50">Risk:</span>
+            {Object.entries(RISK_COLORS).map(([level, color]) => (
+              <div key={level} className="flex items-center gap-0.5">
+                <div className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: color }} />
+                <span className="text-white/80">{level}</span>
+              </div>
+            ))}
+          </div>
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[8px]">
+            <span className="font-bold uppercase tracking-widest text-white/50">Crime:</span>
+            {Object.entries(CATEGORY_COLORS).slice(0, 4).map(([label, color]) => (
+              <div key={label} className="flex items-center gap-0.5">
+                <div className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: color }} />
+                <span className="text-white/80">{label}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
