@@ -178,34 +178,34 @@ export default function ScenarioZoneView({
   }
 
   return (
-    <div className="flex flex-1 overflow-hidden bg-gray-950 text-white">
-      <aside className="w-[360px] shrink-0 overflow-y-auto border-r border-white/10 bg-[radial-gradient(circle_at_top,_rgba(15,23,42,0.95),_rgba(2,6,23,1))] p-5">
-        <div className="rounded-[28px] border border-white/10 bg-white/5 p-5 shadow-[0_24px_80px_rgba(0,0,0,0.35)]">
+    <div className="flex flex-1 overflow-hidden bg-black text-white">
+      <aside className="w-[360px] shrink-0 overflow-y-auto border-r border-white/5 bg-black p-5">
+        <div className="rounded-[28px] border border-white/5 bg-white/5 p-5 shadow-[0_24px_80px_rgba(0,0,0,0.45)]">
           <p
-            className="text-[11px] font-semibold uppercase tracking-[0.35em]"
+            className="text-[11px] font-black uppercase tracking-[0.35em]"
             style={{ color: accentColor }}
           >
             Separate Prediction Surface
           </p>
-          <h2 className="mt-3 text-3xl font-black leading-none">{title}</h2>
+          <h2 className="mt-3 text-3xl font-black leading-none uppercase tracking-tighter">{title}</h2>
           {subtitle && (
-            <p className="mt-3 text-sm leading-6 text-slate-300">{subtitle}</p>
+            <p className="mt-3 text-sm leading-6 text-[#999999]">{subtitle}</p>
           )}
         </div>
 
-        <div className="mt-5 rounded-[28px] border border-white/10 bg-slate-900/80 p-5">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.32em] text-slate-400">
+        <div className="mt-5 rounded-[28px] border border-white/5 bg-white/5 p-5">
+          <p className="text-[11px] font-black uppercase tracking-[0.32em] text-[#999999]">
             Scenario Controls
           </p>
           <div className="mt-4 space-y-4">
             <div>
-              <label className="mb-2 block text-xs font-semibold uppercase tracking-wide text-slate-400">
+              <label className="mb-2 block text-[10px] font-black uppercase tracking-widest text-[#999999]">
                 District
               </label>
               <select
                 value={district}
                 onChange={(event) => setDistrict(event.target.value)}
-                className="w-full rounded-2xl border border-slate-700 bg-slate-950 px-3 py-3 text-sm text-white"
+                className="w-full rounded-2xl border border-white/10 bg-black px-3 py-3 text-sm text-white"
               >
                 <option value="">All districts</option>
                 {options.districts.map((item) => (
@@ -218,13 +218,13 @@ export default function ScenarioZoneView({
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="mb-2 block text-xs font-semibold uppercase tracking-wide text-slate-400">
+                <label className="mb-2 block text-[10px] font-black uppercase tracking-widest text-[#999999]">
                   Forecast Year
                 </label>
                 <select
                   value={year}
                   onChange={(event) => setYear(event.target.value)}
-                  className="w-full rounded-2xl border border-slate-700 bg-slate-950 px-3 py-3 text-sm text-white"
+                  className="w-full rounded-2xl border border-white/10 bg-black px-3 py-3 text-sm text-white"
                 >
                   {options.years.map((item) => (
                     <option key={item} value={item}>
@@ -235,13 +235,13 @@ export default function ScenarioZoneView({
               </div>
 
               <div>
-                <label className="mb-2 block text-xs font-semibold uppercase tracking-wide text-slate-400">
+                <label className="mb-2 block text-[10px] font-black uppercase tracking-widest text-[#999999]">
                   Forecast Month
                 </label>
                 <select
                   value={month}
                   onChange={(event) => setMonth(event.target.value)}
-                  className="w-full rounded-2xl border border-slate-700 bg-slate-950 px-3 py-3 text-sm text-white"
+                  className="w-full rounded-2xl border border-white/10 bg-black px-3 py-3 text-sm text-white"
                 >
                   {MONTH_OPTIONS.map((item) => (
                     <option key={item.value} value={item.value}>
@@ -252,7 +252,7 @@ export default function ScenarioZoneView({
               </div>
             </div>
 
-            <label className="flex items-center gap-3 rounded-2xl border border-white/10 bg-black/20 px-3 py-3 text-sm text-slate-200">
+            <label className="flex items-center gap-3 rounded-2xl border border-white/5 bg-white/5 px-3 py-3 text-sm font-bold text-slate-200">
               <input
                 type="checkbox"
                 checked={showDerivedPoints}
@@ -260,7 +260,7 @@ export default function ScenarioZoneView({
                 className="h-4 w-4"
                 style={{ accentColor }}
               />
-              Show dense derived incident markers
+              Show derived incident markers
             </label>
           </div>
         </div>
@@ -269,9 +269,9 @@ export default function ScenarioZoneView({
           {headlineCards.map((card) => (
             <div
               key={card.label}
-              className="rounded-[24px] border border-white/10 bg-white/5 p-4"
+              className="rounded-[24px] border border-white/5 bg-white/5 p-4"
             >
-              <p className="text-[11px] uppercase tracking-[0.24em] text-slate-400">
+              <p className="text-[10px] font-black uppercase tracking-[0.24em] text-[#999999]">
                 {card.label}
               </p>
               <p className="mt-2 text-xl font-black text-white">{card.value}</p>
@@ -279,17 +279,17 @@ export default function ScenarioZoneView({
           ))}
         </div>
 
-        <div className="mt-5 rounded-[28px] border border-white/10 bg-slate-900/85 p-5">
+        <div className="mt-5 rounded-[28px] border border-white/5 bg-white/5 p-5">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.32em] text-slate-400">
+              <p className="text-[10px] font-black uppercase tracking-[0.32em] text-[#999999]">
                 Forecast Window
               </p>
-              <p className="mt-2 text-lg font-bold text-white">{forecastLabel}</p>
+              <p className="mt-2 text-lg font-black text-white uppercase tracking-tight">{forecastLabel}</p>
             </div>
             <div
-              className="rounded-full px-3 py-1 text-xs font-bold uppercase tracking-[0.22em]"
-              style={{ backgroundColor: `${accentColor}22`, color: accentColor }}
+              className="rounded px-2 py-1 text-[10px] font-black uppercase tracking-[0.22em]"
+              style={{ backgroundColor: `${accentColor}44`, color: "white" }}
             >
               Top {limit}
             </div>
@@ -300,14 +300,14 @@ export default function ScenarioZoneView({
               visibleZones.map((zone) => (
                 <div
                   key={zone.taluk_id}
-                  className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3"
+                  className="rounded-2xl border border-white/5 bg-black px-4 py-3"
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div>
-                      <p className="text-sm font-semibold text-white">
+                      <p className="text-sm font-black text-white uppercase tracking-tight">
                         #{zone.rank} {zone.taluk}
                       </p>
-                      <p className="mt-1 text-xs uppercase tracking-[0.2em] text-slate-400">
+                      <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.2em] text-[#999999]">
                         {zone.district}
                       </p>
                     </div>
@@ -315,21 +315,20 @@ export default function ScenarioZoneView({
                       <p className="text-lg font-black" style={{ color: accentColor }}>
                         {zone.predicted_count}
                       </p>
-                      <p className="text-[11px] uppercase tracking-[0.2em] text-slate-400">
+                      <p className="text-[9px] font-black uppercase tracking-[0.2em] text-[#999999]">
                         predicted
                       </p>
                     </div>
                   </div>
-                  <div className="mt-3 flex items-center justify-between text-xs text-slate-300">
+                  <div className="mt-3 flex items-center justify-between text-[10px] font-bold uppercase tracking-wide text-[#999999]">
                     <span>Index {zone.prediction_index}</span>
-                    <span>{zone.predicted_top_category}</span>
                     <span>{zone.risk_level}</span>
                   </div>
                 </div>
               ))
             ) : (
-              <p className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-slate-300">
-                No zones matched this scenario and filter window.
+              <p className="rounded-2xl border border-white/10 bg-black px-4 py-3 text-sm text-slate-300">
+                No matching zones.
               </p>
             )}
           </div>

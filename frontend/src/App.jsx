@@ -113,8 +113,8 @@ function App() {
             <ScenarioZoneView
               scenario="women_safety"
               title="Women Safety Prediction"
-              accentColor="#EC4899"
-              pointColor="#F9A8D4"
+              accentColor="#af1b1b"
+              pointColor="#999999"
               limit={50}
             />
           )}
@@ -122,8 +122,8 @@ function App() {
             <ScenarioZoneView
               scenario="accident"
               title="Accident Zone Prediction"
-              accentColor="#F97316"
-              pointColor="#FDBA74"
+              accentColor="#af1b1b"
+              pointColor="#999999"
               limit={50}
             />
           )}

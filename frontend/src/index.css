@@ -1,6 +1,16 @@
 @import "tailwindcss";
 
 :root, body, #root {
+  --bg-primary: #000000;
+  --bg-secondary: #0a0a0a;
+  --bg-tertiary: #1a1a1a;
+  --text-primary: #f2f0e9;
+  --text-secondary: #999999;
+  --accent: #af1b1b;
+  --accent-light: #df2c2c;
+  
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
   /* Custom black cursor with white outline for visibility */
   cursor: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSJibGFjayIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxIiBkPSJNNS41IDJ2MThsNS01IDQgNiAyLTEtNC02IDYgMHoiLz48L3N2Zz4=") 0 0, auto;
 }
@@ -12,5 +22,5 @@ a, button, [role="button"], select, .cursor-pointer,
 }
 
 input, textarea, select {
-  caret-color: #fbbf24;
+  caret-color: var(--accent);
 }

@@ -68,24 +68,24 @@ export default function Sidebar({ onFilter, activeView, onViewChange }) {
     JSON.stringify(pendingFilters) !== JSON.stringify(appliedFilters);
 
   return (
-    <aside className="flex h-full w-[280px] flex-col border-r border-gray-800 bg-gray-950 text-white">
-      <div className="border-b border-blue-500/50 bg-[#0b1423] px-5 py-4">
+    <aside className="flex h-full w-[280px] flex-col border-r border-white/5 bg-black text-white">
+      <div className="border-b border-white/5 bg-black px-5 py-4">
         <div className="leading-[0.92]">
           <p className="text-[2.15rem] font-black uppercase tracking-[0.04em] text-white">
             Crime
           </p>
-          <p className="mt-1 text-[2.15rem] font-black uppercase tracking-[0.04em] text-amber-400">
+          <p className="mt-1 text-[2.15rem] font-black uppercase tracking-[0.04em] text-[#af1b1b]">
             Radar
           </p>
         </div>
-        <p className="mt-3 max-w-[15rem] text-[0.72rem] italic leading-5 text-slate-400">
+        <p className="mt-3 max-w-[15rem] text-[0.72rem] italic leading-5 text-[#999999]">
           Predictive Crime Hotspot Mapping for Smarter Policing
         </p>
       </div>
 
       <div className="flex-1 overflow-y-auto px-4 py-4 space-y-6">
         <div>
-          <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.28em] text-gray-500">
+          <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.28em] text-[#999999]">
             Views
           </p>
           <div className="space-y-2">
@@ -97,31 +97,31 @@ export default function Sidebar({ onFilter, activeView, onViewChange }) {
                   onClick={() => onViewChange(item.id)}
                   className={`w-full rounded-xl border px-4 py-3 text-left transition ${
                     active
-                      ? "border-blue-500 bg-blue-600/15"
-                      : "border-gray-800 bg-gray-900/60 hover:border-gray-700 hover:bg-gray-900"
+                      ? "border-[#af1b1b] bg-[#af1b1b]/15"
+                      : "border-white/5 bg-white/5 hover:border-white/10 hover:bg-white/10"
                   }`}
                 >
                   <p className="text-sm font-semibold text-white">{item.label}</p>
-                  <p className="mt-1 text-xs text-gray-400">{item.description}</p>
+                  <p className="mt-1 text-xs text-[#999999]">{item.description}</p>
                 </button>
               );
             })}
           </div>
         </div>
 
-        <div className="rounded-2xl border border-gray-800 bg-gray-900/70 p-4">
+        <div className="rounded-2xl border border-white/5 bg-white/5 p-4">
           <div className="mb-4 flex items-center justify-between">
             <div>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-gray-500">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#999999]">
                 Map Filters
               </p>
-              <p className="mt-1 text-xs text-gray-400">
+              <p className="mt-1 text-xs text-[#999999]">
                 These filters apply to the operations map and 3D view.
               </p>
             </div>
             <button
               onClick={resetFilters}
-              className="rounded-lg border border-gray-700 px-3 py-1 text-xs font-semibold text-gray-300 transition hover:border-gray-600 hover:text-white"
+              className="rounded-lg border border-white/10 px-3 py-1 text-xs font-semibold text-[#999999] transition hover:border-white/20 hover:text-white"
             >
               Reset
             </button>
@@ -129,13 +129,13 @@ export default function Sidebar({ onFilter, activeView, onViewChange }) {
 
           <div className="space-y-4">
             <div>
-              <label className="mb-2 block text-xs font-semibold uppercase tracking-wide text-gray-400">
+              <label className="mb-2 block text-xs font-semibold uppercase tracking-wide text-[#999999]">
                 Year
               </label>
               <select
                 value={pendingFilters.year}
                 onChange={(event) => setPendingValue("year", event.target.value)}
-                className="w-full rounded-xl border border-gray-700 bg-gray-950 px-3 py-2.5 text-sm text-white"
+                className="w-full rounded-xl border border-white/10 bg-black px-3 py-2.5 text-sm text-white"
               >
                 <option value="">All years</option>
                 {options.years.map((year) => (
@@ -147,13 +147,13 @@ export default function Sidebar({ onFilter, activeView, onViewChange }) {
             </div>
 
             <div>
-              <label className="mb-2 block text-xs font-semibold uppercase tracking-wide text-gray-400">
+              <label className="mb-2 block text-xs font-semibold uppercase tracking-wide text-[#999999]">
                 District
               </label>
               <select
                 value={pendingFilters.district}
                 onChange={(event) => setPendingValue("district", event.target.value)}
-                className="w-full rounded-xl border border-gray-700 bg-gray-950 px-3 py-2.5 text-sm text-white"
+                className="w-full rounded-xl border border-white/10 bg-black px-3 py-2.5 text-sm text-white"
               >
                 <option value="">All districts</option>
                 {options.districts.map((district) => (
@@ -165,13 +165,13 @@ export default function Sidebar({ onFilter, activeView, onViewChange }) {
             </div>
 
             <div>
-              <label className="mb-2 block text-xs font-semibold uppercase tracking-wide text-gray-400">
+              <label className="mb-2 block text-xs font-semibold uppercase tracking-wide text-[#999999]">
                 Crime Category
               </label>
               <select
                 value={pendingFilters.category}
                 onChange={(event) => setPendingValue("category", event.target.value)}
-                className="w-full rounded-xl border border-gray-700 bg-gray-950 px-3 py-2.5 text-sm text-white"
+                className="w-full rounded-xl border border-white/10 bg-black px-3 py-2.5 text-sm text-white"
               >
                 <option value="">All categories</option>
                 {options.categories.map((category) => (
@@ -183,18 +183,17 @@ export default function Sidebar({ onFilter, activeView, onViewChange }) {
             </div>
           </div>
 
-          {/* Apply Filters button */}
           <button
             onClick={applyFilters}
             className={`mt-4 w-full rounded-xl px-4 py-2.5 text-sm font-semibold transition ${
               hasPendingChanges
-                ? "bg-blue-600 text-white hover:bg-blue-500 shadow-[0_0_12px_rgba(59,130,246,0.4)]"
-                : "bg-gray-800 text-gray-500 cursor-default"
+                ? "bg-[#af1b1b] text-white hover:bg-[#df2c2c] shadow-[0_0_12px_rgba(175,27,27,0.4)]"
+                : "bg-white/10 text-[#999999] cursor-default"
             }`}
           >
             <span className="flex items-center justify-center gap-2">
               {hasPendingChanges && (
-                <span className="h-2 w-2 animate-pulse rounded-full bg-blue-300" />
+                <span className="h-2 w-2 animate-pulse rounded-full bg-red-300" />
               )}
               Apply Filters
             </span>
