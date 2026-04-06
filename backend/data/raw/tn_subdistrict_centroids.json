@@ -1,0 +1,3050 @@
+﻿{
+    "displayFieldName":  "stname",
+    "fieldAliases":  {
+                         "stname":  "stname",
+                         "dtname":  "dtname",
+                         "sdtname":  "sdtname",
+                         "dtcode11":  "dtcode11",
+                         "sdtcode11":  "sdtcode11",
+                         "subdt_lgd":  "subdt_lgd"
+                     },
+    "fields":  [
+                   {
+                       "name":  "stname",
+                       "type":  "esriFieldTypeString",
+                       "alias":  "stname",
+                       "length":  30
+                   },
+                   {
+                       "name":  "dtname",
+                       "type":  "esriFieldTypeString",
+                       "alias":  "dtname",
+                       "length":  30
+                   },
+                   {
+                       "name":  "sdtname",
+                       "type":  "esriFieldTypeString",
+                       "alias":  "sdtname",
+                       "length":  30
+                   },
+                   {
+                       "name":  "dtcode11",
+                       "type":  "esriFieldTypeString",
+                       "alias":  "dtcode11",
+                       "length":  3
+                   },
+                   {
+                       "name":  "sdtcode11",
+                       "type":  "esriFieldTypeString",
+                       "alias":  "sdtcode11",
+                       "length":  5
+                   },
+                   {
+                       "name":  "subdt_lgd",
+                       "type":  "esriFieldTypeInteger",
+                       "alias":  "subdt_lgd"
+                   }
+               ],
+    "features":  [
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Tenkasi",
+                                            "sdtname":  "Alangulam",
+                                            "dtcode11":  "790",
+                                            "sdtcode11":  "05875",
+                                            "subdt_lgd":  5875
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Pudukkottai",
+                                            "sdtname":  "Alangudi",
+                                            "dtcode11":  "621",
+                                            "sdtcode11":  "05824",
+                                            "subdt_lgd":  5824
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Tirunelveli",
+                                            "sdtname":  "Ambasamudram",
+                                            "dtcode11":  "628",
+                                            "sdtcode11":  "05878",
+                                            "subdt_lgd":  5878
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Chennai",
+                                            "sdtname":  "Ambattur",
+                                            "dtcode11":  "603",
+                                            "sdtcode11":  "05700",
+                                            "subdt_lgd":  5700
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Chennai",
+                                            "sdtname":  "Aminjikarai",
+                                            "dtcode11":  "603",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  7161
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Vellore",
+                                            "sdtname":  "Anaicut",
+                                            "dtcode11":  "605",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  5964
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Coimbatore",
+                                            "sdtname":  "Anaimalai",
+                                            "dtcode11":  "632",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  6643
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Theni",
+                                            "sdtname":  "Andipatti",
+                                            "dtcode11":  "624",
+                                            "sdtcode11":  "05846",
+                                            "subdt_lgd":  5846
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Coimbatore",
+                                            "sdtname":  "annur",
+                                            "dtcode11":  "632",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  5955
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Erode",
+                                            "sdtname":  "Anthiyur",
+                                            "dtcode11":  "610",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  5969
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Pudukkottai",
+                                            "sdtname":  "Aranthangi",
+                                            "dtcode11":  "621",
+                                            "sdtcode11":  "05826",
+                                            "subdt_lgd":  5826
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Virudhunagar",
+                                            "sdtname":  "Aruppukkottai",
+                                            "dtcode11":  "625",
+                                            "sdtcode11":  "05853",
+                                            "subdt_lgd":  5853
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Dindigul",
+                                            "sdtname":  "Athoor",
+                                            "dtcode11":  "612",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  5994
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Salem",
+                                            "sdtname":  "Attur",
+                                            "dtcode11":  "608",
+                                            "sdtcode11":  "05743",
+                                            "subdt_lgd":  5743
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Pudukkottai",
+                                            "sdtname":  "Avudayarkoil",
+                                            "dtcode11":  "621",
+                                            "sdtcode11":  "05828",
+                                            "subdt_lgd":  5828
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Coimbatore",
+                                            "sdtname":  "Avanashi",
+                                            "dtcode11":  "632",
+                                            "sdtcode11":  "05903",
+                                            "subdt_lgd":  5903
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Chennai",
+                                            "sdtname":  "Ayanavaram",
+                                            "dtcode11":  "603",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  7163
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Erode",
+                                            "sdtname":  "Bhavani",
+                                            "dtcode11":  "610",
+                                            "sdtcode11":  "05750",
+                                            "subdt_lgd":  5750
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Cuddalore",
+                                            "sdtname":  "Bhuvanagiri",
+                                            "dtcode11":  "617",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  6645
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Theni",
+                                            "sdtname":  "Bodinayakanur",
+                                            "dtcode11":  "624",
+                                            "sdtcode11":  "05842",
+                                            "subdt_lgd":  5842
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Chengalpattu",
+                                            "sdtname":  "Chengalpattu",
+                                            "dtcode11":  "787",
+                                            "sdtcode11":  "05706",
+                                            "subdt_lgd":  5706
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Tirunelveli",
+                                            "sdtname":  "Cheranmahadevi",
+                                            "dtcode11":  "628",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  6648
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Chengalpattu",
+                                            "sdtname":  "Cheyyur",
+                                            "dtcode11":  "787",
+                                            "sdtcode11":  "05711",
+                                            "subdt_lgd":  5711
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Cuddalore",
+                                            "sdtname":  "Chidambaram",
+                                            "dtcode11":  "617",
+                                            "sdtcode11":  "05791",
+                                            "subdt_lgd":  5791
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Kallakurichchi",
+                                            "sdtname":  "Chinnasalem",
+                                            "dtcode11":  "789",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  5977
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Coimbatore",
+                                            "sdtname":  "Coimbatore North",
+                                            "dtcode11":  "632",
+                                            "sdtcode11":  "05897",
+                                            "subdt_lgd":  5897
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Coimbatore",
+                                            "sdtname":  "Coimbatore South",
+                                            "dtcode11":  "632",
+                                            "sdtcode11":  "05898",
+                                            "subdt_lgd":  5898
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Cuddalore",
+                                            "sdtname":  "Cuddalore",
+                                            "dtcode11":  "617",
+                                            "sdtcode11":  "05789",
+                                            "subdt_lgd":  5789
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Krishnagiri",
+                                            "sdtname":  "Denkanikottai",
+                                            "dtcode11":  "631",
+                                            "sdtcode11":  "05892",
+                                            "subdt_lgd":  5892
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Sivaganga",
+                                            "sdtname":  "Devakottai",
+                                            "dtcode11":  "622",
+                                            "sdtcode11":  "05831",
+                                            "subdt_lgd":  5831
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Dharmapuri",
+                                            "sdtname":  "Dharmapuri",
+                                            "dtcode11":  "630",
+                                            "sdtcode11":  "05888",
+                                            "subdt_lgd":  5888
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Dindigul",
+                                            "sdtname":  "DINDIGUL EAST",
+                                            "dtcode11":  "612",
+                                            "sdtcode11":  "05764",
+                                            "subdt_lgd":  0
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Dindigul",
+                                            "sdtname":  "DindigulWest",
+                                            "dtcode11":  "612",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  5979
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Chennai",
+                                            "sdtname":  "Chennai",
+                                            "dtcode11":  "603",
+                                            "sdtcode11":  "05925",
+                                            "subdt_lgd":  0
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Erode",
+                                            "sdtname":  "Erode",
+                                            "dtcode11":  "610",
+                                            "sdtcode11":  "05753",
+                                            "subdt_lgd":  5753
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Thoothukkudi",
+                                            "sdtname":  "Ettayapuram",
+                                            "dtcode11":  "627",
+                                            "sdtcode11":  "05863",
+                                            "subdt_lgd":  5863
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Pudukkottai",
+                                            "sdtname":  "Gandarvakkottai",
+                                            "dtcode11":  "621",
+                                            "sdtcode11":  "05820",
+                                            "subdt_lgd":  5820
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Salem",
+                                            "sdtname":  "Gangavalli",
+                                            "dtcode11":  "608",
+                                            "sdtcode11":  "05744",
+                                            "subdt_lgd":  5744
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Viluppuram",
+                                            "sdtname":  "Gingee",
+                                            "dtcode11":  "607",
+                                            "sdtcode11":  "05728",
+                                            "subdt_lgd":  5728
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Erode",
+                                            "sdtname":  "Gobichettipalayam",
+                                            "dtcode11":  "610",
+                                            "sdtcode11":  "05751",
+                                            "subdt_lgd":  5751
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Vellore",
+                                            "sdtname":  "Gudiyatham",
+                                            "dtcode11":  "605",
+                                            "sdtcode11":  "05712",
+                                            "subdt_lgd":  5712
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Chennai",
+                                            "sdtname":  "Guindy",
+                                            "dtcode11":  "603",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  7169
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Dharmapuri",
+                                            "sdtname":  "Harur",
+                                            "dtcode11":  "630",
+                                            "sdtcode11":  "05886",
+                                            "subdt_lgd":  5886
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Krishnagiri",
+                                            "sdtname":  "Hosur",
+                                            "dtcode11":  "631",
+                                            "sdtcode11":  "05890",
+                                            "subdt_lgd":  5890
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Salem",
+                                            "sdtname":  "Edappadi",
+                                            "dtcode11":  "608",
+                                            "sdtcode11":  "05738",
+                                            "subdt_lgd":  5738
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Sivaganga",
+                                            "sdtname":  "Ilayangudi",
+                                            "dtcode11":  "622",
+                                            "sdtcode11":  "05834",
+                                            "subdt_lgd":  5834
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Pudukkottai",
+                                            "sdtname":  "Iluppur",
+                                            "dtcode11":  "621",
+                                            "sdtcode11":  "05818",
+                                            "subdt_lgd":  5818
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Salem",
+                                            "sdtname":  "Kadayampatti",
+                                            "dtcode11":  "608",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  6619
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Tenkasi",
+                                            "sdtname":  "Kadayanallur",
+                                            "dtcode11":  "790",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  6639
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Sivaganga",
+                                            "sdtname":  "Kalaiyarkoil",
+                                            "dtcode11":  "622",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  6644
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Kallakurichchi",
+                                            "sdtname":  "Kallakkurichi",
+                                            "dtcode11":  "789",
+                                            "sdtcode11":  "05734",
+                                            "subdt_lgd":  5734
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Madurai",
+                                            "sdtname":  "Kalligudi",
+                                            "dtcode11":  "623",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  6615
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Viluppuram",
+                                            "sdtname":  "Kandachipuram",
+                                            "dtcode11":  "607",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  6651
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Sivaganga",
+                                            "sdtname":  "Karaikkudi",
+                                            "dtcode11":  "622",
+                                            "sdtcode11":  "05830",
+                                            "subdt_lgd":  5830
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Pudukkottai",
+                                            "sdtname":  "Karambakudi",
+                                            "dtcode11":  "621",
+                                            "sdtcode11":  "05825",
+                                            "subdt_lgd":  5825
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Dharmapuri",
+                                            "sdtname":  "KARIMANGALAM",
+                                            "dtcode11":  "630",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  6622
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Virudhunagar",
+                                            "sdtname":  "Kariapatti",
+                                            "dtcode11":  "625",
+                                            "sdtcode11":  "05851",
+                                            "subdt_lgd":  5851
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Vellore",
+                                            "sdtname":  "Katpadi",
+                                            "dtcode11":  "605",
+                                            "sdtcode11":  "05713",
+                                            "subdt_lgd":  5713
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Cuddalore",
+                                            "sdtname":  "Kattumannarkoil",
+                                            "dtcode11":  "617",
+                                            "sdtcode11":  "05792",
+                                            "subdt_lgd":  5792
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Thoothukkudi",
+                                            "sdtname":  "Kayathar",
+                                            "dtcode11":  "627",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  6628
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Coimbatore",
+                                            "sdtname":  "KINATHUKADAVU",
+                                            "dtcode11":  "632",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  5956
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Dindigul",
+                                            "sdtname":  "Kodaikanal",
+                                            "dtcode11":  "612",
+                                            "sdtcode11":  "05766",
+                                            "subdt_lgd":  5766
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Erode",
+                                            "sdtname":  "Kodumudi",
+                                            "dtcode11":  "610",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  6637
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Tiruchirappalli",
+                                            "sdtname":  "KOLLI HILLS",
+                                            "dtcode11":  "614",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  6625
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Thoothukkudi",
+                                            "sdtname":  "Kovilpatti",
+                                            "dtcode11":  "627",
+                                            "sdtcode11":  "05862",
+                                            "subdt_lgd":  5862
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Krishnagiri",
+                                            "sdtname":  "Krishnagiri",
+                                            "dtcode11":  "631",
+                                            "sdtcode11":  "05891",
+                                            "subdt_lgd":  5891
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Pudukkottai",
+                                            "sdtname":  "Kulathur",
+                                            "dtcode11":  "621",
+                                            "sdtcode11":  "05819",
+                                            "subdt_lgd":  5819
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Cuddalore",
+                                            "sdtname":  "Kurinjipadi",
+                                            "dtcode11":  "617",
+                                            "sdtcode11":  "05790",
+                                            "subdt_lgd":  5790
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Chennai",
+                                            "sdtname":  "Mathavaram",
+                                            "dtcode11":  "603",
+                                            "sdtcode11":  "05701",
+                                            "subdt_lgd":  5701
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Coimbatore",
+                                            "sdtname":  "Madukkari",
+                                            "dtcode11":  "632",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  5986
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Madurai",
+                                            "sdtname":  "MADURAI EAST",
+                                            "dtcode11":  "623",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  5960
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Madurai",
+                                            "sdtname":  "Madurai North",
+                                            "dtcode11":  "623",
+                                            "sdtcode11":  "05836",
+                                            "subdt_lgd":  5836
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Madurai",
+                                            "sdtname":  "Madurai South",
+                                            "dtcode11":  "623",
+                                            "sdtcode11":  "05841",
+                                            "subdt_lgd":  5841
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Madurai",
+                                            "sdtname":  "MADURAI WEST",
+                                            "dtcode11":  "623",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  5961
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Chengalpattu",
+                                            "sdtname":  "Maduranthakam",
+                                            "dtcode11":  "787",
+                                            "sdtcode11":  "05710",
+                                            "subdt_lgd":  5710
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Chennai",
+                                            "sdtname":  "Maduravoyal",
+                                            "dtcode11":  "603",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  5981
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Chennai",
+                                            "sdtname":  "Mambalam",
+                                            "dtcode11":  "603",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  7165
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Pudukkottai",
+                                            "sdtname":  "Manamelkudi",
+                                            "dtcode11":  "621",
+                                            "sdtcode11":  "05827",
+                                            "subdt_lgd":  5827
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Sivaganga",
+                                            "sdtname":  "Manamadurai",
+                                            "dtcode11":  "622",
+                                            "sdtcode11":  "05833",
+                                            "subdt_lgd":  5833
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Tirunelveli",
+                                            "sdtname":  "Manur",
+                                            "dtcode11":  "628",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  6647
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Viluppuram",
+                                            "sdtname":  "MARAKANAM",
+                                            "dtcode11":  "607",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  6650
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Viluppuram",
+                                            "sdtname":  "Melmalaiyanur",
+                                            "dtcode11":  "607",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  6652
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Madurai",
+                                            "sdtname":  "Melur",
+                                            "dtcode11":  "623",
+                                            "sdtcode11":  "05835",
+                                            "subdt_lgd":  5835
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Coimbatore",
+                                            "sdtname":  "Mettupalayam",
+                                            "dtcode11":  "632",
+                                            "sdtcode11":  "05895",
+                                            "subdt_lgd":  5895
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Salem",
+                                            "sdtname":  "Mettur",
+                                            "dtcode11":  "608",
+                                            "sdtcode11":  "05736",
+                                            "subdt_lgd":  5736
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Erode",
+                                            "sdtname":  "Modakkurichi",
+                                            "dtcode11":  "610",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  6636
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Chennai",
+                                            "sdtname":  "Mylapore",
+                                            "dtcode11":  "603",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  7170
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Dharmapuri",
+                                            "sdtname":  "Nallampalli",
+                                            "dtcode11":  "630",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  6623
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Erode",
+                                            "sdtname":  "Nambiyur",
+                                            "dtcode11":  "610",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  6638
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Tirunelveli",
+                                            "sdtname":  "Nanguneri",
+                                            "dtcode11":  "628",
+                                            "sdtcode11":  "05879",
+                                            "subdt_lgd":  5879
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Dindigul",
+                                            "sdtname":  "Natham",
+                                            "dtcode11":  "612",
+                                            "sdtcode11":  "05763",
+                                            "subdt_lgd":  5763
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Dindigul",
+                                            "sdtname":  "Nilakkottai",
+                                            "dtcode11":  "612",
+                                            "sdtcode11":  "05767",
+                                            "subdt_lgd":  5767
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Dindigul",
+                                            "sdtname":  "Oddanchatram",
+                                            "dtcode11":  "612",
+                                            "sdtcode11":  "05761",
+                                            "subdt_lgd":  5761
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Salem",
+                                            "sdtname":  "Omalur",
+                                            "dtcode11":  "608",
+                                            "sdtcode11":  "05737",
+                                            "subdt_lgd":  5737
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Thoothukkudi",
+                                            "sdtname":  "Ottapidaram",
+                                            "dtcode11":  "627",
+                                            "sdtcode11":  "05865",
+                                            "subdt_lgd":  5865
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Dharmapuri",
+                                            "sdtname":  "Palakkodu",
+                                            "dtcode11":  "630",
+                                            "sdtcode11":  "05885",
+                                            "subdt_lgd":  5885
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Dindigul",
+                                            "sdtname":  "Palani",
+                                            "dtcode11":  "612",
+                                            "sdtcode11":  "05760",
+                                            "subdt_lgd":  5760
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Tirunelveli",
+                                            "sdtname":  "Palayamkottai",
+                                            "dtcode11":  "628",
+                                            "sdtcode11":  "05877",
+                                            "subdt_lgd":  5877
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Chengalpattu",
+                                            "sdtname":  "Pallavaram",
+                                            "dtcode11":  "787",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  6629
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Cuddalore",
+                                            "sdtname":  "Panruti",
+                                            "dtcode11":  "617",
+                                            "sdtcode11":  "05788",
+                                            "subdt_lgd":  5788
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Dharmapuri",
+                                            "sdtname":  "Pappireddipatti",
+                                            "dtcode11":  "630",
+                                            "sdtcode11":  "05887",
+                                            "subdt_lgd":  5887
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Salem",
+                                            "sdtname":  "Pethanaickanpalayam",
+                                            "dtcode11":  "608",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  6618
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Dharmapuri",
+                                            "sdtname":  "Pennagaram",
+                                            "dtcode11":  "630",
+                                            "sdtcode11":  "05889",
+                                            "subdt_lgd":  5889
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Madurai",
+                                            "sdtname":  "Peraiyur",
+                                            "dtcode11":  "623",
+                                            "sdtcode11":  "05839",
+                                            "subdt_lgd":  5839
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Chennai",
+                                            "sdtname":  "Perambur",
+                                            "dtcode11":  "603",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  7166
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Theni",
+                                            "sdtname":  "Periyakulam",
+                                            "dtcode11":  "624",
+                                            "sdtcode11":  "05843",
+                                            "subdt_lgd":  5843
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Vellore",
+                                            "sdtname":  "Pernambut",
+                                            "dtcode11":  "605",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  6663
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Erode",
+                                            "sdtname":  "Perundurai",
+                                            "dtcode11":  "610",
+                                            "sdtcode11":  "05752",
+                                            "subdt_lgd":  5752
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Krishnagiri",
+                                            "sdtname":  "Pochampalli",
+                                            "dtcode11":  "631",
+                                            "sdtcode11":  "05893",
+                                            "subdt_lgd":  5893
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Coimbatore",
+                                            "sdtname":  "Pollachi",
+                                            "dtcode11":  "632",
+                                            "sdtcode11":  "05899",
+                                            "subdt_lgd":  5899
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Pudukkottai",
+                                            "sdtname":  "Ponnamaravathi",
+                                            "dtcode11":  "621",
+                                            "sdtcode11":  "05823",
+                                            "subdt_lgd":  5823
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Pudukkottai",
+                                            "sdtname":  "Pudukkottai",
+                                            "dtcode11":  "621",
+                                            "sdtcode11":  "05821",
+                                            "subdt_lgd":  5821
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Chennai",
+                                            "sdtname":  "Purasawalkam",
+                                            "dtcode11":  "603",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  7167
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Tirunelveli",
+                                            "sdtname":  "Radhapuram",
+                                            "dtcode11":  "628",
+                                            "sdtcode11":  "05880",
+                                            "subdt_lgd":  5880
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Virudhunagar",
+                                            "sdtname":  "Rajapalayam",
+                                            "dtcode11":  "625",
+                                            "sdtcode11":  "05847",
+                                            "subdt_lgd":  5847
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Salem",
+                                            "sdtname":  "Salem",
+                                            "dtcode11":  "608",
+                                            "sdtcode11":  "05740",
+                                            "subdt_lgd":  5740
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Salem",
+                                            "sdtname":  "Salem South",
+                                            "dtcode11":  "608",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  5970
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Salem",
+                                            "sdtname":  "Salem West",
+                                            "dtcode11":  "608",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  5971
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Tenkasi",
+                                            "sdtname":  "Sankarankoil",
+                                            "dtcode11":  "790",
+                                            "sdtcode11":  "05871",
+                                            "subdt_lgd":  5871
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Kallakurichchi",
+                                            "sdtname":  "Sankarapuram",
+                                            "dtcode11":  "789",
+                                            "sdtcode11":  "05733",
+                                            "subdt_lgd":  5733
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Salem",
+                                            "sdtname":  "Sankari",
+                                            "dtcode11":  "608",
+                                            "sdtcode11":  "05739",
+                                            "subdt_lgd":  5739
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Thoothukkudi",
+                                            "sdtname":  "Sathankulam",
+                                            "dtcode11":  "627",
+                                            "sdtcode11":  "05869",
+                                            "subdt_lgd":  5869
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Virudhunagar",
+                                            "sdtname":  "Sattur",
+                                            "dtcode11":  "625",
+                                            "sdtcode11":  "05854",
+                                            "subdt_lgd":  5854
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Erode",
+                                            "sdtname":  "Sathyamangalam",
+                                            "dtcode11":  "610",
+                                            "sdtcode11":  "05749",
+                                            "subdt_lgd":  5749
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Tenkasi",
+                                            "sdtname":  "Shenkottai",
+                                            "dtcode11":  "790",
+                                            "sdtcode11":  "05874",
+                                            "subdt_lgd":  5874
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Krishnagiri",
+                                            "sdtname":  "Shoolagiri",
+                                            "dtcode11":  "631",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  6641
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Sivaganga",
+                                            "sdtname":  "Singampunari",
+                                            "dtcode11":  "622",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  5995
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Virudhunagar",
+                                            "sdtname":  "Srivilliputhur",
+                                            "dtcode11":  "625",
+                                            "sdtcode11":  "05848",
+                                            "subdt_lgd":  5848
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Sivaganga",
+                                            "sdtname":  "Sivaganga",
+                                            "dtcode11":  "622",
+                                            "sdtcode11":  "05832",
+                                            "subdt_lgd":  5832
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Tenkasi",
+                                            "sdtname":  "Sivagiri",
+                                            "dtcode11":  "790",
+                                            "sdtcode11":  "05870",
+                                            "subdt_lgd":  5870
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Virudhunagar",
+                                            "sdtname":  "Sivakasi",
+                                            "dtcode11":  "625",
+                                            "sdtcode11":  "05849",
+                                            "subdt_lgd":  5849
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Cuddalore",
+                                            "sdtname":  "Srimushnam",
+                                            "dtcode11":  "617",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  6646
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Thoothukkudi",
+                                            "sdtname":  "Srivaikuntam",
+                                            "dtcode11":  "627",
+                                            "sdtcode11":  "05867",
+                                            "subdt_lgd":  5867
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Coimbatore",
+                                            "sdtname":  "Sulur",
+                                            "dtcode11":  "632",
+                                            "sdtcode11":  "05896",
+                                            "subdt_lgd":  5896
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Chengalpattu",
+                                            "sdtname":  "Tambaram",
+                                            "dtcode11":  "787",
+                                            "sdtcode11":  "05703",
+                                            "subdt_lgd":  5703
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Theni",
+                                            "sdtname":  "Theni",
+                                            "dtcode11":  "624",
+                                            "sdtcode11":  "05844",
+                                            "subdt_lgd":  5844
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Tenkasi",
+                                            "sdtname":  "Tenkasi",
+                                            "dtcode11":  "790",
+                                            "sdtcode11":  "05873",
+                                            "subdt_lgd":  5873
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Erode",
+                                            "sdtname":  "Thalavadi",
+                                            "dtcode11":  "610",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  6539
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Virudhunagar",
+                                            "sdtname":  "Tiruchuli",
+                                            "dtcode11":  "625",
+                                            "sdtcode11":  "05852",
+                                            "subdt_lgd":  5852
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Chengalpattu",
+                                            "sdtname":  "Tiruporur",
+                                            "dtcode11":  "787",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  5958
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Viluppuram",
+                                            "sdtname":  "Tindivanam",
+                                            "dtcode11":  "607",
+                                            "sdtcode11":  "05729",
+                                            "subdt_lgd":  5729
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Thoothukkudi",
+                                            "sdtname":  "Tiruchendur",
+                                            "dtcode11":  "627",
+                                            "sdtcode11":  "05868",
+                                            "subdt_lgd":  5868
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Chengalpattu",
+                                            "sdtname":  "Tirukalukundram",
+                                            "dtcode11":  "787",
+                                            "sdtcode11":  "05709",
+                                            "subdt_lgd":  5709
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Kallakurichchi",
+                                            "sdtname":  "Tirukkoyilur",
+                                            "dtcode11":  "789",
+                                            "sdtcode11":  "05732",
+                                            "subdt_lgd":  5732
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Madurai",
+                                            "sdtname":  "Thirumangalam",
+                                            "dtcode11":  "623",
+                                            "sdtcode11":  "05840",
+                                            "subdt_lgd":  5840
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Pudukkottai",
+                                            "sdtname":  "Thirumayam",
+                                            "dtcode11":  "621",
+                                            "sdtcode11":  "05822",
+                                            "subdt_lgd":  5822
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Tirunelveli",
+                                            "sdtname":  "Tirunelveli",
+                                            "dtcode11":  "628",
+                                            "sdtcode11":  "05876",
+                                            "subdt_lgd":  5876
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Sivaganga",
+                                            "sdtname":  "Thiruppathur",
+                                            "dtcode11":  "622",
+                                            "sdtcode11":  "05829",
+                                            "subdt_lgd":  5829
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Madurai",
+                                            "sdtname":  "THIRUPPARANKUNDRAM",
+                                            "dtcode11":  "623",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  5962
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Sivaganga",
+                                            "sdtname":  "Thiruppuvanam",
+                                            "dtcode11":  "622",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  5965
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Tenkasi",
+                                            "sdtname":  "Tiruvengadam",
+                                            "dtcode11":  "790",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  6642
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Chennai",
+                                            "sdtname":  "Tiruvottiyur",
+                                            "dtcode11":  "603",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  5982
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Cuddalore",
+                                            "sdtname":  "Tittakudi",
+                                            "dtcode11":  "617",
+                                            "sdtcode11":  "05794",
+                                            "subdt_lgd":  5794
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Chennai",
+                                            "sdtname":  "Tondiarpet",
+                                            "dtcode11":  "603",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  7168
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Thoothukkudi",
+                                            "sdtname":  "Thoothukkudi",
+                                            "dtcode11":  "627",
+                                            "sdtcode11":  "05866",
+                                            "subdt_lgd":  5866
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Kallakurichchi",
+                                            "sdtname":  "Ulundurpettai",
+                                            "dtcode11":  "789",
+                                            "sdtcode11":  "05735",
+                                            "subdt_lgd":  5735
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Dindigul",
+                                            "sdtname":  "Usilampatti",
+                                            "dtcode11":  "612",
+                                            "sdtcode11":  "05838",
+                                            "subdt_lgd":  5838
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Madurai",
+                                            "sdtname":  "Usilampatti",
+                                            "dtcode11":  "623",
+                                            "sdtcode11":  "05838",
+                                            "subdt_lgd":  5838
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Theni",
+                                            "sdtname":  "Uthamapalayam",
+                                            "dtcode11":  "624",
+                                            "sdtcode11":  "05845",
+                                            "subdt_lgd":  5845
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Krishnagiri",
+                                            "sdtname":  "Uthangarai",
+                                            "dtcode11":  "631",
+                                            "sdtcode11":  "05894",
+                                            "subdt_lgd":  5894
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Madurai",
+                                            "sdtname":  "Vadipatti",
+                                            "dtcode11":  "623",
+                                            "sdtcode11":  "05837",
+                                            "subdt_lgd":  5837
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Salem",
+                                            "sdtname":  "Vazhapadi",
+                                            "dtcode11":  "608",
+                                            "sdtcode11":  "05742",
+                                            "subdt_lgd":  5742
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Coimbatore",
+                                            "sdtname":  "Valparai",
+                                            "dtcode11":  "632",
+                                            "sdtcode11":  "05900",
+                                            "subdt_lgd":  5900
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Viluppuram",
+                                            "sdtname":  "Vanur",
+                                            "dtcode11":  "607",
+                                            "sdtcode11":  "05730",
+                                            "subdt_lgd":  5730
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Dindigul",
+                                            "sdtname":  "Vedasandur",
+                                            "dtcode11":  "612",
+                                            "sdtcode11":  "05762",
+                                            "subdt_lgd":  5762
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Chennai",
+                                            "sdtname":  "Velachery",
+                                            "dtcode11":  "603",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  7171
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Vellore",
+                                            "sdtname":  "Vellore",
+                                            "dtcode11":  "605",
+                                            "sdtcode11":  "05717",
+                                            "subdt_lgd":  5717
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Virudhunagar",
+                                            "sdtname":  "VEMBAKOTTAI",
+                                            "dtcode11":  "625",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  6640
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Cuddalore",
+                                            "sdtname":  "veppur",
+                                            "dtcode11":  "617",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  5953
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Viluppuram",
+                                            "sdtname":  "Vikravandi",
+                                            "dtcode11":  "607",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  5978
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Thoothukkudi",
+                                            "sdtname":  "Vilathikulam",
+                                            "dtcode11":  "627",
+                                            "sdtcode11":  "05864",
+                                            "subdt_lgd":  5864
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Viluppuram",
+                                            "sdtname":  "Viluppuram",
+                                            "dtcode11":  "607",
+                                            "sdtcode11":  "05731",
+                                            "subdt_lgd":  5731
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Tenkasi",
+                                            "sdtname":  "Veerakeralamputhur",
+                                            "dtcode11":  "790",
+                                            "sdtcode11":  "05872",
+                                            "subdt_lgd":  5872
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Virudhunagar",
+                                            "sdtname":  "Virudhunagar",
+                                            "dtcode11":  "625",
+                                            "sdtcode11":  "05850",
+                                            "subdt_lgd":  5850
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Cuddalore",
+                                            "sdtname":  "Virudhachalam",
+                                            "dtcode11":  "617",
+                                            "sdtcode11":  "05793",
+                                            "subdt_lgd":  5793
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Salem",
+                                            "sdtname":  "Yercaud",
+                                            "dtcode11":  "608",
+                                            "sdtcode11":  "05741",
+                                            "subdt_lgd":  5741
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Krishnagiri",
+                                            "sdtname":  "Bargur",
+                                            "dtcode11":  "631",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  6613
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Kanniyakumari",
+                                            "sdtname":  "Agastheeswaram",
+                                            "dtcode11":  "629",
+                                            "sdtcode11":  "05884",
+                                            "subdt_lgd":  5884
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "KAnchipuram",
+                                            "sdtname":  "Alandur",
+                                            "dtcode11":  "604",
+                                            "sdtcode11":  "05704",
+                                            "subdt_lgd":  5704
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Ranipet",
+                                            "sdtname":  "Arakonam",
+                                            "dtcode11":  "786",
+                                            "sdtcode11":  "05715",
+                                            "subdt_lgd":  5715
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Tiruvannamalai",
+                                            "sdtname":  "Arani",
+                                            "dtcode11":  "606",
+                                            "sdtcode11":  "05721",
+                                            "subdt_lgd":  5721
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Ranipet",
+                                            "sdtname":  "Arcot",
+                                            "dtcode11":  "786",
+                                            "sdtcode11":  "05716",
+                                            "subdt_lgd":  5716
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Tiruvannamalai",
+                                            "sdtname":  "Chengam",
+                                            "dtcode11":  "606",
+                                            "sdtcode11":  "05725",
+                                            "subdt_lgd":  5725
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Tiruvannamalai",
+                                            "sdtname":  "Chetpet",
+                                            "dtcode11":  "606",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  6617
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Tiruvannamalai",
+                                            "sdtname":  "Cheyyar",
+                                            "dtcode11":  "606",
+                                            "sdtcode11":  "05722",
+                                            "subdt_lgd":  5722
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Tiruvannamalai",
+                                            "sdtname":  "Jamunamarathoor",
+                                            "dtcode11":  "606",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  6631
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "KAnchipuram",
+                                            "sdtname":  "Kancheepuram",
+                                            "dtcode11":  "604",
+                                            "sdtcode11":  "05707",
+                                            "subdt_lgd":  5707
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Ramanathapuram",
+                                            "sdtname":  "Kadaladi",
+                                            "dtcode11":  "626",
+                                            "sdtcode11":  "05859",
+                                            "subdt_lgd":  5859
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Tiruvannamalai",
+                                            "sdtname":  "Kalasapakkam",
+                                            "dtcode11":  "606",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  5959
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Kanniyakumari",
+                                            "sdtname":  "Kalkulam",
+                                            "dtcode11":  "629",
+                                            "sdtcode11":  "05882",
+                                            "subdt_lgd":  5882
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Ramanathapuram",
+                                            "sdtname":  "Kamuthi",
+                                            "dtcode11":  "626",
+                                            "sdtcode11":  "05858",
+                                            "subdt_lgd":  5858
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Ramanathapuram",
+                                            "sdtname":  "KILAKARAI",
+                                            "dtcode11":  "626",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  6654
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Tiruvannamalai",
+                                            "sdtname":  "Kilpennathur",
+                                            "dtcode11":  "606",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  6630
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Nagapattinam",
+                                            "sdtname":  "Kilvelur",
+                                            "dtcode11":  "618",
+                                            "sdtcode11":  "05800",
+                                            "subdt_lgd":  5800
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Namakkal",
+                                            "sdtname":  "KOLLI HILLS",
+                                            "dtcode11":  "609",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  6625
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Namakkal",
+                                            "sdtname":  "KUMARAPALAYAM",
+                                            "dtcode11":  "609",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  6634
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Mayiladuthurai",
+                                            "sdtname":  "Kuthalam",
+                                            "dtcode11":  "796",
+                                            "sdtcode11":  "05797",
+                                            "subdt_lgd":  5797
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Tiruchirappalli",
+                                            "sdtname":  "Lalgudi",
+                                            "dtcode11":  "614",
+                                            "sdtcode11":  "05777",
+                                            "subdt_lgd":  5777
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Tiruchirappalli",
+                                            "sdtname":  "Manachanallur",
+                                            "dtcode11":  "614",
+                                            "sdtcode11":  "05776",
+                                            "subdt_lgd":  5776
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Tiruchirappalli",
+                                            "sdtname":  "Manapparai",
+                                            "dtcode11":  "614",
+                                            "sdtcode11":  "05781",
+                                            "subdt_lgd":  5781
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Tiruchirappalli",
+                                            "sdtname":  "MARUNGAPURI",
+                                            "dtcode11":  "614",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  5954
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Mayiladuthurai",
+                                            "sdtname":  "Mayiladuthurai",
+                                            "dtcode11":  "796",
+                                            "sdtcode11":  "05796",
+                                            "subdt_lgd":  5796
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Namakkal",
+                                            "sdtname":  "MOHANUR",
+                                            "dtcode11":  "609",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  6635
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Ramanathapuram",
+                                            "sdtname":  "Mudukulathur",
+                                            "dtcode11":  "626",
+                                            "sdtcode11":  "05857",
+                                            "subdt_lgd":  5857
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Tiruchirappalli",
+                                            "sdtname":  "Musiri",
+                                            "dtcode11":  "614",
+                                            "sdtcode11":  "05774",
+                                            "subdt_lgd":  5774
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Nagapattinam",
+                                            "sdtname":  "Nagapattinam",
+                                            "dtcode11":  "618",
+                                            "sdtcode11":  "05799",
+                                            "subdt_lgd":  5799
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Namakkal",
+                                            "sdtname":  "Namakkal",
+                                            "dtcode11":  "609",
+                                            "sdtcode11":  "05747",
+                                            "subdt_lgd":  5747
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Ranipet",
+                                            "sdtname":  "Nemili",
+                                            "dtcode11":  "786",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  6664
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Ramanathapuram",
+                                            "sdtname":  "Paramakudi",
+                                            "dtcode11":  "626",
+                                            "sdtcode11":  "05856",
+                                            "subdt_lgd":  5856
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Namakkal",
+                                            "sdtname":  "Paramathi-Velur",
+                                            "dtcode11":  "609",
+                                            "sdtcode11":  "05748",
+                                            "subdt_lgd":  5748
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Tiruvannamalai",
+                                            "sdtname":  "Polur",
+                                            "dtcode11":  "606",
+                                            "sdtcode11":  "05724",
+                                            "subdt_lgd":  5724
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "KAnchipuram",
+                                            "sdtname":  "Poonamallee",
+                                            "dtcode11":  "604",
+                                            "sdtcode11":  "05699",
+                                            "subdt_lgd":  5699
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Ramanathapuram",
+                                            "sdtname":  "Ramanathapuram",
+                                            "dtcode11":  "626",
+                                            "sdtcode11":  "05860",
+                                            "subdt_lgd":  5860
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Ramanathapuram",
+                                            "sdtname":  "Rameswaram",
+                                            "dtcode11":  "626",
+                                            "sdtcode11":  "05861",
+                                            "subdt_lgd":  5861
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Namakkal",
+                                            "sdtname":  "Rasipuram",
+                                            "dtcode11":  "609",
+                                            "sdtcode11":  "05746",
+                                            "subdt_lgd":  5746
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Mayiladuthurai",
+                                            "sdtname":  "Sirkali",
+                                            "dtcode11":  "796",
+                                            "sdtcode11":  "05795",
+                                            "subdt_lgd":  5795
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Namakkal",
+                                            "sdtname":  "SENDAMANGALAM",
+                                            "dtcode11":  "609",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  6632
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "KAnchipuram",
+                                            "sdtname":  "Sholinganallur",
+                                            "dtcode11":  "604",
+                                            "sdtcode11":  "05705",
+                                            "subdt_lgd":  5705
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "KAnchipuram",
+                                            "sdtname":  "Sriperumbudur",
+                                            "dtcode11":  "604",
+                                            "sdtcode11":  "05702",
+                                            "subdt_lgd":  5702
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Tiruchirappalli",
+                                            "sdtname":  "Srirangam",
+                                            "dtcode11":  "614",
+                                            "sdtcode11":  "05778",
+                                            "subdt_lgd":  5778
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Mayiladuthurai",
+                                            "sdtname":  "Tharangambadi",
+                                            "dtcode11":  "796",
+                                            "sdtcode11":  "05798",
+                                            "subdt_lgd":  5798
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Tiruvannamalai",
+                                            "sdtname":  "THANDRAMPET",
+                                            "dtcode11":  "606",
+                                            "sdtcode11":  "05726",
+                                            "subdt_lgd":  5726
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Nagapattinam",
+                                            "sdtname":  "Thirukkuvalai",
+                                            "dtcode11":  "618",
+                                            "sdtcode11":  "05801",
+                                            "subdt_lgd":  5801
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Namakkal",
+                                            "sdtname":  "Tiruchengode",
+                                            "dtcode11":  "609",
+                                            "sdtcode11":  "05745",
+                                            "subdt_lgd":  5745
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Tiruchirappalli",
+                                            "sdtname":  "Tiruchirappalli East",
+                                            "dtcode11":  "614",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  6620
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Tiruchirappalli",
+                                            "sdtname":  "Tiruchirappalli West",
+                                            "dtcode11":  "614",
+                                            "sdtcode11":  "05779",
+                                            "subdt_lgd":  5779
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Ramanathapuram",
+                                            "sdtname":  "Tiruvadanai",
+                                            "dtcode11":  "626",
+                                            "sdtcode11":  "05855",
+                                            "subdt_lgd":  5855
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "KAnchipuram",
+                                            "sdtname":  "Thiruvallur",
+                                            "dtcode11":  "604",
+                                            "sdtcode11":  "05698",
+                                            "subdt_lgd":  5698
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Tiruvannamalai",
+                                            "sdtname":  "Tiruvannamalai",
+                                            "dtcode11":  "606",
+                                            "sdtcode11":  "05727",
+                                            "subdt_lgd":  5727
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Tiruchirappalli",
+                                            "sdtname":  "Thiruverumbur",
+                                            "dtcode11":  "614",
+                                            "sdtcode11":  "05780",
+                                            "subdt_lgd":  5780
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Tiruchirappalli",
+                                            "sdtname":  "Thottiyam",
+                                            "dtcode11":  "614",
+                                            "sdtcode11":  "05773",
+                                            "subdt_lgd":  5773
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Kanniyakumari",
+                                            "sdtname":  "Thovala",
+                                            "dtcode11":  "629",
+                                            "sdtcode11":  "05883",
+                                            "subdt_lgd":  5883
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Tiruchirappalli",
+                                            "sdtname":  "Thuraiyur",
+                                            "dtcode11":  "614",
+                                            "sdtcode11":  "05775",
+                                            "subdt_lgd":  5775
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "KAnchipuram",
+                                            "sdtname":  "Uthiramerur",
+                                            "dtcode11":  "604",
+                                            "sdtcode11":  "05708",
+                                            "subdt_lgd":  5708
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Tiruvannamalai",
+                                            "sdtname":  "Vandavasi",
+                                            "dtcode11":  "606",
+                                            "sdtcode11":  "05723",
+                                            "subdt_lgd":  5723
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Nagapattinam",
+                                            "sdtname":  "Vedaranyam",
+                                            "dtcode11":  "618",
+                                            "sdtcode11":  "05802",
+                                            "subdt_lgd":  5802
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Tiruvannamalai",
+                                            "sdtname":  "Vembakkam",
+                                            "dtcode11":  "606",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  6624
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Kanniyakumari",
+                                            "sdtname":  "Vilavancode",
+                                            "dtcode11":  "629",
+                                            "sdtcode11":  "05881",
+                                            "subdt_lgd":  5881
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "KAnchipuram",
+                                            "sdtname":  "Walajabad",
+                                            "dtcode11":  "604",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  6626
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Ranipet",
+                                            "sdtname":  "Wallajah",
+                                            "dtcode11":  "786",
+                                            "sdtcode11":  "05714",
+                                            "subdt_lgd":  5714
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "The Nilgiris",
+                                            "sdtname":  "Coonoor",
+                                            "dtcode11":  "611",
+                                            "sdtcode11":  "05758",
+                                            "subdt_lgd":  5758
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "The Nilgiris",
+                                            "sdtname":  "Gudalur",
+                                            "dtcode11":  "611",
+                                            "sdtcode11":  "05755",
+                                            "subdt_lgd":  5755
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "The Nilgiris",
+                                            "sdtname":  "Kotagiri",
+                                            "dtcode11":  "611",
+                                            "sdtcode11":  "05757",
+                                            "subdt_lgd":  5757
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "The Nilgiris",
+                                            "sdtname":  "Kundah",
+                                            "dtcode11":  "611",
+                                            "sdtcode11":  "05759",
+                                            "subdt_lgd":  5759
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "The Nilgiris",
+                                            "sdtname":  "Udhagamandalam",
+                                            "dtcode11":  "611",
+                                            "sdtcode11":  "05756",
+                                            "subdt_lgd":  5756
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "The Nilgiris",
+                                            "sdtname":  "Panthalur",
+                                            "dtcode11":  "611",
+                                            "sdtcode11":  "05754",
+                                            "subdt_lgd":  5754
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Thiruvallur",
+                                            "sdtname":  "Avadi",
+                                            "dtcode11":  "602",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  6621
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Perambalur",
+                                            "sdtname":  "Alathur",
+                                            "dtcode11":  "615",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  5951
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Tiruppattur",
+                                            "sdtname":  "Ambur",
+                                            "dtcode11":  "788",
+                                            "sdtcode11":  "05719",
+                                            "subdt_lgd":  5719
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Ariyalur",
+                                            "sdtname":  "Andimadam",
+                                            "dtcode11":  "616",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  5983
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Karur",
+                                            "sdtname":  "Aravakurichi",
+                                            "dtcode11":  "613",
+                                            "sdtcode11":  "05768",
+                                            "subdt_lgd":  5768
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Ariyalur",
+                                            "sdtname":  "Ariyalur",
+                                            "dtcode11":  "616",
+                                            "sdtcode11":  "05787",
+                                            "subdt_lgd":  5787
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Tiruppur",
+                                            "sdtname":  "Avanashi",
+                                            "dtcode11":  "633",
+                                            "sdtcode11":  "05903",
+                                            "subdt_lgd":  5903
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Tiruppur",
+                                            "sdtname":  "Dharapuram",
+                                            "dtcode11":  "633",
+                                            "sdtcode11":  "05902",
+                                            "subdt_lgd":  5902
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Thiruvallur",
+                                            "sdtname":  "Gummidipoondi",
+                                            "dtcode11":  "602",
+                                            "sdtcode11":  "05693",
+                                            "subdt_lgd":  5693
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Karur",
+                                            "sdtname":  "Kadavur",
+                                            "dtcode11":  "613",
+                                            "sdtcode11":  "05772",
+                                            "subdt_lgd":  5772
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Tiruppur",
+                                            "sdtname":  "Kangeyam",
+                                            "dtcode11":  "633",
+                                            "sdtcode11":  "05901",
+                                            "subdt_lgd":  5901
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Karur",
+                                            "sdtname":  "Karur",
+                                            "dtcode11":  "613",
+                                            "sdtcode11":  "05769",
+                                            "subdt_lgd":  5769
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Karur",
+                                            "sdtname":  "Krishnarayapuram",
+                                            "dtcode11":  "613",
+                                            "sdtcode11":  "05770",
+                                            "subdt_lgd":  5770
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Karur",
+                                            "sdtname":  "Kulithalai",
+                                            "dtcode11":  "613",
+                                            "sdtcode11":  "05771",
+                                            "subdt_lgd":  5771
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Perambalur",
+                                            "sdtname":  "Kunnam",
+                                            "dtcode11":  "615",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  5976
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Tiruppur",
+                                            "sdtname":  "Madathukulam",
+                                            "dtcode11":  "633",
+                                            "sdtcode11":  "05907",
+                                            "subdt_lgd":  5907
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Karur",
+                                            "sdtname":  "Manmangalam",
+                                            "dtcode11":  "613",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  5985
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Ariyalur",
+                                            "sdtname":  "Mayiladuthurai",
+                                            "dtcode11":  "616",
+                                            "sdtcode11":  "05796",
+                                            "subdt_lgd":  5796
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Tiruppattur",
+                                            "sdtname":  "Natrampalli",
+                                            "dtcode11":  "788",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  5963
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Tiruppur",
+                                            "sdtname":  "Palladam",
+                                            "dtcode11":  "633",
+                                            "sdtcode11":  "05905",
+                                            "subdt_lgd":  5905
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Thiruvallur",
+                                            "sdtname":  "Pallipattu",
+                                            "dtcode11":  "602",
+                                            "sdtcode11":  "05697",
+                                            "subdt_lgd":  5697
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Perambalur",
+                                            "sdtname":  "Perambalur",
+                                            "dtcode11":  "615",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  5973
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Thiruvallur",
+                                            "sdtname":  "Ponneri",
+                                            "dtcode11":  "602",
+                                            "sdtcode11":  "05694",
+                                            "subdt_lgd":  5694
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Thiruvallur",
+                                            "sdtname":  "Poonamallee",
+                                            "dtcode11":  "602",
+                                            "sdtcode11":  "05699",
+                                            "subdt_lgd":  5699
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Ariyalur",
+                                            "sdtname":  "Sendurai",
+                                            "dtcode11":  "616",
+                                            "sdtcode11":  "05785",
+                                            "subdt_lgd":  5785
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Tiruppur",
+                                            "sdtname":  "TiruppurNorth",
+                                            "dtcode11":  "633",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  5967
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Tiruppur",
+                                            "sdtname":  "TIRUPPAR SOUTH",
+                                            "dtcode11":  "633",
+                                            "sdtcode11":  "05904",
+                                            "subdt_lgd":  0
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Tiruppattur",
+                                            "sdtname":  "Tirupathur",
+                                            "dtcode11":  "788",
+                                            "sdtcode11":  "05720",
+                                            "subdt_lgd":  5720
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Thiruvallur",
+                                            "sdtname":  "Tiruttani",
+                                            "dtcode11":  "602",
+                                            "sdtcode11":  "05696",
+                                            "subdt_lgd":  5696
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Thiruvallur",
+                                            "sdtname":  "Thiruvallur",
+                                            "dtcode11":  "602",
+                                            "sdtcode11":  "05698",
+                                            "subdt_lgd":  5698
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Ariyalur",
+                                            "sdtname":  "Udayarpalayam",
+                                            "dtcode11":  "616",
+                                            "sdtcode11":  "05786",
+                                            "subdt_lgd":  5786
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Tiruppur",
+                                            "sdtname":  "Udumalaipettai",
+                                            "dtcode11":  "633",
+                                            "sdtcode11":  "05906",
+                                            "subdt_lgd":  5906
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Thiruvallur",
+                                            "sdtname":  "Uthukkottai",
+                                            "dtcode11":  "602",
+                                            "sdtcode11":  "05695",
+                                            "subdt_lgd":  5695
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Tiruppur",
+                                            "sdtname":  "Uthukuli",
+                                            "dtcode11":  "633",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  6616
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Tiruppattur",
+                                            "sdtname":  "Vaniyambadi",
+                                            "dtcode11":  "788",
+                                            "sdtcode11":  "05718",
+                                            "subdt_lgd":  5718
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Perambalur",
+                                            "sdtname":  "Veppanthattai",
+                                            "dtcode11":  "615",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  5974
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Thiruvarur",
+                                            "sdtname":  "Koothanallur",
+                                            "dtcode11":  "619",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  6627
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Thiruvarur",
+                                            "sdtname":  "Kudavasal",
+                                            "dtcode11":  "619",
+                                            "sdtcode11":  "05804",
+                                            "subdt_lgd":  5804
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Thanjavur",
+                                            "sdtname":  "Kumbakonam",
+                                            "dtcode11":  "620",
+                                            "sdtcode11":  "05811",
+                                            "subdt_lgd":  5811
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Thiruvarur",
+                                            "sdtname":  "Mannargudi",
+                                            "dtcode11":  "619",
+                                            "sdtcode11":  "05808",
+                                            "subdt_lgd":  5808
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Thiruvarur",
+                                            "sdtname":  "Nannilam",
+                                            "dtcode11":  "619",
+                                            "sdtcode11":  "05805",
+                                            "subdt_lgd":  5805
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Thiruvarur",
+                                            "sdtname":  "Needamangalam",
+                                            "dtcode11":  "619",
+                                            "sdtcode11":  "05807",
+                                            "subdt_lgd":  5807
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Thanjavur",
+                                            "sdtname":  "Papanasam",
+                                            "dtcode11":  "620",
+                                            "sdtcode11":  "05812",
+                                            "subdt_lgd":  5812
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Thanjavur",
+                                            "sdtname":  "Pattukkottai",
+                                            "dtcode11":  "620",
+                                            "sdtcode11":  "05816",
+                                            "subdt_lgd":  5816
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Thanjavur",
+                                            "sdtname":  "Peravurani",
+                                            "dtcode11":  "620",
+                                            "sdtcode11":  "05817",
+                                            "subdt_lgd":  5817
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Thanjavur",
+                                            "sdtname":  "Thanjavur",
+                                            "dtcode11":  "620",
+                                            "sdtcode11":  "05814",
+                                            "subdt_lgd":  5814
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Thiruvarur",
+                                            "sdtname":  "Thiruvarur",
+                                            "dtcode11":  "619",
+                                            "sdtcode11":  "05806",
+                                            "subdt_lgd":  5806
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Thanjavur",
+                                            "sdtname":  "Thiruthuraipoondi",
+                                            "dtcode11":  "620",
+                                            "sdtcode11":  "05809",
+                                            "subdt_lgd":  5809
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Thiruvarur",
+                                            "sdtname":  "Thiruthuraipoondi",
+                                            "dtcode11":  "619",
+                                            "sdtcode11":  "05809",
+                                            "subdt_lgd":  5809
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Thanjavur",
+                                            "sdtname":  "Thiruvidaimarudur",
+                                            "dtcode11":  "620",
+                                            "sdtcode11":  "05810",
+                                            "subdt_lgd":  5810
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Thiruvarur",
+                                            "sdtname":  "Valangaiman",
+                                            "dtcode11":  "619",
+                                            "sdtcode11":  "05803",
+                                            "subdt_lgd":  5803
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Thanjavur",
+                                            "sdtname":  "Orathanadu",
+                                            "dtcode11":  "620",
+                                            "sdtcode11":  "05815",
+                                            "subdt_lgd":  5815
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Pudukkottai",
+                                            "sdtname":  "Viralimalai",
+                                            "dtcode11":  "621",
+                                            "sdtcode11":  "",
+                                            "subdt_lgd":  6614
+                                        }
+                     },
+                     {
+                         "attributes":  {
+                                            "stname":  "TAMIL NADU",
+                                            "dtname":  "Thanjavur",
+                                            "sdtname":  "Thiruvaiyaru",
+                                            "dtcode11":  "620",
+                                            "sdtcode11":  "05813",
+                                            "subdt_lgd":  5813
+                                        }
+                     }
+                 ]
+}

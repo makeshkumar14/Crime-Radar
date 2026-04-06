@@ -151,7 +151,11 @@ export default function Sidebar({ onFilter, activeView, onViewChange }) {
         <button
           className="w-full bg-gray-800 hover:bg-gray-700
                      text-gray-400 text-xs py-2 rounded-lg mt-2"
-          onClick={() => setSelected({ district: "", category: "", year: "" })}
+          onClick={() => {
+            const cleared = { district: "", category: "", year: "" };
+            setSelected(cleared);
+            onFilter && onFilter(cleared);
+          }}
         >
           Reset
         </button>

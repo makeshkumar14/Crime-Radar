@@ -1,0 +1,3836 @@
+﻿[
+    {
+        "osm_type":  "node",
+        "osm_id":  247177690,
+        "name":  "Thudiyalur Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  11.0820675,
+        "lng":  76.9412411
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  250363729,
+        "name":  "Mambalam Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0349573,
+        "lng":  80.2294600
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  259773441,
+        "name":  "Royapettah PS",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0520106,
+        "lng":  80.2637348
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  264481213,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  13.0596173,
+        "lng":  80.2427681
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  300468066,
+        "name":  "S-8 Adambakkam Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  12.9893957,
+        "lng":  80.2019683
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  301949978,
+        "name":  "Teynampet E3 PS",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0486510,
+        "lng":  80.2494881
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  308446629,
+        "name":  "Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  10.6571159,
+        "lng":  77.0083512
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  308449858,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  10.6565729,
+        "lng":  77.0184714
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  312025133,
+        "name":  "Adyar J2",
+        "district":  null,
+        "city":  null,
+        "lat":  12.9978140,
+        "lng":  80.2557176
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  313951548,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  12.9814685,
+        "lng":  80.1920630
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  320968223,
+        "name":  "Central Station PS",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0818276,
+        "lng":  80.2755071
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  320968578,
+        "name":  "Chennai Central RPF",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0830613,
+        "lng":  80.2732996
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  334644593,
+        "name":  "RTO Check Post",
+        "district":  null,
+        "city":  null,
+        "lat":  8.3307076,
+        "lng":  77.1742787
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  334644595,
+        "name":  "Tax Check Post",
+        "district":  null,
+        "city":  null,
+        "lat":  8.3242251,
+        "lng":  77.1817641
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  339282419,
+        "name":  "B1 Saint Thomas Mount PS",
+        "district":  null,
+        "city":  null,
+        "lat":  12.9991212,
+        "lng":  80.2002620
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  353073504,
+        "name":  "Kalpakkam Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  12.5037687,
+        "lng":  80.1533696
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  354836500,
+        "name":  "Dharapuram Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  10.7312269,
+        "lng":  77.5240154
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  354890203,
+        "name":  "Sadras Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  12.5251654,
+        "lng":  80.1626667
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  366075241,
+        "name":  "Koyambedu Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0696407,
+        "lng":  80.2004587
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  369183249,
+        "name":  "E1 Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  11.4120760,
+        "lng":  76.6884781
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  370481197,
+        "name":  "Office, Police Commissioner",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0100865,
+        "lng":  80.1990931
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  370969674,
+        "name":  "T15 SRMC PS",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0341993,
+        "lng":  80.1602489
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  389948945,
+        "name":  "KK Nagar PS",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0415108,
+        "lng":  80.2054415
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  390852677,
+        "name":  "N4 PS",
+        "district":  null,
+        "city":  null,
+        "lat":  13.1345408,
+        "lng":  80.2974596
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  411318042,
+        "name":  "Virugambakkam Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0491123,
+        "lng":  80.1992562
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  416412274,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  13.0369400,
+        "lng":  80.2674177
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  687175330,
+        "name":  "Police Booth",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0737484,
+        "lng":  80.1923421
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  687177364,
+        "name":  "Police Booth",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0656907,
+        "lng":  80.1935705
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  725513774,
+        "name":  "Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  11.2777330,
+        "lng":  77.5865812
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  747616884,
+        "name":  "Velachery",
+        "district":  null,
+        "city":  null,
+        "lat":  12.9850126,
+        "lng":  80.2208713
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  803271976,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  10.9952707,
+        "lng":  76.9681824
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  803272013,
+        "name":  "District Police Office",
+        "district":  null,
+        "city":  null,
+        "lat":  10.9990022,
+        "lng":  76.9677805
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  934859086,
+        "name":  "Police Booth",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0447322,
+        "lng":  80.1862162
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  951833229,
+        "name":  "E6",
+        "district":  null,
+        "city":  null,
+        "lat":  13.2718063,
+        "lng":  80.2625092
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  966556101,
+        "name":  "Chintadripet",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0749088,
+        "lng":  80.2725042
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  983961147,
+        "name":  "S6 Shankar Nagar Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  12.9692797,
+        "lng":  80.1257959
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  984217571,
+        "name":  "Vadapalani Police station",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0496730,
+        "lng":  80.2117315
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  1015569835,
+        "name":  "Ramapuram Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0317737,
+        "lng":  80.1790069
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  1051328308,
+        "name":  "Ukkadam Police Station(B2)",
+        "district":  null,
+        "city":  null,
+        "lat":  10.9890037,
+        "lng":  76.9615341
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  1051328344,
+        "name":  "Womens Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  11.0155688,
+        "lng":  76.9683463
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  1051328360,
+        "name":  "Kattor Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  11.0153033,
+        "lng":  76.9683070
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  1051328368,
+        "name":  "Madukkarai Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  10.9114530,
+        "lng":  76.9490401
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  1153096222,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  10.3289364,
+        "lng":  76.9574477
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  1186119073,
+        "name":  "TIRUPPUR NORTH",
+        "district":  null,
+        "city":  null,
+        "lat":  11.1078920,
+        "lng":  77.3450511
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  1315141190,
+        "name":  "Police booth",
+        "district":  null,
+        "city":  null,
+        "lat":  12.9651635,
+        "lng":  80.2060352
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  1391252125,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  13.1244932,
+        "lng":  80.2771688
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  1423854834,
+        "name":  "Karamadai Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  11.2395224,
+        "lng":  76.9595897
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  1451946829,
+        "name":  "Porur Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0343074,
+        "lng":  80.1601292
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  1470432055,
+        "name":  "C2- Race Course Police Station, Coimbatore",
+        "district":  "COIMBATORE",
+        "city":  "Gopalapuram",
+        "lat":  11.0016920,
+        "lng":  76.9713177
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  1471854713,
+        "name":  "C-3 Saibaba Colony Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  11.0266348,
+        "lng":  76.9515967
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  1474350853,
+        "name":  "Saravanampatti Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  11.0747296,
+        "lng":  77.0027116
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  1474518443,
+        "name":  "Ramanathapuram police station",
+        "district":  null,
+        "city":  null,
+        "lat":  10.9975827,
+        "lng":  76.9978710
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  1474803271,
+        "name":  "B1 POLICE STATION",
+        "district":  null,
+        "city":  null,
+        "lat":  10.9924847,
+        "lng":  76.9591307
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  1597178645,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  13.0576855,
+        "lng":  80.2041548
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  1623278302,
+        "name":  "Kollencode Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  8.2937626,
+        "lng":  77.1143470
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  1668204092,
+        "name":  "Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  11.3630177,
+        "lng":  77.7476505
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  1680232798,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  10.9883830,
+        "lng":  76.9354528
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  1685476656,
+        "name":  "Tisaiyanvillai Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  8.3366712,
+        "lng":  77.8541616
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  1711627907,
+        "name":  "Shastri Nagar Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0006116,
+        "lng":  80.2659307
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  1754861237,
+        "name":  "Bagayam Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  12.8757507,
+        "lng":  79.1336955
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  1769189559,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  9.2399184,
+        "lng":  78.7819267
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  1771171090,
+        "name":  "Palani Town Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  10.4528743,
+        "lng":  77.5155698
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  1803675803,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  12.3043547,
+        "lng":  78.2031130
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  1813686211,
+        "name":  "Tiruppur North",
+        "district":  null,
+        "city":  null,
+        "lat":  11.1066254,
+        "lng":  77.3427939
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  1821366073,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  12.5292856,
+        "lng":  78.2057273
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  1865961947,
+        "name":  "Police Outpost",
+        "district":  null,
+        "city":  null,
+        "lat":  13.2156173,
+        "lng":  80.1694388
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  1896342668,
+        "name":  "HVF",
+        "district":  null,
+        "city":  null,
+        "lat":  13.1291456,
+        "lng":  80.1073794
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  1909667210,
+        "name":  "Railway police station",
+        "district":  null,
+        "city":  null,
+        "lat":  8.9645513,
+        "lng":  77.3063031
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  1911051522,
+        "name":  "Krishnagiri Taluk office, fire station, Police station",
+        "district":  null,
+        "city":  null,
+        "lat":  12.5254539,
+        "lng":  78.2171823
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  1918541999,
+        "name":  "Police Stations",
+        "district":  null,
+        "city":  null,
+        "lat":  8.9724199,
+        "lng":  77.4192932
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  1948632616,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  13.0687012,
+        "lng":  80.2046669
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  1974104672,
+        "name":  "Komarapalayam Police station",
+        "district":  null,
+        "city":  null,
+        "lat":  11.4413141,
+        "lng":  77.6931115
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  1988390146,
+        "name":  "Adirampattinam Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  10.3404104,
+        "lng":  79.3855317
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  1998095213,
+        "name":  "Commissioner\u0027s office",
+        "district":  null,
+        "city":  null,
+        "lat":  11.7553690,
+        "lng":  79.7688583
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  2039963456,
+        "name":  "J2 Police Station Kedar Jurisdiction",
+        "district":  null,
+        "city":  null,
+        "lat":  12.0091224,
+        "lng":  79.4029681
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  2061123092,
+        "name":  "J9 Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  12.9476130,
+        "lng":  80.2416251
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  2086712180,
+        "name":  "Madipalkam police stations",
+        "district":  null,
+        "city":  null,
+        "lat":  12.9559858,
+        "lng":  80.1853072
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  2139742510,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  13.0229741,
+        "lng":  80.1999165
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  2152043251,
+        "name":  "All Women Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  8.0824428,
+        "lng":  77.5495196
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  2152043264,
+        "name":  "Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  8.0821735,
+        "lng":  77.5495411
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  2152463911,
+        "name":  "Police Srirangam",
+        "district":  null,
+        "city":  null,
+        "lat":  10.8571762,
+        "lng":  78.6896428
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  2153276888,
+        "name":  "Taluk Police Station Kumbakonam",
+        "district":  null,
+        "city":  null,
+        "lat":  10.9555027,
+        "lng":  79.3655029
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  2154131305,
+        "name":  "Traffic Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  12.6212684,
+        "lng":  80.1955516
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  2156885345,
+        "name":  "Police Station, Vettavalam",
+        "district":  null,
+        "city":  null,
+        "lat":  12.1098807,
+        "lng":  79.2447246
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  2210021510,
+        "name":  "Police Booth",
+        "district":  null,
+        "city":  null,
+        "lat":  12.8975662,
+        "lng":  80.1823209
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  2214183884,
+        "name":  "police station",
+        "district":  null,
+        "city":  null,
+        "lat":  10.7035066,
+        "lng":  78.5504006
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  2221603034,
+        "name":  "Police Assistance Booth Mugalivakam",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0207162,
+        "lng":  80.1663239
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  2296700944,
+        "name":  "B2 Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  10.8228204,
+        "lng":  78.6827289
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  2344385363,
+        "name":  "Trafic Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  12.7279317,
+        "lng":  77.8270513
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  2344410073,
+        "name":  "Hosur Town Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  12.7267546,
+        "lng":  77.8272830
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  2364874938,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  8.1783299,
+        "lng":  77.4316465
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  2375997491,
+        "name":  "Police",
+        "district":  null,
+        "city":  null,
+        "lat":  12.6214889,
+        "lng":  80.1942737
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  2442814216,
+        "name":  "Jaihindpuram Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  9.9066088,
+        "lng":  78.1119041
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  2445795300,
+        "name":  "City Police HQ",
+        "district":  null,
+        "city":  null,
+        "lat":  9.5565491,
+        "lng":  77.9453096
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  2535205986,
+        "name":  "Koothanallur Police Station",
+        "district":  null,
+        "city":  "Koothanallur",
+        "lat":  10.7161884,
+        "lng":  79.5172308
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  2578986487,
+        "name":  "Women\u0027s Police Station",
+        "district":  null,
+        "city":  "Gingee",
+        "lat":  12.2523481,
+        "lng":  79.4163223
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  2578986788,
+        "name":  "Police Station",
+        "district":  null,
+        "city":  "gingee",
+        "lat":  12.2517837,
+        "lng":  79.4181292
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  2587520257,
+        "name":  "J6 Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  12.9874599,
+        "lng":  80.2559315
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  2678764369,
+        "name":  "Mailam Police Station",
+        "district":  null,
+        "city":  "Mailam",
+        "lat":  12.1281858,
+        "lng":  79.6195761
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  3026674742,
+        "name":  "Chitlapakam Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  12.9372924,
+        "lng":  80.1379265
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  3097014588,
+        "name":  "S-10 Police Station (Pallikaranai)",
+        "district":  null,
+        "city":  null,
+        "lat":  12.9173825,
+        "lng":  80.1950805
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  3154720635,
+        "name":  "Perumalpuram C3 Police station",
+        "district":  null,
+        "city":  null,
+        "lat":  8.7040942,
+        "lng":  77.7319902
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  3195423909,
+        "name":  "Chetpet",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0706907,
+        "lng":  80.2421194
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  3197680841,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  11.3976327,
+        "lng":  79.6911315
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  3571694093,
+        "name":  "Rathinapuri Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  11.0250344,
+        "lng":  76.9715748
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  3591907532,
+        "name":  "Thirukovilur Police Station",
+        "district":  null,
+        "city":  "Thirukovilur",
+        "lat":  11.9664139,
+        "lng":  79.2020996
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  3686857438,
+        "name":  "Boiler Plant Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  10.7710082,
+        "lng":  78.7956650
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  3730202122,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  10.8161847,
+        "lng":  78.6942025
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  3983676959,
+        "name":  "Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  11.9401952,
+        "lng":  79.4865046
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  3983763747,
+        "name":  "Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  11.9440945,
+        "lng":  79.4958028
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4199785690,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  10.8523494,
+        "lng":  77.8485857
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4299434191,
+        "name":  "Salem Town Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  11.6539405,
+        "lng":  78.1604851
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4305413795,
+        "name":  "Alagapuram Police station",
+        "district":  null,
+        "city":  null,
+        "lat":  11.6769953,
+        "lng":  78.1422615
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4308319495,
+        "name":  "R6 KUMARAN NAGAR POLICE STATION ",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0283677,
+        "lng":  80.2163105
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4322649892,
+        "name":  "Denkanikottai Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  12.5208971,
+        "lng":  77.7903372
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4436123523,
+        "name":  "Airport Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  10.7588027,
+        "lng":  78.7077417
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4444954749,
+        "name":  "G4 Vandavasi north police station",
+        "district":  null,
+        "city":  "kanchipuram",
+        "lat":  12.5068712,
+        "lng":  79.6045373
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4445174109,
+        "name":  "superitendent of police",
+        "district":  null,
+        "city":  "Kanchipuram",
+        "lat":  12.8224828,
+        "lng":  79.6973133
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4445183306,
+        "name":  "Walajabad police station",
+        "district":  null,
+        "city":  "kanchipuram",
+        "lat":  12.7937471,
+        "lng":  79.8162163
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4445204054,
+        "name":  "c3 police station Manimangalam",
+        "district":  null,
+        "city":  "kanchipuram",
+        "lat":  12.9163861,
+        "lng":  80.0398418
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4445288963,
+        "name":  "Cheyur Police station",
+        "district":  null,
+        "city":  "Kanchipuram",
+        "lat":  12.3517152,
+        "lng":  79.9975084
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4445321696,
+        "name":  "sup",
+        "district":  null,
+        "city":  null,
+        "lat":  12.8227120,
+        "lng":  79.6949704
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4445321697,
+        "name":  "anna nagar police superitendent station",
+        "district":  null,
+        "city":  "Kanchipuram",
+        "lat":  12.8237772,
+        "lng":  79.6974277
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4445352945,
+        "name":  "Chengalpatu AwPolice Station",
+        "district":  null,
+        "city":  "kancheepuram",
+        "lat":  12.6971397,
+        "lng":  79.9771626
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4445363957,
+        "name":  "Guduvancherry Police Station",
+        "district":  null,
+        "city":  "kancheepuram",
+        "lat":  12.8439226,
+        "lng":  80.0615864
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4445386757,
+        "name":  "Baluchetty Chatram Police station",
+        "district":  null,
+        "city":  "kancheepuram",
+        "lat":  12.8768075,
+        "lng":  79.6160108
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4445409369,
+        "name":  "Melmaruvathur Police Station",
+        "district":  null,
+        "city":  "kancheepuram",
+        "lat":  12.4316923,
+        "lng":  79.8319190
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4445425089,
+        "name":  "Mathur Police Station",
+        "district":  null,
+        "city":  "kancheepuram",
+        "lat":  12.3828409,
+        "lng":  78.4125514
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4445488162,
+        "name":  "Otteri Police Station",
+        "district":  null,
+        "city":  "kancheepuram",
+        "lat":  13.0874523,
+        "lng":  80.2458786
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4445825097,
+        "name":  "Palur Police station",
+        "district":  null,
+        "city":  "kancheepuram",
+        "lat":  12.7676644,
+        "lng":  79.9034914
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4446290798,
+        "name":  "Ammapet B 6  Police Station",
+        "district":  null,
+        "city":  "salem",
+        "lat":  11.6530298,
+        "lng":  78.1617852
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4446318185,
+        "name":  "Ammapet B 6  Police Station",
+        "district":  null,
+        "city":  "salem",
+        "lat":  11.6590023,
+        "lng":  78.1816097
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4446321544,
+        "name":  "Annadanapatti B 4 Police Station",
+        "district":  null,
+        "city":  "salem",
+        "lat":  11.6424031,
+        "lng":  78.1404779
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4446325349,
+        "name":  "Attayampati C 1 Police Station",
+        "district":  null,
+        "city":  "salem",
+        "lat":  11.5313534,
+        "lng":  78.0508670
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4446333993,
+        "name":  "Hastampatti B 7 Police Station",
+        "district":  null,
+        "city":  "Salem",
+        "lat":  11.6778088,
+        "lng":  78.1645798
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4446337753,
+        "name":  "Kannankurichi B 8 Police Station",
+        "district":  null,
+        "city":  "Salem",
+        "lat":  11.6967465,
+        "lng":  78.1769759
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4446339678,
+        "name":  "Karipatti Police Station",
+        "district":  null,
+        "city":  "salem",
+        "lat":  9.6771157,
+        "lng":  78.1034294
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4446341974,
+        "name":  "Kitchipalayam B 5 Police Station",
+        "district":  null,
+        "city":  "salem",
+        "lat":  11.6472529,
+        "lng":  78.1702578
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4446350980,
+        "name":  "Mallur Police Station",
+        "district":  null,
+        "city":  "salem",
+        "lat":  11.5452987,
+        "lng":  78.1428828
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4446359348,
+        "name":  "Palapatti B 10 Police Station",
+        "district":  null,
+        "city":  "salem",
+        "lat":  11.6699556,
+        "lng":  78.1394849
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4446368920,
+        "name":  "Panamarathupatti Police Station",
+        "district":  null,
+        "city":  "salem",
+        "lat":  11.5614945,
+        "lng":  78.1639663
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4446378287,
+        "name":  "Police Control Room Police Station",
+        "district":  null,
+        "city":  "salem",
+        "lat":  11.6425701,
+        "lng":  78.1459515
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4446385831,
+        "name":  "Suramangalam Police Station",
+        "district":  null,
+        "city":  "salem",
+        "lat":  11.6708007,
+        "lng":  78.1168863
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4446388122,
+        "name":  "Shevapet B 2 Police Station",
+        "district":  null,
+        "city":  "salem",
+        "lat":  11.6514754,
+        "lng":  78.1522608
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4446398757,
+        "name":  "Veeranam Police Station",
+        "district":  "Salem",
+        "city":  "Salem",
+        "lat":  11.6862224,
+        "lng":  78.2128652
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4446403140,
+        "name":  "Women Ammapet W 2 Police Station",
+        "district":  null,
+        "city":  "salem",
+        "lat":  11.6590617,
+        "lng":  78.1818592
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4446409862,
+        "name":  "Women Salem Town W 1 Police Station",
+        "district":  null,
+        "city":  "Salem",
+        "lat":  11.6540130,
+        "lng":  78.1601008
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4446984572,
+        "name":  "police station s11",
+        "district":  null,
+        "city":  "kanchipuram",
+        "lat":  12.9254171,
+        "lng":  80.1128984
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4446987278,
+        "name":  "Somangalam police station",
+        "district":  null,
+        "city":  "kanchipuram",
+        "lat":  12.9459306,
+        "lng":  80.0355638
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4446991785,
+        "name":  "thiroporur police station",
+        "district":  null,
+        "city":  "kanchipuram",
+        "lat":  12.7236799,
+        "lng":  80.1887292
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4446993625,
+        "name":  "Uthiranerur police station",
+        "district":  null,
+        "city":  "kanchipuram",
+        "lat":  12.6162879,
+        "lng":  79.7537657
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4446999050,
+        "name":  "Acirapakkam Police Station",
+        "district":  null,
+        "city":  "kanchipuram",
+        "lat":  12.4038340,
+        "lng":  79.8174314
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4446999051,
+        "name":  "Sriperumbudur Police Station",
+        "district":  null,
+        "city":  "kanchipuram",
+        "lat":  12.9637993,
+        "lng":  79.9491741
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4449926670,
+        "name":  "Cheyyar Police Station",
+        "district":  null,
+        "city":  "cheyyar,tamilnadu",
+        "lat":  12.6667419,
+        "lng":  79.5406110
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4449967759,
+        "name":  "J.J Nagar Police Booth (V3)",
+        "district":  null,
+        "city":  "Chennai, Tamil Nadu",
+        "lat":  13.0876952,
+        "lng":  80.1878894
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4449972552,
+        "name":  "Anna Nagar Police Station",
+        "district":  null,
+        "city":  "Tallakulam, Madurai",
+        "lat":  9.9354414,
+        "lng":  78.1442838
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4449998376,
+        "name":  "D6 Police Station",
+        "district":  null,
+        "city":  "Tamil Nadu",
+        "lat":  12.7890654,
+        "lng":  80.0309867
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4450002469,
+        "name":  null,
+        "district":  null,
+        "city":  "chennai",
+        "lat":  12.4325210,
+        "lng":  79.8317603
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4450005607,
+        "name":  "Orathi Police Station",
+        "district":  null,
+        "city":  "kanchipuram,TN",
+        "lat":  12.3806752,
+        "lng":  79.6928343
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4450010503,
+        "name":  "Thalambur Police Station",
+        "district":  null,
+        "city":  "kanchipuram,TN",
+        "lat":  12.8469006,
+        "lng":  80.2271771
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4450449989,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  10.9875675,
+        "lng":  76.9639330
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4471710291,
+        "name":  "Temple police station",
+        "district":  null,
+        "city":  null,
+        "lat":  9.2893241,
+        "lng":  79.3185256
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4517325189,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  11.6187962,
+        "lng":  78.1446278
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4517325190,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  11.6336943,
+        "lng":  78.1495015
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4517325389,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  11.6422125,
+        "lng":  78.1454129
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4528055734,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  11.4549850,
+        "lng":  77.4270905
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4543308094,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  10.8266164,
+        "lng":  78.6946494
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4546946582,
+        "name":  "West Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  9.5924531,
+        "lng":  77.9534737
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4578007190,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  8.0810373,
+        "lng":  77.5337547
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4584953596,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  11.0528309,
+        "lng":  77.9221892
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4592158996,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  10.7895835,
+        "lng":  78.6803313
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4603492001,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  9.9105636,
+        "lng":  78.1495967
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4693434975,
+        "name":  "Viruthampattu police station",
+        "district":  null,
+        "city":  null,
+        "lat":  12.9534269,
+        "lng":  79.1414205
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4701650874,
+        "name":  "Gandhi Market Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  10.8161795,
+        "lng":  78.6944015
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4707055100,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  11.7189488,
+        "lng":  79.7696453
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4748988045,
+        "name":  "Arakkonam Town Police Station",
+        "district":  null,
+        "city":  "Arakkonam",
+        "lat":  13.0838611,
+        "lng":  79.6699654
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4857137121,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  12.4904347,
+        "lng":  80.1585715
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4878937211,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  10.9876225,
+        "lng":  78.3361429
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4881957124,
+        "name":  "Kadampuliyur Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  11.7025877,
+        "lng":  79.5509081
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  4951080243,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  10.9407487,
+        "lng":  78.4199515
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  5029745421,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  10.4874625,
+        "lng":  77.7512396
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  5079396769,
+        "name":  "District Commissioner Office",
+        "district":  null,
+        "city":  null,
+        "lat":  10.7806820,
+        "lng":  78.7015497
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  5079397364,
+        "name":  "Police Assistance Booth",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0699263,
+        "lng":  80.2714181
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  5079397452,
+        "name":  "Mandiyur Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  10.6596787,
+        "lng":  78.7408896
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  5079397456,
+        "name":  "District Police Office",
+        "district":  null,
+        "city":  null,
+        "lat":  10.7849428,
+        "lng":  78.6990110
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  5225890331,
+        "name":  "Police Quarters",
+        "district":  null,
+        "city":  "Cuddalore",
+        "lat":  11.7516072,
+        "lng":  79.7602431
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  5225891829,
+        "name":  "Cuddalore New Town Police Station",
+        "district":  null,
+        "city":  "Cuddalore",
+        "lat":  11.7513011,
+        "lng":  79.7610182
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  5226071789,
+        "name":  "Police Booth",
+        "district":  null,
+        "city":  null,
+        "lat":  13.1037724,
+        "lng":  80.0585425
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  5226197960,
+        "name":  "T9 Police Station Pattabiram",
+        "district":  null,
+        "city":  null,
+        "lat":  13.1222511,
+        "lng":  80.0624155
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  5226262920,
+        "name":  "J-10 Semmenchery Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  12.9008558,
+        "lng":  80.2280156
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  5232302356,
+        "name":  "Police Station",
+        "district":  null,
+        "city":  "Thanjavur",
+        "lat":  10.7743667,
+        "lng":  79.1328753
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  5234779869,
+        "name":  "Tamil nadu special police battalion",
+        "district":  null,
+        "city":  null,
+        "lat":  10.7901246,
+        "lng":  78.6825796
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  5235144279,
+        "name":  "Ayyampettai Police Station",
+        "district":  null,
+        "city":  "Ayyampet",
+        "lat":  10.8905055,
+        "lng":  79.1890064
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  5338402894,
+        "name":  "Karunya nagar police station",
+        "district":  null,
+        "city":  null,
+        "lat":  10.9419510,
+        "lng":  76.7536848
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  5367536437,
+        "name":  "Police Booth",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0149758,
+        "lng":  80.1816427
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  5601012628,
+        "name":  "Prohibition Check Post",
+        "district":  null,
+        "city":  null,
+        "lat":  11.9827095,
+        "lng":  79.8450868
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  5692259731,
+        "name":  "B6 Kandamangalam Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  11.9189716,
+        "lng":  79.6785747
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  5893838815,
+        "name":  "G3",
+        "district":  null,
+        "city":  null,
+        "lat":  10.3406203,
+        "lng":  79.3854808
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  5970940185,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  11.0821749,
+        "lng":  76.9411896
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  6029686231,
+        "name":  "Police Station - Annamalai Nagar",
+        "district":  null,
+        "city":  "Annamalai Nagar",
+        "lat":  11.3869698,
+        "lng":  79.7111529
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  6169678221,
+        "name":  "Paramathi velur police station",
+        "district":  null,
+        "city":  null,
+        "lat":  11.1098949,
+        "lng":  78.0096057
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  6176739305,
+        "name":  "Jedarpalayam Police station",
+        "district":  null,
+        "city":  "Jedarpalayam",
+        "lat":  11.1496887,
+        "lng":  77.8921407
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  6209719671,
+        "name":  "Kangeyam Police Station",
+        "district":  null,
+        "city":  "Kangeyam",
+        "lat":  11.0011411,
+        "lng":  77.5626880
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  6236032560,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  10.3828047,
+        "lng":  78.8189833
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  6354550885,
+        "name":  "T-11 Tiruninravur Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  13.1251137,
+        "lng":  80.0286037
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  6367890840,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  12.3065121,
+        "lng":  78.0736555
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  6403262985,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  10.5562871,
+        "lng":  77.3649060
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  6765543397,
+        "name":  "Pattamadai Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  8.6671909,
+        "lng":  77.5840969
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  6780251054,
+        "name":  "Railway Police",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0341367,
+        "lng":  80.2664405
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  6854765885,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  12.9931857,
+        "lng":  80.2674928
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  6859575314,
+        "name":  "Alagappapuram Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  10.0807228,
+        "lng":  78.7936167
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  6859609827,
+        "name":  "North Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  10.0754828,
+        "lng":  78.7791774
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  6869192346,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  10.0790892,
+        "lng":  78.7804416
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  6892846811,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  10.0939554,
+        "lng":  78.7882948
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  7060019586,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  13.1188229,
+        "lng":  80.2974617
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  7060026186,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  13.0757377,
+        "lng":  80.2775929
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  7067369294,
+        "name":  "Ketti Village Police Station",
+        "district":  null,
+        "city":  "coimbatore",
+        "lat":  11.3816825,
+        "lng":  76.7358475
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  7161554515,
+        "name":  "Police Station Rasipuram",
+        "district":  "Namakkal",
+        "city":  "Rasipuram",
+        "lat":  11.4617825,
+        "lng":  78.1847411
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  7169322645,
+        "name":  "Diatrict Police Station, Kallakurichi",
+        "district":  null,
+        "city":  null,
+        "lat":  11.7030001,
+        "lng":  78.9430882
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  7199661754,
+        "name":  "Temple Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  9.2870953,
+        "lng":  79.3098772
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  7216689413,
+        "name":  "West Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  10.9584710,
+        "lng":  79.3748958
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  7251517085,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  11.6356677,
+        "lng":  78.8774714
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  7266279885,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  12.8204638,
+        "lng":  79.7181166
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  7279582468,
+        "name":  "Police Checkpost",
+        "district":  null,
+        "city":  null,
+        "lat":  10.2648663,
+        "lng":  77.5394683
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  7476292498,
+        "name":  "Anjugramam Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  8.1487731,
+        "lng":  77.5704974
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  7880331736,
+        "name":  "pachal police station",
+        "district":  null,
+        "city":  null,
+        "lat":  12.2701050,
+        "lng":  78.9416793
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  7880514352,
+        "name":  "Police station",
+        "district":  null,
+        "city":  null,
+        "lat":  8.9387509,
+        "lng":  77.4491522
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  7881407653,
+        "name":  "Arakandanallur Police station",
+        "district":  null,
+        "city":  null,
+        "lat":  11.9741088,
+        "lng":  79.2255456
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  7930461092,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  12.5331807,
+        "lng":  78.2136260
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  7973358298,
+        "name":  "Police station",
+        "district":  null,
+        "city":  null,
+        "lat":  10.7526081,
+        "lng":  78.8228808
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  7994867411,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  12.9738305,
+        "lng":  80.1868350
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  8096280337,
+        "name":  "R10 MGR Nagar Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0310886,
+        "lng":  80.2017034
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  8108600154,
+        "name":  "R6 Police Booth",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0265010,
+        "lng":  80.2116238
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  8151962606,
+        "name":  "Kunnathur Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  11.2730826,
+        "lng":  77.4111808
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  8477523432,
+        "name":  "Police Help Line",
+        "district":  null,
+        "city":  null,
+        "lat":  10.0732901,
+        "lng":  78.7813961
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  8495842126,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  13.0504496,
+        "lng":  80.1828617
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  8517767919,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  10.0679510,
+        "lng":  78.7649715
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  8541101418,
+        "name":  "Narikudi, Virudhunagar",
+        "district":  null,
+        "city":  null,
+        "lat":  9.5890379,
+        "lng":  78.3162074
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  8541104017,
+        "name":  "Ponnamaravathy",
+        "district":  null,
+        "city":  null,
+        "lat":  10.2764499,
+        "lng":  78.5388542
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  8616517717,
+        "name":  "Railway Protection Force",
+        "district":  null,
+        "city":  null,
+        "lat":  10.0680319,
+        "lng":  78.7918841
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  8645780209,
+        "name":  "Velachery Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  12.9809435,
+        "lng":  80.2209233
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  8766962805,
+        "name":  "Wellington Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  11.3547876,
+        "lng":  76.7846127
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  8770991976,
+        "name":  "DSP office",
+        "district":  null,
+        "city":  null,
+        "lat":  11.3430657,
+        "lng":  76.7908448
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  9022381123,
+        "name":  "à®à®°à®à¯à®à¯à®ªà¯à®ªà®¾à®³à¯à®¯à®®à¯ à®à®¾à®µà®²à¯ à®¨à®¿à®²à¯à®¯à®®à¯",
+        "district":  null,
+        "city":  null,
+        "lat":  11.3575860,
+        "lng":  77.8922539
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  9104697728,
+        "name":  "SP Bungalow",
+        "district":  null,
+        "city":  null,
+        "lat":  10.3609025,
+        "lng":  77.9868464
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  9104697729,
+        "name":  "S.P. Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  10.3609973,
+        "lng":  77.9864850
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  9104697823,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  10.3632709,
+        "lng":  77.9775751
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  9135062024,
+        "name":  "Police Station, Kattumannarkoil",
+        "district":  null,
+        "city":  "Kattumannarkoil",
+        "lat":  11.2748874,
+        "lng":  79.5467232
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  9194950899,
+        "name":  "Pettai Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  8.7233887,
+        "lng":  77.6634014
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  9569071027,
+        "name":  "E5 Mattuthavani Station",
+        "district":  null,
+        "city":  null,
+        "lat":  9.9435961,
+        "lng":  78.1551729
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  9743027919,
+        "name":  "à®ªà¯à®¤à¯à®à¯à®à¯à®à¯à®à¯ à®à®¾à®µà®²à¯ à®¨à®¿à®²à¯à®¯à®®à¯",
+        "district":  null,
+        "city":  null,
+        "lat":  8.7365240,
+        "lng":  78.0445247
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  9776942617,
+        "name":  "Women Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  10.0754931,
+        "lng":  78.7793942
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  9994034342,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  13.0414828,
+        "lng":  80.1331364
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  10199917192,
+        "name":  "Police station",
+        "district":  null,
+        "city":  null,
+        "lat":  11.3844885,
+        "lng":  78.1622883
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  10200933102,
+        "name":  "Puduchathiram Police station",
+        "district":  null,
+        "city":  null,
+        "lat":  11.3845086,
+        "lng":  78.1624257
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  10688149980,
+        "name":  "HUDCO Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  12.7258052,
+        "lng":  77.8579715
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  10703074467,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  11.6124667,
+        "lng":  79.4888385
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  10703115523,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  11.7925302,
+        "lng":  79.5278090
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  10741550765,
+        "name":  "mangadu police station",
+        "district":  null,
+        "city":  "chennai",
+        "lat":  13.0352881,
+        "lng":  80.1145210
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  10833430957,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  12.9407315,
+        "lng":  79.1733108
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  10926155837,
+        "name":  "Ranipet Police Station",
+        "district":  "Ranipet District",
+        "city":  null,
+        "lat":  12.9275387,
+        "lng":  79.3304569
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  10949254831,
+        "name":  "F2 Auroville Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  11.9910312,
+        "lng":  79.7840118
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  10968036587,
+        "name":  "Government Railway Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  11.6712204,
+        "lng":  78.1130289
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  11105068155,
+        "name":  "Police station",
+        "district":  null,
+        "city":  null,
+        "lat":  11.4417624,
+        "lng":  76.9515084
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  11174459038,
+        "name":  "J1 Sethiathoppu Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  11.4526281,
+        "lng":  79.5462513
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  11282919361,
+        "name":  "Maavatta Kaaval Aluvalagam - Tiruppur",
+        "district":  null,
+        "city":  null,
+        "lat":  11.0811826,
+        "lng":  77.3409296
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  11351138787,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  8.1789810,
+        "lng":  77.4367708
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  11411647470,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  10.5401717,
+        "lng":  76.9831010
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  11535349506,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  8.6258884,
+        "lng":  77.9077959
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  11535753770,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  8.2049330,
+        "lng":  77.5714806
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  11782326196,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  11.5563332,
+        "lng":  79.5553209
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  11799299456,
+        "name":  "L3 Kullanchavadi Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  11.6280544,
+        "lng":  79.6690515
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  11799300848,
+        "name":  "T-2 Reddichavady Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  11.8364604,
+        "lng":  79.7858521
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  11810827238,
+        "name":  "Thiruvarur Taluk Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  10.7807779,
+        "lng":  79.6076069
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  11816646131,
+        "name":  "Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  10.1460152,
+        "lng":  77.6419915
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  11816661282,
+        "name":  "Police station",
+        "district":  null,
+        "city":  null,
+        "lat":  10.3107880,
+        "lng":  77.6430616
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  11816672233,
+        "name":  "Police station",
+        "district":  null,
+        "city":  null,
+        "lat":  10.1224472,
+        "lng":  77.5459840
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  11816672814,
+        "name":  "DYSP Police station",
+        "district":  null,
+        "city":  null,
+        "lat":  10.2368898,
+        "lng":  77.4943466
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  11868319265,
+        "name":  "Munneerpallam Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  8.6818307,
+        "lng":  77.6986627
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  11905568731,
+        "name":  "Thottiyam Police station",
+        "district":  null,
+        "city":  null,
+        "lat":  10.9874415,
+        "lng":  78.3363001
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  12006228469,
+        "name":  "Thiruvarur Armed Reserve",
+        "district":  null,
+        "city":  null,
+        "lat":  10.7695222,
+        "lng":  79.6054543
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  12038551386,
+        "name":  "Tirupattur Town Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  12.4950217,
+        "lng":  78.5674799
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  12044030499,
+        "name":  "Malli Police Station",
+        "district":  "virudhunagar",
+        "city":  null,
+        "lat":  9.4944923,
+        "lng":  77.6937848
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  12077887621,
+        "name":  "kanjanur police station",
+        "district":  null,
+        "city":  null,
+        "lat":  12.0661599,
+        "lng":  79.4651755
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  12078422762,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  10.4337272,
+        "lng":  77.8609746
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  12078439759,
+        "name":  "X1 Veppur Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  11.5295953,
+        "lng":  79.1223868
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  12122699748,
+        "name":  "Annur Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  11.2315485,
+        "lng":  77.1014321
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  12169790434,
+        "name":  "Control Room",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0848694,
+        "lng":  80.2182466
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  12187065413,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  11.3498588,
+        "lng":  79.5058987
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  12287751638,
+        "name":  "E4 Police Station, Thuraiyur",
+        "district":  null,
+        "city":  null,
+        "lat":  11.1448718,
+        "lng":  78.5935710
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  12289141065,
+        "name":  "Southgate Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  9.9107439,
+        "lng":  78.1197237
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  12310097751,
+        "name":  "W.2. Oomangalam Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  11.5380527,
+        "lng":  79.4326298
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  12347266609,
+        "name":  "Mallasamudram Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  11.4998427,
+        "lng":  78.0303028
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  12459049285,
+        "name":  "M5 Ennore Police Booth",
+        "district":  null,
+        "city":  null,
+        "lat":  13.1864179,
+        "lng":  80.3076057
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  12473835683,
+        "name":  "Peelamedu E2 Police Station",
+        "district":  "Coimbatore",
+        "city":  "Coimbatore",
+        "lat":  11.0253639,
+        "lng":  77.0101634
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  12473896167,
+        "name":  "Podanur Police Station",
+        "district":  "Coimbatore",
+        "city":  "Podanur",
+        "lat":  10.9677575,
+        "lng":  76.9781012
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  12473897891,
+        "name":  "Ramanathapuram Police Station",
+        "district":  "Coimbatore",
+        "city":  "Puliakulam",
+        "lat":  11.0028259,
+        "lng":  76.9916717
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  12473901192,
+        "name":  "C1 Katoor Police Station",
+        "district":  "Coimbatore",
+        "city":  "Gandhipuram",
+        "lat":  11.0145917,
+        "lng":  76.9682620
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  12473949936,
+        "name":  "Out Post Police Station - Singanallur",
+        "district":  "Coimbatore",
+        "city":  "Singanallur",
+        "lat":  11.0025957,
+        "lng":  77.0288423
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  12473970775,
+        "name":  "Rathinapuri B-15 Police Station",
+        "district":  "Coimbatore",
+        "city":  "Ganapathy",
+        "lat":  11.0252974,
+        "lng":  76.9689359
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  12473983454,
+        "name":  "Thudiyalur Police Station",
+        "district":  "Coimbatore",
+        "city":  "Thudiyalur",
+        "lat":  11.0819434,
+        "lng":  76.9412392
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  12564674797,
+        "name":  "C-1 Bargur Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  12.5432967,
+        "lng":  78.3548710
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  12622178058,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  9.1729984,
+        "lng":  77.8716028
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  12622199524,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  8.9159832,
+        "lng":  78.0211681
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  12650886972,
+        "name":  "All Women Police Station, Vedaranyam",
+        "district":  "Nagapattinam",
+        "city":  null,
+        "lat":  10.3771265,
+        "lng":  79.8515803
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  12650925865,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  11.6066384,
+        "lng":  79.5489693
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  12705216101,
+        "name":  "Muthupet Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  10.3995959,
+        "lng":  79.4969815
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  12705216901,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  10.3867819,
+        "lng":  79.4601763
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  12729125134,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  8.7434769,
+        "lng":  78.1245230
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  12818542389,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  8.7491810,
+        "lng":  78.1666590
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  12909709888,
+        "name":  "DSP Police station",
+        "district":  null,
+        "city":  null,
+        "lat":  10.2388773,
+        "lng":  77.4947667
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  13001849060,
+        "name":  "B-2 R.S.Puram police station",
+        "district":  null,
+        "city":  null,
+        "lat":  11.0053262,
+        "lng":  76.9500311
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  13127975757,
+        "name":  "Srinagar colony police booth",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0125062,
+        "lng":  80.2272456
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  13337897439,
+        "name":  "Yercaud Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  11.7743308,
+        "lng":  78.2077213
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  13415981854,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  8.4992968,
+        "lng":  78.1261947
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  13609197706,
+        "name":  "Madurai Traffic Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  9.9245991,
+        "lng":  78.1488578
+    },
+    {
+        "osm_type":  "node",
+        "osm_id":  13673527215,
+        "name":  "Thondamuthur Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  10.9912998,
+        "lng":  76.8424602
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  24385984,
+        "name":  "G1",
+        "district":  null,
+        "city":  null,
+        "lat":  11.4117251,
+        "lng":  76.7031563
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  32747326,
+        "name":  "Police Quarters",
+        "district":  null,
+        "city":  null,
+        "lat":  11.4119909,
+        "lng":  76.6888919
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  43316308,
+        "name":  "Women\u0027s Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  10.7809629,
+        "lng":  79.1339162
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  43316417,
+        "name":  "Thanjavur District Police HQ",
+        "district":  null,
+        "city":  null,
+        "lat":  10.7801475,
+        "lng":  79.1335845
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  130035512,
+        "name":  "Police training camp 4th battalion in coimbatore",
+        "district":  null,
+        "city":  null,
+        "lat":  10.9412581,
+        "lng":  76.9396392
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  133585587,
+        "name":  "Commisioner Office",
+        "district":  "Coimbatore",
+        "city":  "Gopalapuram",
+        "lat":  11.0007466,
+        "lng":  76.9681639
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  133739505,
+        "name":  "B9 Saravanampatty Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  11.0747167,
+        "lng":  77.0027098
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  151586128,
+        "name":  "Nilgiri armed reserve",
+        "district":  null,
+        "city":  null,
+        "lat":  11.4239411,
+        "lng":  76.7092904
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  170941790,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  12.5293021,
+        "lng":  78.2056658
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  178616405,
+        "name":  "Pavoorchatram Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  8.9153414,
+        "lng":  77.3841992
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  208569725,
+        "name":  "Mylapore E1 PS",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0359873,
+        "lng":  80.2701421
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  211435479,
+        "name":  "Periamet PS",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0831121,
+        "lng":  80.2709138
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  211864592,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  13.0590491,
+        "lng":  80.2706569
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  214356712,
+        "name":  "R1 Police Station",
+        "district":  null,
+        "city":  "Chennai",
+        "lat":  13.0347642,
+        "lng":  80.2294897
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  217637688,
+        "name":  "Esplanade PS",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0864715,
+        "lng":  80.2853702
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  217767201,
+        "name":  "F4 Greams Road PS",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0598386,
+        "lng":  80.2547972
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  217864794,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  13.1231943,
+        "lng":  80.2873206
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  217878794,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  13.1000303,
+        "lng":  80.2601445
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  217920494,
+        "name":  "Peravallur Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  13.1113985,
+        "lng":  80.2263784
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  217921152,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  13.0934393,
+        "lng":  80.2434556
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  217960575,
+        "name":  "D1 Triplicane Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0672549,
+        "lng":  80.2736489
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  231052535,
+        "name":  "K4 Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0925447,
+        "lng":  80.2179700
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  240511203,
+        "name":  "R3 Ashok Nagar Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0440809,
+        "lng":  80.2173045
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  241007895,
+        "name":  "Abhiramapuram",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0332562,
+        "lng":  80.2559671
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  241027985,
+        "name":  "F2 Egmore Police Station",
+        "district":  null,
+        "city":  "Chennai",
+        "lat":  13.0750725,
+        "lng":  80.2570140
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  295103984,
+        "name":  "Sulur Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  11.0248612,
+        "lng":  77.1204842
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  297184195,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  8.9990294,
+        "lng":  77.3883670
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  297495780,
+        "name":  "Selaiyur Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  12.9229459,
+        "lng":  80.1352359
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  306980743,
+        "name":  "Police Quarters",
+        "district":  null,
+        "city":  null,
+        "lat":  11.4741243,
+        "lng":  77.8673495
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  342464013,
+        "name":  "Mohanur Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  11.0615398,
+        "lng":  78.1388491
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  343141650,
+        "name":  "Police Station - J1 - Saidapet",
+        "district":  null,
+        "city":  "Saidapet",
+        "lat":  13.0224076,
+        "lng":  80.2260780
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  344108979,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  11.6129203,
+        "lng":  79.5181499
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  345483870,
+        "name":  "Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  11.2185353,
+        "lng":  78.1695347
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  345483871,
+        "name":  "Women Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  11.2183133,
+        "lng":  78.1692677
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  354469200,
+        "name":  "E5 Foreshore Estate Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0245553,
+        "lng":  80.2748155
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  355104205,
+        "name":  "D3 Guduvancheri Police Station",
+        "district":  null,
+        "city":  "chennai",
+        "lat":  12.8439997,
+        "lng":  80.0603546
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  360995780,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  11.4216526,
+        "lng":  76.8611809
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  396363992,
+        "name":  "Police Station",
+        "district":  null,
+        "city":  "Thiruppapuliyur",
+        "lat":  11.7464090,
+        "lng":  79.7454395
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  580408779,
+        "name":  "K G Chavadi Police",
+        "district":  null,
+        "city":  null,
+        "lat":  10.8755239,
+        "lng":  76.8950568
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  677255714,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  12.9845863,
+        "lng":  80.2611458
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  683879393,
+        "name":  "Sipcot Police Station",
+        "district":  null,
+        "city":  "Ranipet",
+        "lat":  12.9562113,
+        "lng":  79.3044053
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  685342422,
+        "name":  "vadavalli police station",
+        "district":  null,
+        "city":  null,
+        "lat":  11.0452875,
+        "lng":  76.8949051
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  815415916,
+        "name":  "à®¨à®¾à®à¯à®à®¿à®¯à®¾à®°à¯à®ªà¯à®°à®®à¯ à®à®¾à®µà®²à¯ à®¨à®¿à®²à¯à®¯à®®à¯",
+        "district":  null,
+        "city":  null,
+        "lat":  10.0800037,
+        "lng":  78.6721154
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  824803689,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  11.3816601,
+        "lng":  76.7359451
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  835251736,
+        "name":  "Ambattur T1 Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  13.1073143,
+        "lng":  80.1525569
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  844760299,
+        "name":  "District Police Office",
+        "district":  null,
+        "city":  "Tiruvannamalai",
+        "lat":  12.2717178,
+        "lng":  79.0749271
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  914095632,
+        "name":  "Rajapalayam South Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  9.4499892,
+        "lng":  77.5546694
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  914095633,
+        "name":  "Rajapalayam North Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  9.4589091,
+        "lng":  77.5556291
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  923519789,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  11.0266436,
+        "lng":  76.9516544
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1029921184,
+        "name":  "B4 Taluk Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  11.9366797,
+        "lng":  79.5066409
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1038741390,
+        "name":  "Guindy J3 Police station",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0093531,
+        "lng":  80.2106918
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1065857124,
+        "name":  "Coastal Police Station Pazhaverkadu",
+        "district":  null,
+        "city":  null,
+        "lat":  13.4201609,
+        "lng":  80.3175919
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1076565133,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  9.5118788,
+        "lng":  77.6333965
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1076586613,
+        "name":  "B1 North Beach Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0899215,
+        "lng":  80.2904578
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1077452521,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  9.4982417,
+        "lng":  77.6458404
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1083677252,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  9.5115051,
+        "lng":  77.6335244
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1089835073,
+        "name":  "C3 Seven Wells Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0988879,
+        "lng":  80.2816945
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1089863482,
+        "name":  "C5 Kothavalchavadi Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0940347,
+        "lng":  80.2854602
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1090653955,
+        "name":  "C1 Flower Bazaar Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0884077,
+        "lng":  80.2817032
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1090653956,
+        "name":  "C1 Flower Bazaar Police Booth",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0883718,
+        "lng":  80.2823944
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1090950056,
+        "name":  "H1 Washermanpet Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  13.1086614,
+        "lng":  80.2809199
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1091003580,
+        "name":  "P2 Otteri Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  13.1003326,
+        "lng":  80.2515633
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1095915240,
+        "name":  "E3 Teynampet Police Assistance Booth",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0313112,
+        "lng":  80.2398324
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1095915254,
+        "name":  "Office of the Director General of Police Civil Supplies CID Chennai",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0300516,
+        "lng":  80.2432354
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1105182350,
+        "name":  "Perungudi Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  9.8294147,
+        "lng":  78.1009093
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1105971900,
+        "name":  "C2 Elephant Gate Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0926307,
+        "lng":  80.2750124
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1107911282,
+        "name":  "Office of the Deputy Commissioner of Police, Pudupet",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0686386,
+        "lng":  80.2620582
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1110191293,
+        "name":  "N3 Muthialpet Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0998376,
+        "lng":  80.2870248
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1112851437,
+        "name":  "D5 Marina Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0391513,
+        "lng":  80.2793207
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1116154383,
+        "name":  "B1 North Beach Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0966217,
+        "lng":  80.2915125
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1120328241,
+        "name":  "Armed Reserve Police",
+        "district":  null,
+        "city":  "Salem",
+        "lat":  11.6678863,
+        "lng":  78.1607012
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1120601888,
+        "name":  "T.S.P. Camp",
+        "district":  null,
+        "city":  null,
+        "lat":  10.4642883,
+        "lng":  77.5175337
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1122926992,
+        "name":  "G7 Chetpet Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0725347,
+        "lng":  80.2520681
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1123051523,
+        "name":  "D2 Anna Salai (Mount Road) Poice Station",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0610620,
+        "lng":  80.2622320
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1130577724,
+        "name":  "VEERANAM POLICE STATION",
+        "district":  "Salem",
+        "city":  "Salem",
+        "lat":  11.6862223,
+        "lng":  78.2128812
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1131693908,
+        "name":  "Tamil Nadu Police Computer Communication Centre",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0225066,
+        "lng":  80.2713880
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1131693910,
+        "name":  "Tamil Nadu State Crime Records Bureau",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0228060,
+        "lng":  80.2716339
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1132145713,
+        "name":  "Elliots Beach Police Outpost",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0007139,
+        "lng":  80.2712201
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1149353353,
+        "name":  "E1 Singanallur Police Station",
+        "district":  "Coimbatore",
+        "city":  "Singanallur",
+        "lat":  11.0003996,
+        "lng":  77.0296891
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1149353354,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  11.0001594,
+        "lng":  77.0296247
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1149353355,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  11.0000407,
+        "lng":  77.0296799
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1149353356,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  10.9999160,
+        "lng":  77.0297109
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1149353357,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  11.0001463,
+        "lng":  77.0298438
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1176848837,
+        "name":  "C5 Kothavalchavadi Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  13.0953439,
+        "lng":  80.2807237
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1182101834,
+        "name":  "D1 Chengalpattu Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  12.6965498,
+        "lng":  79.9773389
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1184563415,
+        "name":  "All Women\u0027s Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  12.6741842,
+        "lng":  79.9784278
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1184563416,
+        "name":  "Office Of Assistant Superintendent Of Police",
+        "district":  null,
+        "city":  null,
+        "lat":  12.6743322,
+        "lng":  79.9782946
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1226498570,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  11.4617857,
+        "lng":  78.1847269
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1227711041,
+        "name":  "Palapatti Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  11.6699080,
+        "lng":  78.1395206
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1231867886,
+        "name":  "Police Recruit School Thiruvallur",
+        "district":  null,
+        "city":  null,
+        "lat":  13.1468874,
+        "lng":  79.8387584
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1236765220,
+        "name":  "T13 Kundrathur Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  12.9974051,
+        "lng":  80.0918523
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1237329086,
+        "name":  "Gandhimanagar Police Station",
+        "district":  "Coimbatore",
+        "city":  "Peelamedu",
+        "lat":  11.0412789,
+        "lng":  77.0062037
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1281445046,
+        "name":  "Office of Deputy Superintendent of Police, Thiruvarur",
+        "district":  null,
+        "city":  null,
+        "lat":  10.7753720,
+        "lng":  79.6151789
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1299705525,
+        "name":  "C3 Appan Thiruppathi Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  10.0143867,
+        "lng":  78.1906544
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1302295328,
+        "name":  "Palladam Police Station",
+        "district":  "Tiruppur",
+        "city":  "Palladam",
+        "lat":  10.9966966,
+        "lng":  77.2791930
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1302295330,
+        "name":  "Karumathampatti Police Station",
+        "district":  "Coimbatore",
+        "city":  null,
+        "lat":  11.1093464,
+        "lng":  77.1802095
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1305366954,
+        "name":  "Thiruvarur Town Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  10.7745754,
+        "lng":  79.6322485
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1330398918,
+        "name":  "T-1 Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  13.1306625,
+        "lng":  80.1587027
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1337331154,
+        "name":  "BS-1 Vellore South Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  12.9164047,
+        "lng":  79.1328121
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1337331156,
+        "name":  "Ideal North Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  12.9233141,
+        "lng":  79.1315278
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1348530473,
+        "name":  "Chettipalayam Police Station",
+        "district":  "Coimbatore",
+        "city":  "Chettipalayam",
+        "lat":  10.9174713,
+        "lng":  77.0377395
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1349540967,
+        "name":  "District Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  12.9468623,
+        "lng":  79.3182381
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1381963782,
+        "name":  "Railway Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  11.4045403,
+        "lng":  76.6960877
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1425843725,
+        "name":  "Pudumund Police Station",
+        "district":  "Nilgiris",
+        "city":  "Ootacamund",
+        "lat":  11.4311534,
+        "lng":  76.7027635
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1454368627,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  11.7743228,
+        "lng":  78.2077212
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1460005482,
+        "name":  "Podanur Police Station",
+        "district":  null,
+        "city":  null,
+        "lat":  10.9658257,
+        "lng":  76.9854635
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1468160426,
+        "name":  "TN Police Battallion",
+        "district":  null,
+        "city":  null,
+        "lat":  10.9414244,
+        "lng":  76.9391242
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1471879856,
+        "name":  null,
+        "district":  null,
+        "city":  null,
+        "lat":  12.5306058,
+        "lng":  78.2105722
+    },
+    {
+        "osm_type":  "way",
+        "osm_id":  1486069895,
+        "name":  "Manavala Nagar Police Station",
+        "district":  "Tiruvallur",
+        "city":  "Melnallathur",
+        "lat":  13.0839303,
+        "lng":  79.8991106
+    }
+]
