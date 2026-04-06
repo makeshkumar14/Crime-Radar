@@ -1,1 +1,16 @@
 @import "tailwindcss";
+
+:root, body, #root {
+  /* Custom black cursor with white outline for visibility */
+  cursor: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSJibGFjayIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxIiBkPSJNNS41IDJ2MThsNS01IDQgNiAyLTEtNC02IDYgMHoiLz48L3N2Zz4=") 0 0, auto;
+}
+
+/* Force override for elements that often reset cursor */
+a, button, [role="button"], select, .cursor-pointer, 
+.leaflet-container, .maplibregl-canvas, .maplibregl-ctrl-group button {
+  cursor: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSJibGFjayIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxIiBkPSJNMTQgNlYzYTMgMyAwIDAgMC02IDB2MTEuMkw3IDEzYTIgMiAwIDAgMC0yLjggMi44bDMuOSA0YzEgMSAyLjMgMS4yIDMuNSAxLjJoNC40YzIuMiAwIDQtMS44IDQtNFY5YTMgMyAwIDAgMC02IDB2MTEuMkw3IDEzYTIgMiAwIDAgMC0yLjggMi44bDMuOSA0YzEgMSAyLjMgMS4yIDMuNSAxLjJoNC40YzIuMiAwIDQtMS44IDQtNFY5YTMgMyAwIDAgMC02IDAiLz48L3N2Zz4=") 10 0, pointer !important;
+}
+
+input, textarea, select {
+  caret-color: #fbbf24;
+}

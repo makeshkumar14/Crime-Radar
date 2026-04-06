@@ -187,13 +187,9 @@ export default function ScenarioZoneView({
             Separate Prediction Surface
           </p>
           <h2 className="mt-3 text-3xl font-black leading-none">{title}</h2>
-          <p className="mt-3 text-sm leading-6 text-slate-300">{subtitle}</p>
-          <p className="mt-4 rounded-2xl border border-white/10 bg-black/20 px-3 py-2 text-xs leading-5 text-slate-300">
-            Derived markers on this page are generated from the prediction engine at request time.
-            They align to your existing seeded taluk geometry but are not inserted into
-            <span className="px-1 text-white">fir_records</span>
-            or the previous dummy data tables.
-          </p>
+          {subtitle && (
+            <p className="mt-3 text-sm leading-6 text-slate-300">{subtitle}</p>
+          )}
         </div>
 
         <div className="mt-5 rounded-[28px] border border-white/10 bg-slate-900/80 p-5">
@@ -340,67 +336,28 @@ export default function ScenarioZoneView({
       </aside>
 
       <div className="flex flex-1 flex-col gap-4 overflow-hidden p-4">
-        <div className="grid grid-cols-[minmax(0,1fr)_280px] gap-4">
-          <div className="rounded-[30px] border border-white/10 bg-white/5 p-5">
-            <div className="flex items-center justify-between">
-              <div>
-                <p
-                  className="text-[11px] font-semibold uppercase tracking-[0.34em]"
-                  style={{ color: accentColor }}
+        <div className="min-h-0 flex-1 rounded-[32px] border border-white/10 bg-slate-950/70 p-3">
+          <div className="relative h-full overflow-hidden rounded-[26px]">
+            <div className="absolute right-4 top-4 z-[1000] flex gap-2">
+              {Object.entries(MAP_STYLES).map(([key, style]) => (
+                <button
+                  key={key}
+                  onClick={() => setMapStyle(key)}
+                  className={`rounded-full px-3 py-1 text-xs font-semibold shadow-md transition-colors ${
+                    mapStyle === key
+                      ? "text-white"
+                      : "bg-slate-900/80 text-slate-400 backdrop-blur hover:bg-slate-800"
+                  }`}
+                  style={
+                    mapStyle === key
+                      ? { backgroundColor: accentColor }
+                      : undefined
+                  }
                 >
-                  Precision Mapping
-                </p>
-                <h3 className="mt-2 text-xl font-black text-white">
-                  Zone envelopes with dense derived point overlay
-                </h3>
-              </div>
-              <div className="flex gap-2">
-                {Object.entries(MAP_STYLES).map(([key, style]) => (
-                  <button
-                    key={key}
-                    onClick={() => setMapStyle(key)}
-                    className={`rounded-full px-3 py-1 text-xs font-semibold ${
-                      mapStyle === key
-                        ? "text-white"
-                        : "bg-slate-900 text-slate-400"
-                    }`}
-                    style={
-                      mapStyle === key
-                        ? { backgroundColor: accentColor }
-                        : undefined
-                    }
-                  >
-                    {style.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-            <p className="mt-3 text-sm leading-6 text-slate-300">
-              The circles show forecast zone envelopes, while the smaller markers distribute
-              isolated dummy incidents inside each zone to make the prediction surface easier to
-              read without touching the original seeded dataset.
-            </p>
-          </div>
-
-          <div className="rounded-[30px] border border-white/10 bg-slate-900/90 p-5">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.32em] text-slate-400">
-              Model Notes
-            </p>
-            <div className="mt-4 space-y-3">
-              {(data?.notes || []).map((note) => (
-                <p
-                  key={note}
-                  className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm leading-6 text-slate-300"
-                >
-                  {note}
-                </p>
+                  {style.label}
+                </button>
               ))}
             </div>
-          </div>
-        </div>
-
-        <div className="min-h-0 flex-1 rounded-[32px] border border-white/10 bg-slate-950/70 p-3">
-          <div className="h-full overflow-hidden rounded-[26px]">
             <MapContainer
               center={TN_CENTER}
               zoom={7}
