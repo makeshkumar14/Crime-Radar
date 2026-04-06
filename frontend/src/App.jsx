@@ -116,6 +116,7 @@ function App() {
               subtitle="A dedicated forecast page for women safety hotspots, with dense derived markers mapped inside the strongest predicted taluk envelopes."
               accentColor="#EC4899"
               pointColor="#F9A8D4"
+              limit={50}
             />
           )}
           {activeView === "accident-zones" && (
@@ -125,6 +126,7 @@ function App() {
               subtitle="A dedicated accident forecast page showing top-risk corridors with additional isolated dummy incidents for easier zone reading."
               accentColor="#F97316"
               pointColor="#FDBA74"
+              limit={50}
             />
           )}
           {activeView === "analytics" && <Analytics />}

@@ -4,7 +4,9 @@ from collections import defaultdict
 from database import get_connection
 from ml_engine import patrol_ml_prediction
 
-STATEWIDE_ZONE_LAYER_LIMIT = 20
+STATEWIDE_HOTSPOT_LAYER_LIMIT = 20
+STATEWIDE_WOMEN_ZONE_LAYER_LIMIT = 50
+STATEWIDE_ACCIDENT_ZONE_LAYER_LIMIT = 50
 STATEWIDE_PATROL_DISTRICT_LIMIT = 16
 
 
@@ -164,10 +166,12 @@ def load_map_layers(year=None, category=None, district=None):
             }
         )
 
-    zone_layer_limit = len(zones) if district else STATEWIDE_ZONE_LAYER_LIMIT
+    hotspot_layer_limit = len(zones) if district else STATEWIDE_HOTSPOT_LAYER_LIMIT
+    women_zone_layer_limit = len(zones) if district else STATEWIDE_WOMEN_ZONE_LAYER_LIMIT
+    accident_zone_layer_limit = len(zones) if district else STATEWIDE_ACCIDENT_ZONE_LAYER_LIMIT
 
     hotspots = []
-    for zone in sorted(zones, key=lambda item: item["total"], reverse=True)[:zone_layer_limit]:
+    for zone in sorted(zones, key=lambda item: item["total"], reverse=True)[:hotspot_layer_limit]:
         if zone["total"] <= 0:
             continue
         hotspots.append(
@@ -199,7 +203,7 @@ def load_map_layers(year=None, category=None, district=None):
             zones,
             key=lambda item: item["women_safety_total"],
             reverse=True,
-        )[:zone_layer_limit]
+        )[:women_zone_layer_limit]
         if zone["women_safety_total"] > 0
     ]
 
@@ -217,7 +221,7 @@ def load_map_layers(year=None, category=None, district=None):
             zones,
             key=lambda item: item["accident_total"],
             reverse=True,
-        )[:zone_layer_limit]
+        )[:accident_zone_layer_limit]
         if zone["accident_total"] > 0
     ]
 
