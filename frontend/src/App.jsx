@@ -115,6 +115,7 @@ function App() {
               title="Women Safety Prediction"
               accentColor="#EC4899"
               pointColor="#F9A8D4"
+              limit={50}
             />
           )}
           {activeView === "accident-zones" && (
@@ -123,6 +124,7 @@ function App() {
               title="Accident Zone Prediction"
               accentColor="#F97316"
               pointColor="#FDBA74"
+              limit={50}
             />
           )}
           {activeView === "analytics" && <Analytics />}

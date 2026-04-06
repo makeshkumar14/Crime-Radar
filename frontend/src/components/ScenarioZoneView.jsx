@@ -80,6 +80,7 @@ export default function ScenarioZoneView({
   subtitle,
   accentColor,
   pointColor,
+  limit = 20,
 }) {
   const currentYear = new Date().getFullYear();
   const currentMonth = new Date().getMonth() + 1;
@@ -118,7 +119,7 @@ export default function ScenarioZoneView({
       district,
       year: Number(year),
       month: Number(month),
-      limit: 20,
+      limit,
     });
 
     setLoading(true);
@@ -134,7 +135,7 @@ export default function ScenarioZoneView({
       .finally(() => {
         setLoading(false);
       });
-  }, [district, month, scenario, year]);
+  }, [district, limit, month, scenario, year]);
 
   const topZone = data?.zones?.[0] || null;
   const mapCenter = topZone ? [topZone.lat, topZone.lng] : TN_CENTER;
@@ -290,13 +291,13 @@ export default function ScenarioZoneView({
               className="rounded-full px-3 py-1 text-xs font-bold uppercase tracking-[0.22em]"
               style={{ backgroundColor: `${accentColor}22`, color: accentColor }}
             >
-              Top 20
+              Top {limit}
             </div>
           </div>
 
           <div className="mt-4 space-y-3">
             {visibleZones.length ? (
-              visibleZones.slice(0, 8).map((zone) => (
+              visibleZones.map((zone) => (
                 <div
                   key={zone.taluk_id}
                   className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3"
