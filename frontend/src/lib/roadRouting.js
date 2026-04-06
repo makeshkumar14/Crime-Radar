@@ -101,6 +101,14 @@ export function buildRouteRequestPoints(
     return [normalizedPoints[0], normalizedPoints[normalizedPoints.length - 1]];
   }
 
+  if (strategy === "explicit") {
+    const selectedIndices = pickRoutePointIndices(
+      normalizedPoints.length,
+      Math.max(2, maxPoints),
+    );
+    return selectedIndices.map((index) => normalizedPoints[index]);
+  }
+
   const dedupedPoints = dedupeNearbyPoints(normalizedPoints);
   const selectedIndices = pickRoutePointIndices(
     dedupedPoints.length,
@@ -118,6 +126,42 @@ function buildCacheKey(points, serviceUrl) {
 
 function formatCoordinate(point) {
   return `${point.lat},${point.lng}`;
+}
+
+function normalizeLocationQueries(queries = []) {
+  return queries
+    .map((query) => (typeof query === "string" ? query.trim() : ""))
+    .filter(Boolean);
+}
+
+export function buildGoogleMapsDirectionsUrlFromQueries({
+  originQuery,
+  destinationQuery,
+  waypointQueries = [],
+  useDeviceOrigin = false,
+} = {}) {
+  const normalizedDestination = typeof destinationQuery === "string" ? destinationQuery.trim() : "";
+  if (!normalizedDestination) {
+    return null;
+  }
+
+  const params = new URLSearchParams({
+    api: "1",
+    destination: normalizedDestination,
+    travelmode: "driving",
+  });
+
+  const normalizedOrigin = typeof originQuery === "string" ? originQuery.trim() : "";
+  if (!useDeviceOrigin && normalizedOrigin) {
+    params.set("origin", normalizedOrigin);
+  }
+
+  const normalizedWaypoints = normalizeLocationQueries(waypointQueries).slice(0, 6);
+  if (normalizedWaypoints.length) {
+    params.set("waypoints", normalizedWaypoints.join("|"));
+  }
+
+  return `https://www.google.com/maps/dir/?${params.toString()}`;
 }
 
 export function buildGoogleMapsDirectionsUrl(

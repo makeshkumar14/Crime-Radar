@@ -2,6 +2,7 @@ import json
 import math
 import os
 from datetime import date
+from functools import lru_cache
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
@@ -36,6 +37,9 @@ DEFAULT_ROUTE_DEDUPE_OVERLAP = max(
     0.85,
     min(0.995, float(os.getenv("NAV_ROUTE_DEDUPE_OVERLAP", "0.97"))),
 )
+DEFAULT_DETOUR_ZONE_ATTEMPTS = max(1, min(4, int(os.getenv("NAV_DETOUR_ZONE_ATTEMPTS", "2"))))
+DEFAULT_DETOUR_REQUEST_LIMIT = max(2, min(10, int(os.getenv("NAV_DETOUR_REQUEST_LIMIT", "6"))))
+DEFAULT_GOOGLE_WAYPOINT_LIMIT = max(2, min(6, int(os.getenv("NAV_GOOGLE_WAYPOINT_LIMIT", "4"))))
 
 
 def round_value(value, digits=2):
@@ -121,6 +125,14 @@ def to_km_projection(lat, lng, ref_lat):
     return x, y
 
 
+def from_km_projection(x, y, ref_lat):
+    earth_radius_km = 6371.0
+    latitude = (y * 180) / (math.pi * earth_radius_km)
+    cos_lat = max(math.cos((ref_lat * math.pi) / 180), 0.15)
+    longitude = (x * 180) / (math.pi * earth_radius_km * cos_lat)
+    return {"lat": latitude, "lng": longitude}
+
+
 def point_to_segment_distance_km(point, start, end):
     ref_lat = (point["lat"] + start["lat"] + end["lat"]) / 3.0
     px, py = to_km_projection(point["lat"], point["lng"], ref_lat)
@@ -157,6 +169,62 @@ def minimum_polyline_distance_km(point, coordinates):
             ),
         )
     return best
+
+
+def nearest_route_context(point, coordinates):
+    if len(coordinates) < 2:
+        return None
+
+    best = None
+    for index in range(len(coordinates) - 1):
+        start = coordinates[index]
+        end = coordinates[index + 1]
+        ref_lat = (point["lat"] + start["lat"] + end["lat"]) / 3.0
+        px, py = to_km_projection(point["lat"], point["lng"], ref_lat)
+        ax, ay = to_km_projection(start["lat"], start["lng"], ref_lat)
+        bx, by = to_km_projection(end["lat"], end["lng"], ref_lat)
+        abx = bx - ax
+        aby = by - ay
+        length_sq = (abx * abx) + (aby * aby)
+        if length_sq <= 1e-9:
+            continue
+
+        apx = px - ax
+        apy = py - ay
+        t = max(0.0, min(1.0, ((apx * abx) + (apy * aby)) / length_sq))
+        closest_x = ax + abx * t
+        closest_y = ay + aby * t
+        distance_km = math.sqrt((px - closest_x) ** 2 + (py - closest_y) ** 2)
+        length = math.sqrt(length_sq)
+        forward = (abx / length, aby / length)
+        left = (-forward[1], forward[0])
+        signed_offset_km = ((px - closest_x) * left[0]) + ((py - closest_y) * left[1])
+        candidate = {
+            "index": index,
+            "progress": index + t,
+            "ref_lat": ref_lat,
+            "closest_xy": (closest_x, closest_y),
+            "closest_point": from_km_projection(closest_x, closest_y, ref_lat),
+            "forward": forward,
+            "left": left,
+            "signed_offset_km": signed_offset_km,
+            "distance_km": distance_km,
+        }
+        if best is None or candidate["distance_km"] < best["distance_km"]:
+            best = candidate
+
+    return best
+
+
+def offset_point_from_context(context, along_km=0.0, lateral_km=0.0):
+    closest_x, closest_y = context["closest_xy"]
+    forward_x, forward_y = context["forward"]
+    left_x, left_y = context["left"]
+    return from_km_projection(
+        closest_x + forward_x * along_km + left_x * lateral_km,
+        closest_y + forward_y * along_km + left_y * lateral_km,
+        context["ref_lat"],
+    )
 
 
 def route_signature(points):
@@ -212,6 +280,28 @@ def get_taluk_location(taluk_id):
     row = cursor.fetchone()
     conn.close()
     return dict(row) if row else None
+
+
+@lru_cache(maxsize=1)
+def load_route_place_index():
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute(
+        """
+        SELECT taluk_id, district, taluk, lat, lng, radius_km
+        FROM taluks
+        ORDER BY district, taluk
+        """
+    )
+    rows = [
+        {
+            **dict(row),
+            "label": f"{row['taluk']}, {row['district']}, Tamil Nadu, India",
+        }
+        for row in cursor.fetchall()
+    ]
+    conn.close()
+    return rows
 
 
 def build_accident_zone_snapshot(target_year, target_month, policy=None):
@@ -293,9 +383,40 @@ def fallback_route(origin, destination, source_label="fallback"):
     }
 
 
-def build_osrm_url(base_url, origin, destination, alternatives):
+def normalize_request_points(points, min_gap_km=0.35):
+    raw_points = []
+    for point in points:
+        lat = point.get("lat")
+        lng = point.get("lng")
+        if lat is None or lng is None:
+            continue
+        raw_points.append({"lat": float(lat), "lng": float(lng)})
+
+    if len(raw_points) <= 2:
+        return raw_points
+
+    normalized = [raw_points[0]]
+    for index, candidate in enumerate(raw_points[1:], start=1):
+        is_last = index == len(raw_points) - 1
+        if is_last:
+            normalized.append(candidate)
+            continue
+        if not normalized:
+            normalized.append(candidate)
+            continue
+        if haversine_km(
+            normalized[-1]["lat"],
+            normalized[-1]["lng"],
+            candidate["lat"],
+            candidate["lng"],
+        ) >= min_gap_km:
+            normalized.append(candidate)
+    return normalized
+
+
+def build_osrm_url(base_url, request_points, alternatives):
     base_url = base_url.rstrip("/")
-    coordinates = f"{origin['lng']},{origin['lat']};{destination['lng']},{destination['lat']}"
+    coordinates = ";".join(f"{point['lng']},{point['lat']}" for point in request_points)
     params = {
         "alternatives": alternatives if alternatives > 0 else "false",
         "overview": "full",
@@ -357,8 +478,12 @@ def request_osrm_nearest(base_url, point, source_label):
     }
 
 
-def request_osrm_candidates(base_url, origin, destination, alternatives, source_label):
-    request_url = build_osrm_url(base_url, origin, destination, alternatives)
+def request_osrm_candidates(base_url, request_points, alternatives, source_label):
+    request_points = normalize_request_points(request_points, min_gap_km=0.15)
+    if len(request_points) < 2:
+        return []
+
+    request_url = build_osrm_url(base_url, request_points, alternatives)
     request = Request(
         request_url,
         headers={"User-Agent": "CrimeRadar/1.0"},
@@ -401,12 +526,352 @@ def request_osrm_candidates(base_url, origin, destination, alternatives, source_
                 "duration_min": round_value((route.get("duration") or 0) / 60, 1),
                 "weight": route.get("weight"),
                 "signature": route_signature(coordinates),
-                "request_coordinates": [origin, destination],
+                "request_coordinates": request_points,
                 "request_url": request_url,
             }
         )
 
     return candidates
+
+
+def build_zone_detour_request_points(origin, destination, zone, context, policy, side, offset_scale=1.0):
+    warning_buffer_km = max(policy["warning_buffer_km"], zone.get("warning_radius_km") or 0)
+    strict_buffer_km = max(policy["strict_buffer_km"], zone.get("buffer_radius_km") or 0)
+    lateral_km = clamp(
+        max(
+            warning_buffer_km + 0.55 * offset_scale,
+            strict_buffer_km + 0.45,
+            1.15 * offset_scale,
+        ),
+        1.0,
+        4.8,
+    )
+    lead_km = clamp(
+        max(
+            lateral_km * 1.15,
+            warning_buffer_km * 0.9 + 0.7,
+        ),
+        0.9,
+        6.0,
+    )
+    entry = offset_point_from_context(
+        context,
+        along_km=-lead_km,
+        lateral_km=side * lateral_km,
+    )
+    exit = offset_point_from_context(
+        context,
+        along_km=lead_km,
+        lateral_km=side * lateral_km,
+    )
+    return normalize_request_points([origin, entry, exit, destination], min_gap_km=0.45)
+
+
+def build_multi_zone_detour_request_points(origin, destination, route, zones, policy, side):
+    contexts = []
+    for zone in zones:
+        context = nearest_route_context(zone, route)
+        if not context:
+            continue
+        contexts.append((context["progress"], zone, context))
+
+    if not contexts:
+        return []
+
+    request_points = [origin]
+    for _, zone, context in sorted(contexts, key=lambda item: item[0]):
+        zone_points = build_zone_detour_request_points(
+            origin,
+            destination,
+            zone,
+            context,
+            policy,
+            side,
+        )
+        request_points.extend(zone_points[1:-1])
+    request_points.append(destination)
+    return normalize_request_points(request_points, min_gap_km=0.45)
+
+
+def is_endpoint_adjacent_zone(zone, origin, destination, policy):
+    endpoint_distance_km = min(
+        haversine_km(zone["lat"], zone["lng"], origin["lat"], origin["lng"]),
+        haversine_km(zone["lat"], zone["lng"], destination["lat"], destination["lng"]),
+    )
+    threshold_km = max(
+        1.2,
+        (zone.get("warning_radius_km") or policy["warning_buffer_km"]) * 1.25,
+    )
+    return endpoint_distance_km <= threshold_km
+
+
+def build_detour_request_sets(origin, destination, current_path, policy):
+    if not current_path or len(current_path.get("route") or []) < 2:
+        return []
+
+    ranked_zones = sorted(
+        current_path.get("crossedAccidentZones") or current_path.get("accidentHits") or [],
+        key=lambda item: (
+            not item.get("intersects_buffer"),
+            -(item.get("weighted_severity") or 0),
+            item.get("min_distance_km") or 0,
+        ),
+    )
+    corridor_zones = [
+        zone
+        for zone in ranked_zones
+        if not is_endpoint_adjacent_zone(zone, origin, destination, policy)
+    ]
+    target_zones = (corridor_zones or ranked_zones)[:DEFAULT_DETOUR_ZONE_ATTEMPTS]
+    if not target_zones:
+        return []
+
+    request_sets = []
+    seen = set()
+
+    def register(points, label):
+        if len(points) < 3:
+            return
+        signature = route_signature(points)
+        if signature in seen:
+            return
+        seen.add(signature)
+        request_sets.append((points, label))
+
+    route = current_path["route"]
+    offset_scales = (1.0, 1.35)
+    for zone in target_zones:
+        context = nearest_route_context(zone, route)
+        if not context:
+            continue
+        preferred_side = -1 if context["signed_offset_km"] >= 0 else 1
+        side_labels = {
+            preferred_side: "opposite",
+            -preferred_side: "same",
+        }
+        for side in (preferred_side, -preferred_side):
+            for scale_index, offset_scale in enumerate(offset_scales, start=1):
+                register(
+                    build_zone_detour_request_points(
+                        origin,
+                        destination,
+                        zone,
+                        context,
+                        policy,
+                        side,
+                        offset_scale=offset_scale,
+                    ),
+                    f"osrm-detour-{zone['zone_id']}-{side_labels[side]}-{scale_index}",
+                )
+
+    if len(target_zones) > 1:
+        for side, label in ((1, "multi-left"), (-1, "multi-right")):
+            register(
+                build_multi_zone_detour_request_points(
+                    origin,
+                    destination,
+                    route,
+                    target_zones[:2],
+                    policy,
+                    side,
+                ),
+                f"osrm-detour-{label}",
+            )
+
+    return request_sets[:DEFAULT_DETOUR_REQUEST_LIMIT]
+
+
+def request_detour_candidates(base_url, origin, destination, current_path, policy):
+    candidates = []
+    for request_points, source_label in build_detour_request_sets(
+        origin,
+        destination,
+        current_path,
+        policy,
+    ):
+        candidates.extend(
+            request_osrm_candidates(
+                base_url,
+                request_points,
+                0,
+                source_label,
+            )
+        )
+    return candidates
+
+
+def maximum_route_corridor_offset_km(origin, destination, coordinates):
+    if len(coordinates) < 2:
+        return 0.0
+    return max(
+        point_to_segment_distance_km(point, origin, destination)
+        for point in coordinates
+    )
+
+
+def candidate_within_trip_envelope(candidate, origin, destination, baseline_offset_km, baseline_distance_km):
+    route = candidate.get("route") or []
+    if len(route) < 2:
+        return False
+
+    request_points = candidate.get("request_coordinates") or []
+    if len(request_points) >= 2:
+        start_request = request_points[0]
+        end_request = request_points[-1]
+        if haversine_km(start_request["lat"], start_request["lng"], origin["lat"], origin["lng"]) > 0.2:
+            return False
+        if haversine_km(
+            end_request["lat"],
+            end_request["lng"],
+            destination["lat"],
+            destination["lng"],
+        ) > 0.2:
+            return False
+
+    start_distance_km = haversine_km(route[0]["lat"], route[0]["lng"], origin["lat"], origin["lng"])
+    end_distance_km = haversine_km(
+        route[-1]["lat"],
+        route[-1]["lng"],
+        destination["lat"],
+        destination["lng"],
+    )
+    endpoint_limit_km = max(
+        8.0,
+        (origin.get("radius_km") or 0) * 0.8,
+        (destination.get("radius_km") or 0) * 0.8,
+    )
+    if start_distance_km > endpoint_limit_km or end_distance_km > endpoint_limit_km:
+        return False
+
+    candidate_offset_km = maximum_route_corridor_offset_km(origin, destination, route)
+    allowed_offset_km = max(
+        18.0,
+        baseline_offset_km + max(8.0, baseline_distance_km * 0.18),
+        baseline_offset_km * 1.65,
+    )
+    return candidate_offset_km <= allowed_offset_km
+
+
+def nearest_route_place(point, route_places):
+    best_match = None
+    best_distance_km = float("inf")
+    for place in route_places:
+        distance_km = haversine_km(
+            point["lat"],
+            point["lng"],
+            place["lat"],
+            place["lng"],
+        )
+        max_attach_distance_km = max(
+            2.2,
+            min(10.0, (place.get("radius_km") or 0) * 0.9),
+        )
+        if distance_km > max_attach_distance_km:
+            continue
+        if distance_km < best_distance_km:
+            best_distance_km = distance_km
+            best_match = place
+    return best_match
+
+
+def route_progress_ratio(point, route):
+    context = nearest_route_context(point, route)
+    if not context or len(route) < 2:
+        return 0.5
+    return max(0.0, min(1.0, context["progress"] / (len(route) - 1)))
+
+
+def build_named_waypoint_queries(
+    path,
+    origin_query,
+    destination_query,
+    baseline_route=None,
+    max_waypoints=DEFAULT_GOOGLE_WAYPOINT_LIMIT,
+):
+    route = path.get("route") or []
+    if len(route) < 3:
+        return []
+
+    route_places = load_route_place_index()
+    excluded_labels = {
+        (origin_query or "").strip().lower(),
+        (destination_query or "").strip().lower(),
+    }
+    request_points = (path.get("request_coordinates") or [])[1:-1]
+    candidates = []
+    seen_labels = set()
+
+    def register(point, priority, progress=None):
+        place = nearest_route_place(point, route_places)
+        if not place:
+            return
+        label = place["label"]
+        normalized_label = label.strip().lower()
+        if normalized_label in excluded_labels or normalized_label in seen_labels:
+            return
+        progress_ratio = route_progress_ratio(point, route) if progress is None else progress
+        if progress_ratio <= 0.08 or progress_ratio >= 0.92:
+            return
+        divergence_km = (
+            0.0
+            if not baseline_route
+            else minimum_polyline_distance_km(point, baseline_route)
+        )
+        candidates.append(
+            {
+                "label": label,
+                "progress": progress_ratio,
+                "priority": priority,
+                "divergence_km": divergence_km,
+            }
+        )
+        seen_labels.add(normalized_label)
+
+    for point in request_points:
+        register(point, priority=0)
+
+    sample_step = max(1, len(route) // 24)
+    for index in range(sample_step, len(route) - 1, sample_step):
+        point = route[index]
+        divergence_km = (
+            0.0
+            if not baseline_route
+            else minimum_polyline_distance_km(point, baseline_route)
+        )
+        if baseline_route and divergence_km < 0.45:
+            continue
+        register(
+            point,
+            priority=1,
+            progress=index / (len(route) - 1),
+        )
+
+    if not candidates and baseline_route:
+        for index in range(max(1, len(route) // 5), len(route) - 1, max(1, len(route) // 5)):
+            register(
+                route[index],
+                priority=2,
+                progress=index / (len(route) - 1),
+            )
+
+    ranked = sorted(
+        candidates,
+        key=lambda item: (
+            item["priority"],
+            -(item["divergence_km"] or 0),
+            item["progress"],
+        ),
+    )
+    selected = []
+    for candidate in ranked:
+        if any(abs(candidate["progress"] - item["progress"]) < 0.1 for item in selected):
+            continue
+        selected.append(candidate)
+        if len(selected) >= max_waypoints:
+            break
+
+    selected.sort(key=lambda item: item["progress"])
+    return [item["label"] for item in selected]
 
 
 def dedupe_candidates(candidates, overlap_threshold=DEFAULT_ROUTE_DEDUPE_OVERLAP):
@@ -578,6 +1043,22 @@ def safer_candidate_sort_key(candidate):
     )
 
 
+def is_meaningfully_safer_candidate(candidate, baseline_candidate):
+    if candidate.get("signature") == baseline_candidate.get("signature"):
+        return False
+    if safer_candidate_sort_key(candidate) < safer_candidate_sort_key(baseline_candidate):
+        return True
+
+    baseline_clearance = baseline_candidate.get("minZoneClearanceKm") or 0.0
+    candidate_clearance = candidate.get("minZoneClearanceKm") or 0.0
+    return (
+        (baseline_candidate.get("affectedZoneHits") or 0) > 0
+        and (candidate.get("accidentZoneHits") or 0) <= (baseline_candidate.get("accidentZoneHits") or 0)
+        and (candidate.get("accidentExposure") or 0) <= (baseline_candidate.get("accidentExposure") or 0)
+        and candidate_clearance >= baseline_clearance + 0.2
+    )
+
+
 def safer_candidate(current_candidate, comparison_candidates, policy=None, mode="compare"):
     policy = policy or build_routing_policy()
     if not comparison_candidates:
@@ -594,7 +1075,19 @@ def safer_candidate(current_candidate, comparison_candidates, policy=None, mode=
         current_candidate["selection_profile"] = "fast_only"
         return current_candidate
 
-    balanced_candidates = [candidate for candidate in candidates if candidate["withinBalanceLimits"]]
+    preferred_candidates = candidates
+    if current_candidate.get("affectedZoneHits"):
+        improved_distinct_candidates = [
+            candidate
+            for candidate in candidates
+            if is_meaningfully_safer_candidate(candidate, current_candidate)
+        ]
+        if improved_distinct_candidates:
+            preferred_candidates = improved_distinct_candidates
+
+    balanced_candidates = [
+        candidate for candidate in preferred_candidates if candidate["withinBalanceLimits"]
+    ]
     strict_balanced_candidates = [
         candidate
         for candidate in balanced_candidates
@@ -611,7 +1104,7 @@ def safer_candidate(current_candidate, comparison_candidates, policy=None, mode=
         selected["selection_profile"] = "least_risky_balanced_fallback"
         return selected
 
-    selected = min(candidates, key=safer_candidate_sort_key)
+    selected = min(preferred_candidates, key=safer_candidate_sort_key)
     selected["selection_profile"] = "least_risky_unbalanced_fallback"
     return selected
 
@@ -706,10 +1199,10 @@ def build_navigation_payload(
 
     all_zones = build_accident_zone_snapshot(target_year, target_month, policy=policy)
     accident_zones = select_relevant_accident_zones(all_zones, origin, destination)
+    direct_request_points = [origin, destination]
     fast_route_url = build_osrm_url(
         DEFAULT_FAST_ROUTE_URL,
-        origin,
-        destination,
+        direct_request_points,
         requested_alternatives,
     )
     fast_snap_debug = {
@@ -719,14 +1212,14 @@ def build_navigation_payload(
 
     fast_candidates = request_osrm_candidates(
         DEFAULT_FAST_ROUTE_URL,
-        origin,
-        destination,
+        direct_request_points,
         requested_alternatives,
         "osrm-fast",
     )
     safe_route_url = None
     safe_snap_debug = None
     safe_candidates = []
+    detour_base_url = DEFAULT_SAFE_ROUTE_URL or DEFAULT_FAST_ROUTE_URL
     if mode in {"compare", "safe"} and DEFAULT_SAFE_ROUTE_URL and DEFAULT_SAFE_ROUTE_URL != DEFAULT_FAST_ROUTE_URL:
         safe_alternatives = min(
             DEFAULT_SAFE_ALTERNATIVES,
@@ -734,8 +1227,7 @@ def build_navigation_payload(
         )
         safe_route_url = build_osrm_url(
             DEFAULT_SAFE_ROUTE_URL,
-            origin,
-            destination,
+            direct_request_points,
             safe_alternatives,
         )
         safe_snap_debug = {
@@ -744,8 +1236,7 @@ def build_navigation_payload(
         }
         safe_candidates = request_osrm_candidates(
             DEFAULT_SAFE_ROUTE_URL,
-            origin,
-            destination,
+            direct_request_points,
             safe_alternatives,
             "osrm-safe",
         )
@@ -756,7 +1247,63 @@ def build_navigation_payload(
         fast_candidates = [fallback_route(origin, destination)]
 
     fast_candidates = dedupe_candidates(fast_candidates)
-    comparison_candidates = dedupe_candidates(fast_candidates + safe_candidates)
+    fast_scored_candidates = [
+        score_route_against_accident_zones(dict(candidate), accident_zones, policy=policy)
+        for candidate in fast_candidates
+    ]
+    current_path = choose_fastest_candidate(fast_scored_candidates)
+    baseline_distance_km = (
+        current_path.get("distanceKm")
+        if current_path and current_path.get("distanceKm") is not None
+        else haversine_km(origin["lat"], origin["lng"], destination["lat"], destination["lng"])
+    )
+    baseline_offset_km = (
+        maximum_route_corridor_offset_km(origin, destination, current_path.get("route") or [])
+        if current_path
+        else 0.0
+    )
+
+    detour_candidates = []
+    if (
+        mode in {"compare", "safe"}
+        and current_path
+        and not current_path["source"].startswith("fallback")
+        and current_path.get("affectedZoneHits")
+    ):
+        detour_candidates = request_detour_candidates(
+            detour_base_url,
+            origin,
+            destination,
+            current_path,
+            policy,
+        )
+
+    bounded_safe_candidates = [
+        candidate
+        for candidate in safe_candidates
+        if candidate_within_trip_envelope(
+            candidate,
+            origin,
+            destination,
+            baseline_offset_km,
+            baseline_distance_km,
+        )
+    ]
+    bounded_detour_candidates = [
+        candidate
+        for candidate in detour_candidates
+        if candidate_within_trip_envelope(
+            candidate,
+            origin,
+            destination,
+            baseline_offset_km,
+            baseline_distance_km,
+        )
+    ]
+
+    comparison_candidates = dedupe_candidates(
+        fast_candidates + bounded_safe_candidates + bounded_detour_candidates
+    )
     scored_candidates = [
         score_route_against_accident_zones(dict(candidate), accident_zones, policy=policy)
         for candidate in comparison_candidates
@@ -782,6 +1329,19 @@ def build_navigation_payload(
     safe_path["zonesAvoided"] = zones_avoided
 
     route_diverges = current_path["signature"] != safe_path["signature"]
+    origin_query = origin.get("label") or coordinate_label(origin)
+    destination_query = destination.get("label") or coordinate_label(destination)
+    current_path["maps_origin_query"] = origin_query
+    current_path["maps_destination_query"] = destination_query
+    current_path["maps_waypoint_queries"] = []
+    safe_path["maps_origin_query"] = origin_query
+    safe_path["maps_destination_query"] = destination_query
+    safe_path["maps_waypoint_queries"] = build_named_waypoint_queries(
+        safe_path,
+        origin_query,
+        destination_query,
+        baseline_route=current_path["route"] if route_diverges else None,
+    )
     overlap_ratio = round_value(route_overlap_ratio(current_path["route"], safe_path["route"]), 2)
     risk_reduction = round_value(
         max(0.0, current_path["accidentExposure"] - safe_path["accidentExposure"]),
@@ -815,8 +1375,8 @@ def build_navigation_payload(
         "target_month": target_month,
         "origin": origin,
         "destination": destination,
-        "origin_query": origin.get("label") or coordinate_label(origin),
-        "destination_query": destination.get("label") or coordinate_label(destination),
+        "origin_query": origin_query,
+        "destination_query": destination_query,
         "request_debug": {
             "fast_route_url": fast_route_url,
             "safe_route_url": safe_route_url,

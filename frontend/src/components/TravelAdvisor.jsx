@@ -10,7 +10,10 @@ import {
   useMap,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import { buildGoogleMapsDirectionsUrl } from "../lib/roadRouting";
+import {
+  buildGoogleMapsDirectionsUrl,
+  buildGoogleMapsDirectionsUrlFromQueries,
+} from "../lib/roadRouting";
 import { apiUrl } from "../lib/api";
 
 const ROUTE_COLORS = {
@@ -359,6 +362,7 @@ export default function TravelAdvisor() {
   const isFallbackRoute =
     result?.current_path?.source?.startsWith("fallback") ||
     result?.safer_path?.source?.startsWith("fallback");
+  const noSaferDetourFound = !routesDiffer && currentAccidentHits > 0;
 
   const handleAnalyse = async () => {
     if (!form.origin_taluk_id || !form.destination_taluk_id || sameZoneSelected) {
@@ -392,6 +396,13 @@ export default function TravelAdvisor() {
         setNoticeMessage(
           "OSRM was unavailable, so this preview has fallen back to an approximate straight-line route.",
         );
+      } else if (
+        !advisory?.route_diverges &&
+        (advisory?.current_path?.accidentZoneHits ?? 0) > 0
+      ) {
+        setNoticeMessage(
+          "The advisor checked extra road detours, but no better real-road corridor reduced the accident-zone exposure for this trip.",
+        );
       } else if (advisory?.safer_path?.source?.startsWith("osrm-safe")) {
         setNoticeMessage(
           "The backend compared the fastest route with a safest-route profile before recommending the lower-risk drive.",
@@ -411,15 +422,42 @@ export default function TravelAdvisor() {
   };
 
   const openGoogleMaps = (pathType, { useDeviceOrigin = false } = {}) => {
-    const routePoints =
-      pathType === "safer"
-        ? result?.safer_path?.route || []
-        : result?.current_path?.route || [];
-    const strategy = pathType === "safer" && routesDiffer ? "corridor" : "direct";
+    const selectedPath =
+      pathType === "safer" ? result?.safer_path || null : result?.current_path || null;
+    const namedOriginQuery = selectedPath?.maps_origin_query || result?.origin_query || "";
+    const namedDestinationQuery =
+      selectedPath?.maps_destination_query || result?.destination_query || "";
+    const namedWaypointQueries = selectedPath?.maps_waypoint_queries || [];
+    const namedUrl = buildGoogleMapsDirectionsUrlFromQueries({
+      originQuery: namedOriginQuery,
+      destinationQuery: namedDestinationQuery,
+      waypointQueries: namedWaypointQueries,
+      useDeviceOrigin,
+    });
+    if (namedUrl && (namedWaypointQueries.length > 0 || pathType === "current")) {
+      window.open(namedUrl, "_blank", "noopener,noreferrer");
+      return;
+    }
+
+    const requestPoints = selectedPath?.request_coordinates || [];
+    const routePoints = requestPoints.length >= 2 ? requestPoints : selectedPath?.route || [];
+    const strategy =
+      requestPoints.length > 2
+        ? "explicit"
+        : pathType === "safer" && routesDiffer
+          ? "corridor"
+          : "direct";
     const url = buildGoogleMapsDirectionsUrl(routePoints, {
       strategy,
       useDeviceOrigin,
-      maxWaypoints: pathType === "safer" && routesDiffer ? 6 : 2,
+      maxWaypoints: Math.max(
+        2,
+        requestPoints.length > 2
+          ? requestPoints.length - 2
+          : pathType === "safer" && routesDiffer
+            ? 6
+            : 2,
+      ),
     });
 
     if (url) {
@@ -915,7 +953,13 @@ export default function TravelAdvisor() {
                 Live road directions were unavailable, so this preview is approximate.
               </p>
             )}
-            {!loading && result?.status === "ok" && !routesDiffer && (
+            {!loading && result?.status === "ok" && noSaferDetourFound && (
+              <p className="mt-3 text-[11px] text-amber-200">
+                No safer road detour cleared the accident corridor, so both previews use the
+                same route.
+              </p>
+            )}
+            {!loading && result?.status === "ok" && !routesDiffer && !noSaferDetourFound && (
               <p className="mt-3 text-[11px] text-slate-300">
                 The safest option follows the same road corridor as the fastest route.
               </p>
