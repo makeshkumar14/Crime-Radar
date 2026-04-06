@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Map from "./components/Map";
+import GoogleOperationsMap from "./components/GoogleOperationsMap";
 import Map3D from "./components/Map3D";
 import Sidebar from "./components/Sidebar";
 import StatsBar from "./components/StatsBar";
@@ -9,6 +10,7 @@ import TravelAdvisor from "./components/TravelAdvisor";
 import AreaSafetyReport from "./components/AreaSafetyReport";
 
 function App() {
+  const hasGoogleMaps = Boolean(import.meta.env.VITE_GOOGLE_MAPS_API_KEY);
   const [filters, setFilters] = useState({});
   const [activeView, setActiveView] = useState("map");
   const [selectedDistrict, setSelectedDistrict] = useState(null);
@@ -58,7 +60,17 @@ function App() {
                   onDistrictClick={setSelectedDistrict}
                 />
               ) : (
-                <Map filters={filters} onDistrictClick={setSelectedDistrict} />
+                hasGoogleMaps ? (
+                  <GoogleOperationsMap
+                    filters={filters}
+                    onDistrictClick={setSelectedDistrict}
+                  />
+                ) : (
+                  <Map
+                    filters={filters}
+                    onDistrictClick={setSelectedDistrict}
+                  />
+                )
               )}
 
               <button

@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from database import init_db
 from models import seed_ipc_categories
 from seed_operational_data import seed_operational_data
-from routes import citizen, fir, hotspots, crimes, predict
+from routes import citizen, fir, hotspots, crimes, navigation, predict
 
 LOCAL_DEV_ORIGIN_REGEX = r"https?://(localhost|127\.0\.0\.1|\[::1\])(:\d+)?$"
 
@@ -37,3 +37,4 @@ app.include_router(hotspots.router, prefix="/api/hotspots", tags=["Hotspots"])
 app.include_router(crimes.router,   prefix="/api/crimes",   tags=["Crimes"])
 app.include_router(predict.router,  prefix="/api/predict",  tags=["Prediction"])
 app.include_router(citizen.router,  prefix="/api/citizen",  tags=["Citizen"])
+app.include_router(navigation.router, prefix="/api/navigation", tags=["Navigation"])

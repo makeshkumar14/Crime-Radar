@@ -1,0 +1,222 @@
+{
+    "currentVersion":  10.61,
+    "id":  2,
+    "name":  "SubDistrict_Hq",
+    "type":  "Feature Layer",
+    "description":  "",
+    "geometryType":  "esriGeometryPoint",
+    "sourceSpatialReference":  {
+                                   "wkid":  102100,
+                                   "latestWkid":  3857
+                               },
+    "copyrightText":  "",
+    "parentLayer":  null,
+    "subLayers":  [
+
+                  ],
+    "minScale":  3000000,
+    "maxScale":  0,
+    "drawingInfo":  {
+                        "renderer":  {
+                                         "type":  "simple",
+                                         "symbol":  {
+                                                        "type":  "esriPMS",
+                                                        "url":  "d1a0690722226a8ead0ba0e4b3b57cf2",
+                                                        "imageData":  "iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAAXNSR0IB2cksfwAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAIpJREFUCJllySEOwkAQQNE/22FDCByDEyBBcQUOgK1A4VY0u0nFOhQnQKGbYLkLCRJV1UDSwUBI6JP/Kx+W85S2HUvOj29TC2Fk3h/ouhLv1WK80vdbqeu74n0Q2PGzxrkzsFJgw9DSqmquiLwwG+6ieCpwAhZ/6yIp3ZSUjsQ4AUpgZiKNOLcHeAOYJSR/LfJr3gAAAABJRU5ErkJggg==",
+                                                        "contentType":  "image/png",
+                                                        "width":  5,
+                                                        "height":  5,
+                                                        "angle":  0,
+                                                        "xoffset":  0,
+                                                        "yoffset":  0
+                                                    },
+                                         "label":  "",
+                                         "description":  ""
+                                     },
+                        "transparency":  0,
+                        "labelingInfo":  [
+                                             {
+                                                 "labelPlacement":  "esriServerPointLabelPlacementAboveRight",
+                                                 "where":  null,
+                                                 "labelExpression":  "[NAME11]",
+                                                 "useCodedValues":  true,
+                                                 "symbol":  {
+                                                                "type":  "esriTS",
+                                                                "color":  [
+                                                                              0,
+                                                                              0,
+                                                                              0,
+                                                                              255
+                                                                          ],
+                                                                "backgroundColor":  null,
+                                                                "borderLineColor":  null,
+                                                                "borderLineSize":  null,
+                                                                "verticalAlignment":  "bottom",
+                                                                "horizontalAlignment":  "center",
+                                                                "rightToLeft":  false,
+                                                                "angle":  0,
+                                                                "xoffset":  0,
+                                                                "yoffset":  0,
+                                                                "kerning":  true,
+                                                                "haloColor":  [
+                                                                                  232,
+                                                                                  190,
+                                                                                  255,
+                                                                                  255
+                                                                              ],
+                                                                "haloSize":  1,
+                                                                "font":  {
+                                                                             "family":  "Arial",
+                                                                             "size":  8,
+                                                                             "style":  "normal",
+                                                                             "weight":  "normal",
+                                                                             "decoration":  "none"
+                                                                         }
+                                                            },
+                                                 "minScale":  1000000,
+                                                 "maxScale":  0
+                                             }
+                                         ]
+                    },
+    "defaultVisibility":  false,
+    "extent":  {
+                   "xmin":  7655760.154199999,
+                   "ymin":  781961.1198000014,
+                   "xmax":  10805870.5794,
+                   "ymax":  4135217.1449000016,
+                   "spatialReference":  {
+                                            "wkid":  102100,
+                                            "latestWkid":  3857
+                                        }
+               },
+    "hasAttachments":  false,
+    "htmlPopupType":  "esriServerHTMLPopupTypeAsHTMLText",
+    "displayField":  "name11",
+    "typeIdField":  null,
+    "subtypeFieldName":  null,
+    "subtypeField":  null,
+    "defaultSubtypeCode":  null,
+    "fields":  [
+                   {
+                       "name":  "objectid",
+                       "type":  "esriFieldTypeOID",
+                       "alias":  "FID",
+                       "domain":  null
+                   },
+                   {
+                       "name":  "stcode11",
+                       "type":  "esriFieldTypeString",
+                       "alias":  "stcode11",
+                       "length":  2,
+                       "domain":  null
+                   },
+                   {
+                       "name":  "dtcode11",
+                       "type":  "esriFieldTypeString",
+                       "alias":  "dtcode11",
+                       "length":  3,
+                       "domain":  null
+                   },
+                   {
+                       "name":  "sdtcode11",
+                       "type":  "esriFieldTypeString",
+                       "alias":  "sdtcode11",
+                       "length":  5,
+                       "domain":  null
+                   },
+                   {
+                       "name":  "name11",
+                       "type":  "esriFieldTypeString",
+                       "alias":  "name11",
+                       "length":  50,
+                       "domain":  null
+                   },
+                   {
+                       "name":  "dtname",
+                       "type":  "esriFieldTypeString",
+                       "alias":  "dtname",
+                       "length":  35,
+                       "domain":  null
+                   },
+                   {
+                       "name":  "stname",
+                       "type":  "esriFieldTypeString",
+                       "alias":  "stname",
+                       "length":  30,
+                       "domain":  null
+                   },
+                   {
+                       "name":  "sdtlgd",
+                       "type":  "esriFieldTypeInteger",
+                       "alias":  "sdtlgd",
+                       "domain":  null
+                   },
+                   {
+                       "name":  "dt_lgd",
+                       "type":  "esriFieldTypeInteger",
+                       "alias":  "dt_lgd",
+                       "domain":  null
+                   },
+                   {
+                       "name":  "shape",
+                       "type":  "esriFieldTypeGeometry",
+                       "alias":  "shape",
+                       "domain":  null
+                   }
+               ],
+    "geometryField":  {
+                          "name":  "shape",
+                          "type":  "esriFieldTypeGeometry",
+                          "alias":  "shape"
+                      },
+    "indexes":  [
+                    {
+                        "name":  "r383_sde_rowid_uk",
+                        "fields":  "objectid",
+                        "isAscending":  true,
+                        "isUnique":  true,
+                        "description":  ""
+                    },
+                    {
+                        "name":  "a368_ix1",
+                        "fields":  "shape",
+                        "isAscending":  true,
+                        "isUnique":  true,
+                        "description":  ""
+                    }
+                ],
+    "subtypes":  [
+
+                 ],
+    "relationships":  [
+
+                      ],
+    "canModifyLayer":  true,
+    "canScaleSymbols":  false,
+    "hasLabels":  true,
+    "capabilities":  "Map,Query,Data",
+    "maxRecordCount":  1000,
+    "supportsStatistics":  true,
+    "supportsAdvancedQueries":  true,
+    "supportedQueryFormats":  "JSON, AMF, geoJSON",
+    "isDataVersioned":  false,
+    "ownershipBasedAccessControlForFeatures":  {
+                                                   "allowOthersToQuery":  true
+                                               },
+    "useStandardizedQueries":  true,
+    "advancedQueryCapabilities":  {
+                                      "useStandardizedQueries":  true,
+                                      "supportsStatistics":  true,
+                                      "supportsHavingClause":  true,
+                                      "supportsCountDistinct":  true,
+                                      "supportsOrderBy":  true,
+                                      "supportsDistinct":  true,
+                                      "supportsPagination":  true,
+                                      "supportsTrueCurve":  true,
+                                      "supportsReturningQueryExtent":  true,
+                                      "supportsQueryWithDistance":  true,
+                                      "supportsSqlExpression":  true
+                                  },
+    "supportsDatumTransformation":  true,
+    "supportsCoordinatesQuantization":  true
+}

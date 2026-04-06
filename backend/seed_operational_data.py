@@ -5,6 +5,7 @@ import math
 import random
 import re
 from collections import defaultdict
+from functools import lru_cache
 from pathlib import Path
 
 from crime_catalog import catalog_by_category
@@ -13,8 +14,226 @@ from models import seed_ipc_categories
 
 BASE_DIR = Path(__file__).resolve().parent
 RAW_DIR = BASE_DIR / "data" / "raw"
-DATA_SEED_VERSION = "ops_seed_v2"
+DATA_SEED_VERSION = "ops_seed_v4"
 YEARS = [2024, 2025, 2026]
+
+# Curated taluk coordinates that take precedence over the official HQ feed.
+# Sources used during development:
+# - Official Bharat Maps SubDistrict_Hq service for most Tamil Nadu taluks
+# - Curated OSM geocoding fallbacks for taluks missing from the HQ feed
+# - Manual verification for a few Chennai and legacy-name taluks
+TALUK_COORDINATE_OVERRIDES = {
+    ("CHENNAI", "ALANDUR"): {
+        "lat": 13.0028216,
+        "lng": 80.1719186,
+        "source_type": "verified",
+    },
+    ("CHENNAI", "AMBATTUR"): {
+        "lat": 13.100653042654431,
+        "lng": 80.16630446569768,
+        "source_type": "verified",
+    },
+    ("CHENNAI", "AMINJIKARAI"): {
+        "lat": 13.07897776529405,
+        "lng": 80.22299415907511,
+        "source_type": "verified",
+    },
+    ("CHENNAI", "AYANAVARAM"): {
+        "lat": 13.088971192825646,
+        "lng": 80.23144795178736,
+        "source_type": "verified",
+    },
+    ("CHENNAI", "EGMORE"): {
+        "lat": 13.0728321,
+        "lng": 80.2576906,
+        "source_type": "verified",
+    },
+    ("CHENNAI", "GUINDY"): {
+        "lat": 13.013176743078098,
+        "lng": 80.21624958546406,
+        "source_type": "verified",
+    },
+    ("CHENNAI", "KOLATHUR"): {
+        "lat": 13.1241127,
+        "lng": 80.2046276,
+        "source_type": "verified",
+    },
+    ("CHENNAI", "MADHAVARAM"): {
+        "lat": 13.156034997226396,
+        "lng": 80.24393438062472,
+        "source_type": "verified",
+    },
+    ("CHENNAI", "MADURAVOYAL"): {
+        "lat": 13.065046123373149,
+        "lng": 80.1706005184068,
+        "source_type": "verified",
+    },
+    ("CHENNAI", "MAMBALAM"): {
+        "lat": 13.033672379887633,
+        "lng": 80.20770320788705,
+        "source_type": "verified",
+    },
+    ("CHENNAI", "MYLAPORE"): {
+        "lat": 13.041327180153329,
+        "lng": 80.26359421184028,
+        "source_type": "verified",
+    },
+    ("CHENNAI", "PERAMBUR"): {
+        "lat": 13.111625945442766,
+        "lng": 80.25766707369674,
+        "source_type": "verified",
+    },
+    ("CHENNAI", "PURASAWALKAM"): {
+        "lat": 13.103640718170382,
+        "lng": 80.27690314893154,
+        "source_type": "verified",
+    },
+    ("CHENNAI", "SHOZHINGANALLUR"): {
+        "lat": 12.9174426,
+        "lng": 80.2164902,
+        "source_type": "verified",
+    },
+    ("CHENNAI", "THIRUVOTTIYUR"): {
+        "lat": 13.16294909004349,
+        "lng": 80.30319452144093,
+        "source_type": "verified",
+    },
+    ("CHENNAI", "TONDIARPET"): {
+        "lat": 13.129259656353659,
+        "lng": 80.28857020643194,
+        "source_type": "verified",
+    },
+    ("CHENNAI", "VELACHERY"): {
+        "lat": 12.984540729234467,
+        "lng": 80.22992109697705,
+        "source_type": "verified",
+    },
+    ("CHENGALPATTU", "VANDALUR"): {
+        "lat": 12.8921486,
+        "lng": 80.0829603,
+        "source_type": "curated",
+    },
+    ("COIMBATORE", "PERUR"): {
+        "lat": 10.9764060,
+        "lng": 76.9141784,
+        "source_type": "curated",
+    },
+    ("DINDIGUL", "GUJILIAMPARAI"): {
+        "lat": 10.4261206,
+        "lng": 78.0063561,
+        "source_type": "curated",
+    },
+    ("KALLAKURICHI", "KALVARAYAN HILLS"): {
+        "lat": 11.8577778,
+        "lng": 78.6955556,
+        "source_type": "curated",
+    },
+    ("KALLAKURICHI", "VANAPURAM"): {
+        "lat": 11.9267389,
+        "lng": 79.0113595,
+        "source_type": "curated",
+    },
+    ("KANCHEEPURAM", "KUNDRATHUR"): {
+        "lat": 12.9959652,
+        "lng": 80.0975672,
+        "source_type": "curated",
+    },
+    ("KANYAKUMARI", "KILLIYOOR"): {
+        "lat": 8.2653222,
+        "lng": 77.2132679,
+        "source_type": "curated",
+    },
+    ("KANYAKUMARI", "THIRUVATTAR"): {
+        "lat": 8.3305895,
+        "lng": 77.2655506,
+        "source_type": "curated",
+    },
+    ("KARUR", "PUGALUR"): {
+        "lat": 11.0762440,
+        "lng": 78.0040454,
+        "source_type": "curated",
+    },
+    ("KRISHNAGIRI", "ANCHETTY"): {
+        "lat": 12.3142332,
+        "lng": 77.7206605,
+        "source_type": "curated",
+    },
+    ("MAYILADUTHURAI", "SIRKAZHI"): {
+        "lat": 11.23879735821739,
+        "lng": 79.7378258025265,
+        "source_type": "curated",
+    },
+    ("RAMANATHAPURAM", "RAJASINGAMANGALAM"): {
+        "lat": 9.63574,
+        "lng": 78.84613,
+        "source_type": "curated",
+    },
+    ("RANIPET", "KALAVAI"): {
+        "lat": 12.7690720,
+        "lng": 79.4195652,
+        "source_type": "curated",
+    },
+    ("RANIPET", "SHOLINGHUR"): {
+        "lat": 13.1151925,
+        "lng": 79.4231084,
+        "source_type": "curated",
+    },
+    ("RANIPET", "WALAJAPET"): {
+        "lat": 12.9254734,
+        "lng": 79.3637892,
+        "source_type": "curated",
+    },
+    ("SALEM", "THALAIVASAL"): {
+        "lat": 11.5759235,
+        "lng": 78.7609295,
+        "source_type": "curated",
+    },
+    ("THANJAVUR", "BUDALUR"): {
+        "lat": 10.7886490,
+        "lng": 78.9789575,
+        "source_type": "curated",
+    },
+    ("THANJAVUR", "THIRUVONAM"): {
+        "lat": 10.6142792,
+        "lng": 79.2327870,
+        "source_type": "curated",
+    },
+    ("THIRUVARUR", "MUTHUPETTAI"): {
+        "lat": 10.5692280,
+        "lng": 79.5305922,
+        "source_type": "curated",
+    },
+    ("THOOTHUKKUDI", "ERAL"): {
+        "lat": 8.6253791,
+        "lng": 78.0228746,
+        "source_type": "curated",
+    },
+    ("TIRUNELVELI", "THISAYANVILAI"): {
+        "lat": 8.3355721,
+        "lng": 77.8668199,
+        "source_type": "curated",
+    },
+    ("TIRUVALLUR", "R.K. PET"): {
+        "lat": 13.1645,
+        "lng": 79.4380,
+        "source_type": "curated",
+    },
+    ("VELLORE", "K.V. KUPPAM"): {
+        "lat": 12.9557646,
+        "lng": 78.9873416,
+        "source_type": "curated",
+    },
+    ("VILLUPPURAM", "THIRUVENNAINALLUR"): {
+        "lat": 11.8664270,
+        "lng": 79.4053467,
+        "source_type": "curated",
+    },
+    ("VIRUDHUNAGAR", "WATRAP"): {
+        "lat": 9.6365403,
+        "lng": 77.6397064,
+        "source_type": "curated",
+    },
+}
 
 DISTRICT_ALIASES = {
     "KALLAKURICHCHI": "KALLAKURICHI",
@@ -27,12 +246,18 @@ DISTRICT_ALIASES = {
     "SIVAGANGAI": "SIVAGANGAI",
     "THE NILGIRIS": "NILGIRIS",
     "NILGIRIS": "NILGIRIS",
+    "THOOTHUKUDI": "THOOTHUKKUDI",
+    "THOOTHUKKUDI": "THOOTHUKKUDI",
     "TIRUCHIRAPPALLI": "THIRUCHIRAPPALLI",
     "THIRUCHIRAPPALLI": "THIRUCHIRAPPALLI",
+    "TIRUPATHUR": "THIRUPATHUR",
     "TIRUPPATTUR": "THIRUPATHUR",
     "THIRUPATHUR": "THIRUPATHUR",
     "THIRUVALLUR": "TIRUVALLUR",
     "TIRUVALLUR": "TIRUVALLUR",
+    "TUTICORIN": "THOOTHUKKUDI",
+    "VILUPPURAM": "VILLUPPURAM",
+    "VILLUPURAM": "VILLUPPURAM",
     "VILUPPURAM": "VILLUPPURAM",
     "VILLUPPURAM": "VILLUPPURAM",
 }
@@ -40,6 +265,75 @@ DISTRICT_ALIASES = {
 TALUK_FIXES = {
     "MADURAMDAGAM": "MADURANTHAGAM",
     "TINDIVANAMM": "TINDIVANAM",
+}
+
+TALUK_COORDINATE_LOOKUP_ALIASES = {
+    ("CHENGALPATTU", "MADURANTHAGAM"): ("CHENGALPATTU", "MADURANTHAKAM"),
+    ("CHENGALPATTU", "THIRUPORUR"): ("CHENGALPATTU", "TIRUPORUR"),
+    ("COIMBATORE", "COIMBATORE (N)"): ("COIMBATORE", "COIMBATORE NORTH"),
+    ("COIMBATORE", "COIMBATORE (S)"): ("COIMBATORE", "COIMBATORE SOUTH"),
+    ("COIMBATORE", "KINATHUKKDAVU"): ("COIMBATORE", "KINATHUKADAVU"),
+    ("COIMBATORE", "MADUKKARAI"): ("COIMBATORE", "MADUKKARI"),
+    ("CUDDALORE", "TITAGUDI"): ("CUDDALORE", "TITTAKUDI"),
+    ("CUDDALORE", "VRIDHACHALAM"): ("CUDDALORE", "VIRUDHACHALAM"),
+    ("DHARMAPURI", "PALACODE"): ("DHARMAPURI", "PALAKKODU"),
+    ("DHARMAPURI", "PAPPIREDDIPATTY"): ("DHARMAPURI", "PAPPIREDDIPATTI"),
+    ("DINDIGUL", "DINDIGUL WEST"): ("DINDIGUL", "DINDIGULWEST"),
+    ("DINDIGUL", "NILAKOTTAI"): ("DINDIGUL", "NILAKKOTTAI"),
+    ("DINDIGUL", "ODDENCHATRAM"): ("DINDIGUL", "ODDANCHATRAM"),
+    ("ERODE", "GOBICHETTIPALAYM"): ("ERODE", "GOBICHETTIPALAYAM"),
+    ("KALLAKURICHI", "KALLAKURICHI"): ("KALLAKURICHI", "KALLAKKURICHI"),
+    ("KALLAKURICHI", "TIRUKKOILUR"): ("KALLAKURICHI", "TIRUKKOYILUR"),
+    ("KALLAKURICHI", "ULUNDURPET"): ("KALLAKURICHI", "ULUNDURPETTAI"),
+    ("KANYAKUMARI", "THOVALAI"): ("KANYAKUMARI", "THOVALA"),
+    ("KANYAKUMARI", "VILAVAMCODE"): ("KANYAKUMARI", "VILAVANCODE"),
+    ("KARUR", "ARVAKURICHI"): ("KARUR", "ARAVAKURICHI"),
+    ("MADURAI", "TIRUMANGALAM"): ("MADURAI", "THIRUMANGALAM"),
+    ("MAYILADUTHURAI", "SIRKAZHI"): ("MAYILADUTHURAI", "SIRKALI"),
+    ("NAMAKKAL", "PARAMATHIVELUR"): ("NAMAKKAL", "PARAMATHI-VELUR"),
+    ("NAMAKKAL", "THIRUCHENCODE"): ("NAMAKKAL", "TIRUCHENGODE"),
+    ("NILGIRIS", "UDHAGAI"): ("NILGIRIS", "UDHAGAMANDALAM"),
+    ("NILGIRIS", "PANDALUR"): ("NILGIRIS", "PANTHALUR"),
+    ("PUDUKKOTTAI", "AVUDAIYARKOIL"): ("PUDUKKOTTAI", "AVUDAYARKOIL"),
+    ("PUDUKKOTTAI", "GANDARVAKOTTAI"): ("PUDUKKOTTAI", "GANDARVAKKOTTAI"),
+    ("PUDUKKOTTAI", "ILLUPUR"): ("PUDUKKOTTAI", "ILUPPUR"),
+    ("RAMANATHAPURAM", "RAMESHWARAM"): ("RAMANATHAPURAM", "RAMESWARAM"),
+    ("RAMANATHAPURAM", "THIRUVADANI"): ("RAMANATHAPURAM", "TIRUVADANAI"),
+    ("RANIPET", "ARAKKONAM"): ("RANIPET", "ARAKONAM"),
+    ("SALEM", "EDAPPADY"): ("SALEM", "EDAPPADI"),
+    ("SALEM", "PETHANAICKENPALAYAM"): ("SALEM", "PETHANAICKANPALAYAM"),
+    ("SALEM", "VALAPADY"): ("SALEM", "VAZHAPADI"),
+    ("SIVAGANGAI", "ILAYANKUDI"): ("SIVAGANGAI", "ILAYANGUDI"),
+    ("SIVAGANGAI", "KALAIYARKOVIL"): ("SIVAGANGAI", "KALAIYARKOIL"),
+    ("SIVAGANGAI", "KARAIKUDI"): ("SIVAGANGAI", "KARAIKKUDI"),
+    ("SIVAGANGAI", "THIRUPPATTUR"): ("SIVAGANGAI", "THIRUPPATHUR"),
+    ("TENKASI", "THIRUVENGADAM"): ("TENKASI", "TIRUVENGADAM"),
+    ("TENKASI", "VEERAKERALAMPUDUR"): ("TENKASI", "VEERAKERALAMPUTHUR"),
+    ("THANJAVUR", "ORATHANAD"): ("THANJAVUR", "ORATHANADU"),
+    ("THANJAVUR", "PATTUKKOTAI"): ("THANJAVUR", "PATTUKKOTTAI"),
+    ("THENI", "AUNDIPATTI"): ("THENI", "ANDIPATTI"),
+    ("THENI", "BODINAYAKKANUR"): ("THENI", "BODINAYAKANUR"),
+    ("THIRUCHIRAPPALLI", "THOTTIAM"): ("THIRUCHIRAPPALLI", "THOTTIYAM"),
+    ("THIRUPATHUR", "NATARAMPALLI"): ("THIRUPATHUR", "NATRAMPALLI"),
+    ("THOOTHUKKUDI", "SATTANKULAM"): ("THOOTHUKKUDI", "SATHANKULAM"),
+    ("THOOTHUKKUDI", "SRIVAIKUNDAM"): ("THOOTHUKKUDI", "SRIVAIKUNTAM"),
+    ("THOOTHUKKUDI", "THOOTHUKUDI"): ("THOOTHUKKUDI", "THOOTHUKKUDI"),
+    ("TIRUPPUR", "AVINASHI"): ("TIRUPPUR", "AVANASHI"),
+    ("TIRUPPUR", "KANGAYAM"): ("TIRUPPUR", "KANGEYAM"),
+    ("TIRUPPUR", "TIRUPPUR NORTH"): ("TIRUPPUR", "TIRUPPURNORTH"),
+    ("TIRUPPUR", "TIRUPPUR SOUTH"): ("TIRUPPUR", "TIRUPPAR SOUTH"),
+    ("TIRUPPUR", "UDUMALAIPET"): ("TIRUPPUR", "UDUMALAIPETTAI"),
+    ("TIRUPPUR", "UTHUKKULI"): ("TIRUPPUR", "UTHUKULI"),
+    ("TIRUVALLUR", "TIRUVALLUR"): ("TIRUVALLUR", "THIRUVALLUR"),
+    ("TIRUVALLUR", "PALLIPET"): ("TIRUVALLUR", "PALLIPATTU"),
+    ("TIRUVALLUR", "UTHUKOTTAI"): ("TIRUVALLUR", "UTHUKKOTTAI"),
+    ("TIRUVANNAMALAI", "THANDARAMPATTU"): ("TIRUVANNAMALAI", "THANDRAMPET"),
+    ("VILLUPPURAM", "KANDACHEEPURAM"): ("VILLUPPURAM", "KANDACHIPURAM"),
+    ("VILLUPPURAM", "MARAKKANAM"): ("VILLUPPURAM", "MARAKANAM"),
+    ("VILLUPPURAM", "MELMALAIYANOOR"): ("VILLUPPURAM", "MELMALAIYANUR"),
+    ("VIRUDHUNAGAR", "KARIYAPATTI"): ("VIRUDHUNAGAR", "KARIAPATTI"),
+    ("VIRUDHUNAGAR", "RAJAPALAIAM"): ("VIRUDHUNAGAR", "RAJAPALAYAM"),
+    ("VIRUDHUNAGAR", "VEMBAKKOTTAI"): ("VIRUDHUNAGAR", "VEMBAKOTTAI"),
 }
 
 URBAN_DISTRICTS = {
@@ -188,7 +482,7 @@ CATEGORY_CONFIG = {
         "time_slots": [("NIGHT", 0.36), ("EVENING", 0.3), ("AFTERNOON", 0.2), ("MORNING", 0.14)],
     },
     "Accident": {
-        "base": 0.84,
+        "base": 1.26,
         "month": [0.94, 0.93, 0.95, 0.97, 1.0, 1.02, 1.02, 1.0, 1.08, 1.16, 1.18, 1.1],
         "time_slots": [("EVENING", 0.34), ("NIGHT", 0.28), ("AFTERNOON", 0.22), ("MORNING", 0.16)],
     },
@@ -214,6 +508,63 @@ def normalize_taluk(value: str) -> str:
 
 def slugify(value: str) -> str:
     return re.sub(r"[^A-Z0-9]+", "-", normalize_text(value)).strip("-")
+
+
+def resolve_coordinate_lookup_key(district: str, taluk: str):
+    normalized_key = (normalize_district(district), normalize_taluk(taluk))
+    return TALUK_COORDINATE_LOOKUP_ALIASES.get(normalized_key, normalized_key)
+
+
+@lru_cache(maxsize=1)
+def load_official_taluk_coordinate_overrides():
+    path = RAW_DIR / "tn_subdistrict_hq_points.json"
+    if not path.exists():
+        return {}
+
+    raw = json.loads(path.read_text(encoding="utf-8-sig"))
+    overrides = {}
+    for feature in raw.get("features", []):
+        attributes = feature.get("attributes") or {}
+        geometry = feature.get("geometry") or {}
+        lat = geometry.get("y")
+        lng = geometry.get("x")
+        if lat is None or lng is None:
+            continue
+
+        district = normalize_district(attributes.get("dtname") or "")
+        taluk = normalize_taluk(attributes.get("name11") or "")
+        if not district or not taluk:
+            continue
+
+        overrides[(district, taluk)] = {
+            "lat": float(lat),
+            "lng": float(lng),
+            "source_type": "official_hq",
+        }
+
+    return overrides
+
+
+def get_coordinate_override(district: str, taluk: str):
+    normalized_key = (normalize_district(district), normalize_taluk(taluk))
+    manual_override = TALUK_COORDINATE_OVERRIDES.get(normalized_key)
+    if manual_override:
+        return manual_override
+
+    lookup_key = resolve_coordinate_lookup_key(district, taluk)
+    official_override = load_official_taluk_coordinate_overrides().get(lookup_key)
+    if not official_override:
+        return None
+
+    source_type = official_override.get("source_type", "official_hq")
+    if lookup_key != normalized_key:
+        source_type = "official_hq_alias"
+
+    return {
+        "lat": official_override["lat"],
+        "lng": official_override["lng"],
+        "source_type": source_type,
+    }
 
 
 def load_taluk_rows():
@@ -535,6 +886,12 @@ def build_operational_layers():
 
         for idx, taluk_name in enumerate(taluk_names, start=1):
             lat, lng = points[idx - 1]
+            coordinate_override = get_coordinate_override(district, taluk_name)
+            taluk_source_type = "generated"
+            if coordinate_override:
+                lat = coordinate_override["lat"]
+                lng = coordinate_override["lng"]
+                taluk_source_type = coordinate_override.get("source_type", "verified")
             taluk_id = f"TLK-{slugify(district)}-{idx:03d}"
             radius_km = 7 + (idx % 5) * 1.4
             if district in URBAN_DISTRICTS:
@@ -575,7 +932,7 @@ def build_operational_layers():
                     "lng": lng,
                     "radius_km": round(radius_km, 2),
                     "primary_station_id": station_id,
-                    "source_type": "generated",
+                    "source_type": taluk_source_type,
                     "profile": profile,
                 }
             )
@@ -626,6 +983,25 @@ def base_zone_intensity(taluk_record):
     return base
 
 
+def minimum_accident_count(taluk_record, year, month):
+    floor = 3
+
+    if taluk_record["district"] in URBAN_DISTRICTS:
+        floor += 1
+    if taluk_record["district"] in HIGHWAY_DISTRICTS:
+        floor += 2
+    if taluk_record["district"] in COASTAL_DISTRICTS:
+        floor += 1
+    if taluk_record["district"] in HILL_TOURISM_DISTRICTS:
+        floor += 1
+    if month in {9, 10, 11, 12}:
+        floor += 1
+    if year == 2026:
+        floor += 1
+
+    return floor
+
+
 def build_incidents(taluks, station_by_id):
     incidents = []
 
@@ -654,6 +1030,12 @@ def build_incidents(taluks, station_by_id):
                             * (0.84 + rng.random() * 0.42)
                         )
                     )
+
+                    if category == "Accident":
+                        count = max(
+                            minimum_accident_count(taluk, year, month),
+                            count,
+                        )
 
                     if count <= 0:
                         continue
