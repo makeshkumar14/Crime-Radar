@@ -69,6 +69,21 @@ function getStationRadius(total) {
   return 3;
 }
 
+function getZoneDisplayRadiusKm(zone, districtMeta) {
+  const talukCount = districtMeta?.taluk_count || 0;
+
+  if (talukCount >= 15) {
+    return Math.max(1.8, zone.radius_km * 0.38);
+  }
+  if (talukCount >= 10) {
+    return Math.max(2.4, zone.radius_km * 0.52);
+  }
+  if (talukCount >= 7) {
+    return Math.max(3, zone.radius_km * 0.68);
+  }
+  return zone.radius_km;
+}
+
 function MapController({ focusDistrict, fallbackCenter }) {
   const map = useMap();
 
@@ -213,6 +228,28 @@ export default function Map({ filters = {}, onDistrictClick }) {
   const focusDistrict =
     layers.districts.find((item) => item.district === (filters.district || activeDistrict)) ||
     null;
+  const focusedDistrictName = filters.district || activeDistrict || null;
+  const districtMetaByName = Object.fromEntries(
+    layers.districts.map((district) => [district.district, district]),
+  );
+  const visibleZones = focusedDistrictName
+    ? layers.zones.filter((zone) => zone.district === focusedDistrictName)
+    : layers.zones;
+  const visibleStations = focusedDistrictName
+    ? layers.stations.filter((station) => station.district === focusedDistrictName)
+    : layers.stations;
+  const visibleHotspots = focusedDistrictName
+    ? layers.hotspots.filter((hotspot) => hotspot.district === focusedDistrictName)
+    : layers.hotspots;
+  const visibleWomenZones = focusedDistrictName
+    ? layers.women_zones.filter((zone) => zone.district === focusedDistrictName)
+    : layers.women_zones;
+  const visibleAccidentZones = focusedDistrictName
+    ? layers.accident_zones.filter((zone) => zone.district === focusedDistrictName)
+    : layers.accident_zones;
+  const visiblePatrolRoutes = focusedDistrictName
+    ? layers.patrol_routes.filter((route) => route.district === focusedDistrictName)
+    : layers.patrol_routes;
   const patrolFallbackCount = Object.values(patrolRouteGeometry).filter(
     (route) => route?.source === "fallback",
   ).length;
@@ -239,14 +276,18 @@ export default function Map({ filters = {}, onDistrictClick }) {
         />
 
         {showZones &&
-          layers.zones.map((zone) => {
+          visibleZones.map((zone) => {
             const color = getCategoryColor(zone.dominant_category);
             const isActive = activeDistrict === zone.district;
+            const displayRadiusKm = getZoneDisplayRadiusKm(
+              zone,
+              districtMetaByName[zone.district],
+            );
             return (
               <Circle
                 key={zone.taluk_id}
                 center={[zone.lat, zone.lng]}
-                radius={zone.radius_km * 1000}
+                radius={displayRadiusKm * 1000}
                 pathOptions={{
                   color: isActive ? "#ffffff" : color,
                   fillColor: color,
@@ -282,7 +323,7 @@ export default function Map({ filters = {}, onDistrictClick }) {
           })}
 
         {showStations &&
-          layers.stations.map((station) => (
+          visibleStations.map((station) => (
             <CircleMarker
               key={station.station_id}
               center={[station.lat, station.lng]}
@@ -300,7 +341,7 @@ export default function Map({ filters = {}, onDistrictClick }) {
           ))}
 
         {showHotspots &&
-          layers.hotspots.map((hotspot) => (
+          visibleHotspots.map((hotspot) => (
             <Circle
               key={`hotspot-${hotspot.taluk_id}`}
               center={[hotspot.center_lat, hotspot.center_lng]}
@@ -316,7 +357,7 @@ export default function Map({ filters = {}, onDistrictClick }) {
           ))}
 
         {showWomenSafety &&
-          layers.women_zones.map((zone) => (
+          visibleWomenZones.map((zone) => (
             <Circle
               key={`women-${zone.taluk_id}`}
               center={[zone.lat, zone.lng]}
@@ -332,7 +373,7 @@ export default function Map({ filters = {}, onDistrictClick }) {
           ))}
 
         {showAccident &&
-          layers.accident_zones.map((zone) => (
+          visibleAccidentZones.map((zone) => (
             <Circle
               key={`accident-${zone.taluk_id}`}
               center={[zone.lat, zone.lng]}
@@ -348,7 +389,7 @@ export default function Map({ filters = {}, onDistrictClick }) {
           ))}
 
         {showPatrol &&
-          layers.patrol_routes.map((route) => (
+          visiblePatrolRoutes.map((route) => (
             <Polyline
               key={route.route_id}
               positions={patrolRouteGeometry[route.route_id]?.coordinates || []}
