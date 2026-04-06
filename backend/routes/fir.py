@@ -1,14 +1,42 @@
-from fastapi import APIRouter, Query
-from database import get_connection
+from datetime import date
 from typing import Optional
 
+from fastapi import APIRouter, Body, Query
+from pydantic import BaseModel
+
+from database import get_connection
+from ops_queries import load_map_layers
+
 router = APIRouter()
+
+
+CATEGORY_TO_IPC = {
+    "Violent": ("302", "HIGH"),
+    "Property": ("379", "MEDIUM"),
+    "Fraud": ("420", "MEDIUM"),
+    "Women Safety": ("354", "HIGH"),
+    "Public Order": ("147", "MEDIUM"),
+    "NDPS": ("20", "HIGH"),
+    "Excise Act": ("60", "MEDIUM"),
+    "Accident": ("IRAD-ACCIDENT", "HIGH"),
+}
+
+
+class DemoEntry(BaseModel):
+    district: Optional[str] = None
+    taluk_id: Optional[str] = None
+    category: str = "Property"
+    count: int = 4
+    time_slot: Optional[str] = None
+    month: Optional[int] = None
+    year: Optional[int] = None
+
 
 @router.get("/all")
 def get_all_firs(
     year: Optional[int] = Query(None),
     category: Optional[str] = Query(None),
-    district: Optional[str] = Query(None)
+    district: Optional[str] = Query(None),
 ):
     conn = get_connection()
     cursor = conn.cursor()
@@ -26,22 +54,73 @@ def get_all_firs(
         query += " AND district = ?"
         params.append(district)
 
+    query += " ORDER BY year DESC, month DESC, count DESC"
     cursor.execute(query, params)
     rows = cursor.fetchall()
     conn.close()
-    return {"data": [dict(r) for r in rows], "count": len(rows)}
+    return {"data": [dict(row) for row in rows], "count": len(rows)}
+
+
+@router.get("/map-layers")
+def get_map_layers(
+    year: Optional[int] = Query(None),
+    category: Optional[str] = Query(None),
+    district: Optional[str] = Query(None),
+):
+    return load_map_layers(year=year, category=category, district=district)
 
 
 @router.get("/districts")
 def get_districts():
     conn = get_connection()
     cursor = conn.cursor()
-    cursor.execute(
-        "SELECT DISTINCT district FROM fir_records ORDER BY district"
-    )
+    cursor.execute("SELECT district FROM districts ORDER BY district")
     rows = cursor.fetchall()
     conn.close()
-    return {"districts": [r["district"] for r in rows]}
+    return {"districts": [row["district"] for row in rows]}
+
+
+@router.get("/taluks")
+def get_taluks(district: Optional[str] = Query(None)):
+    conn = get_connection()
+    cursor = conn.cursor()
+    if district:
+        cursor.execute(
+            "SELECT taluk_id, district, taluk FROM taluks WHERE district = ? ORDER BY taluk",
+            [district],
+        )
+    else:
+        cursor.execute("SELECT taluk_id, district, taluk FROM taluks ORDER BY district, taluk")
+    rows = cursor.fetchall()
+    conn.close()
+    return {"taluks": [dict(row) for row in rows]}
+
+
+@router.get("/stations")
+def get_stations(district: Optional[str] = Query(None)):
+    conn = get_connection()
+    cursor = conn.cursor()
+    if district:
+        cursor.execute(
+            """
+            SELECT station_id, station_name, district, taluk, lat, lng, source_type
+            FROM police_stations
+            WHERE district = ?
+            ORDER BY station_name
+            """,
+            [district],
+        )
+    else:
+        cursor.execute(
+            """
+            SELECT station_id, station_name, district, taluk, lat, lng, source_type
+            FROM police_stations
+            ORDER BY district, station_name
+            """
+        )
+    rows = cursor.fetchall()
+    conn.close()
+    return {"stations": [dict(row) for row in rows]}
 
 
 @router.get("/categories")
@@ -53,15 +132,124 @@ def get_categories():
     )
     rows = cursor.fetchall()
     conn.close()
-    return {"categories": [r["category"] for r in rows]}
+    return {"categories": [row["category"] for row in rows]}
+
 
 @router.get("/years")
 def get_years():
     conn = get_connection()
     cursor = conn.cursor()
-    cursor.execute(
-        "SELECT DISTINCT year FROM fir_records ORDER BY year"
-    )
+    cursor.execute("SELECT DISTINCT year FROM fir_records ORDER BY year")
     rows = cursor.fetchall()
     conn.close()
-    return {"years": [r["year"] for r in rows]}
+    return {"years": [row["year"] for row in rows]}
+
+
+@router.post("/demo-entry")
+def create_demo_entry(payload: DemoEntry = Body(...)):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    if payload.taluk_id:
+        cursor.execute(
+            """
+            SELECT t.taluk_id, t.district, t.taluk, t.lat, t.lng,
+                   p.station_id, p.station_name
+            FROM taluks t
+            LEFT JOIN police_stations p ON p.station_id = t.primary_station_id
+            WHERE t.taluk_id = ?
+            """,
+            [payload.taluk_id],
+        )
+    elif payload.district:
+        cursor.execute(
+            """
+            SELECT t.taluk_id, t.district, t.taluk, t.lat, t.lng,
+                   p.station_id, p.station_name,
+                   COALESCE(SUM(f.count), 0) AS total
+            FROM taluks t
+            LEFT JOIN police_stations p ON p.station_id = t.primary_station_id
+            LEFT JOIN fir_records f ON f.taluk_id = t.taluk_id
+            WHERE t.district = ?
+            GROUP BY t.taluk_id, t.district, t.taluk, t.lat, t.lng, p.station_id, p.station_name
+            ORDER BY total DESC, t.taluk
+            LIMIT 1
+            """,
+            [payload.district],
+        )
+    else:
+        cursor.execute(
+            """
+            SELECT t.taluk_id, t.district, t.taluk, t.lat, t.lng,
+                   p.station_id, p.station_name,
+                   COALESCE(SUM(f.count), 0) AS total
+            FROM taluks t
+            LEFT JOIN police_stations p ON p.station_id = t.primary_station_id
+            LEFT JOIN fir_records f ON f.taluk_id = t.taluk_id
+            GROUP BY t.taluk_id, t.district, t.taluk, t.lat, t.lng, p.station_id, p.station_name
+            ORDER BY total DESC, t.taluk
+            LIMIT 1
+            """
+        )
+
+    taluk_row = cursor.fetchone()
+    if not taluk_row:
+        conn.close()
+        return {"status": "error", "message": "No target zone found"}
+
+    category = payload.category if payload.category in CATEGORY_TO_IPC else "Property"
+    ipc_section, severity = CATEGORY_TO_IPC[category]
+    today = date.today()
+    incident_year = payload.year or today.year
+    incident_month = payload.month or today.month
+    time_slot = payload.time_slot or "EVENING"
+    count = max(1, min(payload.count, 25))
+
+    cursor.execute(
+        """
+        INSERT INTO fir_records
+        (district, taluk_id, taluk, station_id, station_name, lat, lng, ipc_section,
+         category, severity, year, month, day_of_week, time_slot, incident_date,
+         source_type, count)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """,
+        [
+            taluk_row["district"],
+            taluk_row["taluk_id"],
+            taluk_row["taluk"],
+            taluk_row["station_id"],
+            taluk_row["station_name"],
+            taluk_row["lat"],
+            taluk_row["lng"],
+            ipc_section,
+            category,
+            severity,
+            incident_year,
+            incident_month,
+            today.isoweekday(),
+            time_slot,
+            today.isoformat(),
+            "demo-entry",
+            count,
+        ],
+    )
+    conn.commit()
+    conn.close()
+
+    layers = load_map_layers(
+        year=incident_year,
+        district=taluk_row["district"],
+    )
+
+    return {
+        "status": "ok",
+        "message": "Demo FIR inserted",
+        "entry": {
+            "district": taluk_row["district"],
+            "taluk": taluk_row["taluk"],
+            "station_name": taluk_row["station_name"],
+            "category": category,
+            "count": count,
+        },
+        "impact": layers,
+    }

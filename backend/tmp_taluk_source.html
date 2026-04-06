@@ -1,0 +1,930 @@
+
+
+ 
+ 
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+      <meta name="format-detection" content="telephone=no" />
+      <meta name="description" content="">
+      <meta name="author" content="">
+	  <link rel="shortcut icon" href="/assets2/img/tn-survey-logo.png" type="image/x-icon" /> 
+      <link rel="TN_Govt_Logo" href="/assets2/img/TN_Govt_Logo.png">
+      <link rel="TN_Govt_Logo" href="/assets2/img/TN_Govt_Logo.pngg">
+      <title>Commissionerate of Survey and Settlement</title>
+	  
+	  
+	    
+  
+       
+	  <script src="/assets2/js/jquery-latest.min.js"></script> 
+	<script src="/assets2/js/enc.js"></script>  
+         <script src="/assets/js/md5.js"></script>
+        <!--   <script src="assets2/js/recaptcha_api.js"></script>  -->
+  <!--- commented on 16-02-23
+
+  <script src="/assets2/js/jquery_n.min.js"></script>
+  <script src="/assets2/js/jquery.dataTables.min.js"></script> 
+ <!-- <script src="/assets2/js/jquery.modal.min.js"></script> -->
+  <link href="/assets2/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"> 
+
+
+      <link href="/assets2/css/bootstrap.min.css" rel="stylesheet">
+      <link href="/assets2/css/bootstrap-theme.css" rel="stylesheet">
+      <link href="/assets2/css/gallery-grid.css" rel="stylesheet">
+     <!-- <link href="assets2/css/jquery.modal.min.css" rel="stylesheet" type="text/css">-->
+      <!-- Custom styles for this template -->
+      <link href="/assets/css/base.css" rel="stylesheet" media="all">
+      <link href="/assets/css/base-responsive.css" rel="stylesheet" media="all">
+      <link href="/assets/css/grid.css" rel="stylesheet" media="all">
+      <link href="/assets/css/font.css" rel="stylesheet" media="all">
+      <link href="/assets/css/font-awesome.min.css" rel="stylesheet" media="all">
+      <link href="/assets/css/flexslider.css" rel="stylesheet" media="all">
+      <link href="/assets/css/megamenu.css" rel="stylesheet" media="all" />
+      <link href="/assets/css/print.css" rel="stylesheet" media="print" />
+      
+      <!-- Theme styles for this template -->
+
+      <link href="/theme/css/site.css" rel="stylesheet" media="all">
+      <link href="/theme/css/site-responsive.css" rel="stylesheet" media="all">
+      <link href="/theme/css/ma5gallery.css" rel="stylesheet" type="text/css">
+
+
+<script type="text/javascript">
+    $(document).ready(function(){  
+
+
+      var size;
+
+     size=18;
+   // sizea=14;
+
+
+    $("#increase").on("click",function(){
+   
+      size=size+2;
+     // sizea= sizea+2;
+
+      if(size < 24){
+       
+       $("p").css("font-size",size + "px");
+      // $("a").css("font-size",sizea + "px");
+
+     }
+
+     else{
+
+      return false;
+     }
+
+
+    });
+    $("#resetMe").on("click",function(){
+
+      //location.reload();
+
+      size=18;
+      //sizea=14;
+
+      $("p").css("font-size",size + "px");
+
+    });
+
+
+    $("#decrease").on("click",function(){
+
+      size=size-2;
+     // sizea= sizea-2;
+
+
+      if(size > 8){
+       
+       $("p").css("font-size",size + "px");
+       //$("a").css("font-size",sizea + "px");
+
+     }
+
+     else{
+      return false;
+     }
+
+    });
+
+
+               
+         });
+</script>
+
+
+      <noscript>
+         <link href="/theme/css/no-js.css" type="text/css" rel="stylesheet">
+      </noscript>
+   </head>
+   <body>
+      <div id="fb-root"></div>
+      <header>
+         <div class="region region-header-top">
+            <div id="block-cmf-content-header-region-block" class="block block-cmf-content first last odd">
+             
+               <div class="wrapper common-wrapper">
+                  <div class="container-fluid common-container four_content top-header" style="margin:0px 30px 0px 30px">
+                     <div class="common-left clearfix">
+                        <ul>
+                           <li class="gov-india"><span class="responsive_go_hindi" lang="hi" style="font-weight: 900;font-family: sans-serif;"><a href="" title="">
+                &#2980;&#2990;&#3007;&#2996;&#3021;&#2984;&#3006;&#2975;&#3009; &#2949;&#2992;&#2970;&#3009;</a></span>                           </li>
+                           <li class="ministry"><span class="li_eng responsive_go_eng"><a target="_blank" href="https://www.tn.gov.in/" title="Government of india,External Link that opens in a new window"><strong style="font-weight: 900;font-family: 'Trebuchet MS' , Verdana, Helvetica, Sans-Serif !important; ">Government of Tamil Nadu</strong></a></span></li>
+                        </ul>
+                     </div>
+                     <div class="common-right clearfix">
+                        <ul id="header-nav">
+                           <li class="ico-skip cf"><a href="/index.php/Home/who"><b>Who's &ensp;Who</b></a>
+						   <!--<a href="#skipCont" title="">Skip to main content</a>-->
+                           </li>
+                           <li class="ico-site-search cf" style="pointer-events: none;">
+                              <a href="javascript:void(0);" id="toggleSearch" title="Site Search">
+                              <img class="top" src="/assets/images/ico-site-search.png" alt="Site Search" /></a>
+                            <!--   <div class="search-drop both-search">
+                                 <div class="google-find">
+                                    <form method="get" action="http://www.google.com/search" target="_blank">
+                                       <label for="search_key_g" class="notdisplay">Search</label>
+                                       <input type="text" name="q" value="" id="search_key_g"/> 
+                                       <input type="submit" value="Search" class="submit" /> 
+                                       <div class="">
+                                          <input type="radio" name="sitesearch" value="" id="the_web"/> 
+                                          <label for="the_web">The Web</label> 
+                                          <input type="radio" name="sitesearch" value="india.gov.in" checked id="the_domain"/> <label for="the_domain"> INDIA.GOV.IN</label>
+                                       </div>
+                                    </form>
+                                    
+                                 </div>
+                                 <div class="find">
+                                    <form name="searchForm">
+
+                                       <label for="search_key" class="notdisplay">Search</label>
+                                       <input type="text" name="search_key" id="search_key" onKeyUp="autoComplete()" autocomplete="off" required />
+                                       <input type="submit" value="Search" class="bttn-search"/>
+                                    </form>
+                                    
+                                    <div id="auto_suggesion"></div>
+                                 </div>
+                              </div> -->
+                           </li>
+                           <li class="ico-accessibility cf">
+                              <a href="javascript:void(0);" id="toggleAccessibility" title="Accessibility Dropdown">
+                              <img class="top" src="/assets/images/ico-accessibility.png" alt="Accessibility Dropdown" />
+                              </a>
+                              <ul style="visibility: hidden;">
+                                 <li> <a onClick="set_font_size(&#39;increase&#39;)" title="Increase font size" href="javascript:void(0);" id="increase">A<sup>+</sup>
+                                    </a> 
+                                 </li>
+                                 <li> <a onClick="set_font_size()" title="Reset font size" href="javascript:void(0);" id="resetMe">A<sup>&nbsp;</sup></a> </li>
+                                 <li> <a onClick="set_font_size(&#39;decrease&#39;)" title="Decrease font size" href="javascript:void(0);" id="decrease">A<sup>-</sup></a> </li>
+                               <!--   <li> <a href="javascript:void(0);" class="high-contrast dark" title="High Contrast">A</a> </li>
+                                 <li> <a href="javascript:void(0);" class="high-contrast light" title="Normal Contrast" style="display: none;">A</a> </li> -->
+                              </ul>
+                           </li>
+
+                           <li class="ico-social cf" style="pointer-events: none;">
+                              <a href="javascript:void(0);" id="toggleSocial" title="Social Medias">
+                              <img class="top" src="/assets/images/ico-social.png" alt="Social Medias" /></a>
+                             <!--  <ul>
+                                 <li><a target="_blank" title="External Link that opens in a new window" href="http://www.facebook.com/"><img alt="Facebook Page" src="assets/images/ico-facebook.png"></a></li>
+                                 <li><a target="_blank" title="External Link that opens in a new window" href="http://www.twitter.com/"><img alt="Twitter Page" src="assets/images/ico-twitter.png"></a></li>
+                                 <li><a target="_blank" title="External Link that opens in a new window" href="http://www.youtube.com/"><img alt="youtube Page" src="assets/images/ico-youtube.png"></a></li>
+                              </ul> -->
+                           </li>
+                           <li class="ico-sitemap cf" style="pointer-events: none;"><a href="" title="Sitemap">
+                              <img class="top" src="/assets/images/ico-sitemap.png" alt="Sitemap" /></a>
+                           </li>
+                           <li class="hindi cmf_lan d-hide">
+                              <label class="de-lag"><span style="display: none;">Language</span>
+                                 <select title="Select Language">
+                                    <option>English</option>
+                                    <option>?????</option>
+                                 </select>
+                              </label>
+                           </li>
+                           
+                            <li style="padding-right: 25px !important;">                           
+                              <a href="/index.php/Login"/>
+                                 <button class="btn btn-primary btn-sm" style="font-weight:bold"><i class='fa fa-user'></i>&ensp;LOGIN</button></a>
+                           </li>
+ 
+
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+            </div>                     
+            <p id="scroll" style="display: none;"><span></span></p>
+         </div>
+         <!--Top-Header Section end-->
+         <section class="wrapper header-wrapper">
+            <div class="container-fluid common-container four_content  header-container" style="margin:10px 30px 20px 30px">
+               <h2 class="logo">
+                  <a href="/" title="Home" rel="home" class="header__logo" id="logo">
+            <img src="/assets2/img/TN_Govt_Logo.png" alt="Swachh Bharat" style="width: 110px">
+                 
+                     <em><span style="color:white !important">Commissionerate of Survey and Settlement</span>                       
+                        <span class="text-uppercase" style="text-transform: uppercase;color:white !important">Government of Tamil Nadu</span>
+                     </em>
+                  </a>
+               </h2>
+
+             
+
+               <div class="header-right clearfix">
+                  <div class="right-content clearfix">
+                     <div class="float-element">
+                        <a class="sw-logo">
+                      <!--     <img src="/assets2/img/tn_survey.png" alt="national emblem" style="width:110px">  -->
+                          <img src="/assets2/img/tn-survey.png" alt="national emblem" style="width:110px"> 
+                        </a>
+                     </div>
+                  </div>
+               </div>
+
+            </div>
+         </section>
+         <!--/.header-wrapper-->
+         <section class="wrapper megamenu-wraper">
+            <div class="container-fluid common-container four_content" style="margin-left:30px">
+               <p class="showhide"><em></em><em></em><em></em></p>
+
+                    <nav class="main-menu clearfix" id="main_menu" style="">
+                     <ul class="sub-nav-group">
+					 
+					
+					 
+                     <li class="nav-item"> <a href="/index.php/Home" class="home"><i class="fa fa-home"></i></a> </li> 
+					 
+					 <!-- <li class="nav-item hidden"><a href="">About Us</a>
+                      <div class="sub-nav">
+                        <ul id="nav">
+                          <li><a href="">STI-Orathanadu</a></li>
+                          <li><a href="">Legacy</a></li>
+                           <li><a href="">Era</a></li>
+                          <li><a href="">E-Services</a></li>
+                        </ul>
+                      </div>
+                    </li>-->
+                     <li class="nav-item" ><a href="">Organization</a> 
+                     <div class="sub-nav"> 
+                     <ul id="nav">
+                     <!--<li ><a>Manpower <i class="fa fa-angle-double-right" style="padding-left: 90px;" aria-hidden='true'></i> </a>
+                     <ul id="nav" style="margin-top: 0px !important">  
+                     <li ><a href="">Survey Wing</a></li>
+                     <li><a href="">Settlement Wing</a></li>
+                     </ul>
+                     </li>-->
+					 <li><a target="_blank" href="/assets2/pdf/organization.pdf">Organization</a></li>
+					 
+                     <li><a>Survey <i class="fa fa-angle-double-right" style="padding-left: 118px;" aria-hidden='true'></i> </a>
+                     <ul>
+                     <li><a target="_blank" href="/assets2/pdf/state.pdf">Hierarchy-State</a></li>
+                     <li><a target="_blank" href="/assets2/pdf/region.pdf">Hierarchy-Region</a></li>
+                     <li><a target="_blank" href="/assets2/pdf/district.pdf">Hierarchy-District</a></li>
+                     </ul>
+                     </li>
+                     <li><a target="_blank" href="/assets2/pdf/settlement.pdf">Settlement</a></li>
+					 
+					    <li><a href="/index.php/Home/sti_orthanadu">STI-Orathanadu</a></li>
+					   
+					    <li><a href="/index.php/Home/csofunction">Central Survey Office</a></li>
+					    <li><a> Modernised Photo Zinco Press</a></li>
+                     </ul>
+                     </div>
+                     </li> 
+            
+                    <li class="nav-item"><a href="">Schemes </a>
+                      <div class="sub-nav">
+                        <ul id="nav">
+                          <li><a href="/index.php/Home/announcements">Policy & Announcements</a></li>
+                          <li><a href="/index.php/Home/achievements">Achievements</a></li>
+                          <li><a href="/index.php/Home/dilrmp">DILRMP</a></li>
+						  <li><a href="/index.php/Home/development">Inter Department Services</a></li>
+                        <!--  <li><a>Patta Transfer Status<i class="fa fa-angle-double-right" style="padding-left:15px;" aria-hidden='true'></i></a>
+                          <ul>
+                          <li><a href="">Urban</a></li>
+                          <li><a href="">Rural</a></li>
+                        </ul>
+                        </li>-->
+                        </ul>
+                      </div>
+                    </li>
+            
+                    <li class="nav-item"><a href=""> e-Service</a>
+                      <div class="sub-nav">
+                        <ul id="nav">
+
+                          <li><a style="padding-top: 8.4px;">Buy Maps <i class="fa fa-angle-double-right" style="padding-left:90px;" aria-hidden='true'></i></a>
+						  
+						   <ul>
+                          <!-- <li><a href="/index.php/Home/development">District Maps</a></li>
+						    <li><a href="/index.php/Home/development">Taluk Maps</a></li>-->
+					<li><a href="" at="V" class="map_type">Village Maps&ensp;<img src="/assets2/img/new_gif.gif" style="width: 50px;height: auto;"></a></li>
+				       <li><a href="/index.php/Home/downloadMap">Download&ensp;<img src="/assets2/img/new_gif.gif" style="width: 50px;height: auto;"></a></li>			  
+                                   <!--B <li><a  at="" class="map_type_disable">Block Maps &ensp;<img src="/assets2/img/new_gif.gif" style="width: 50px;height: auto;"></a></li>-->							  
+							  
+							  
+                            </ul>
+                         </li>
+						 
+						   <li><a href="/index.php/Home/development">A-Register</a></li>
+						   
+					<li><a>Patta Transfer<i class="fa fa-angle-double-right" style="padding-left: 50px;" aria-hidden='true'></i> </a>
+                     <ul style="margin:0px;padding:0px">
+					 
+                     <li><a target="_blank" href="https://tamilnilam.tn.gov.in/Revenue/login.html">Rural</a></li>
+                     <li><a target="_blank" href="http://urbantamilnilam.tn.gov.in/Urban/">Urban</a></li>
+                     <li><a href="/index.php/Home/development">Line</a></li>
+                     </ul>
+                     </li>
+						  
+                         
+                        </ul>
+                      </div>
+                    </li>
+                    
+                    <!-- <li class="nav-item"><a href="">Establishment</a>
+                       <div class="sub-nav">
+                        <ul id="nav">
+                          <li><a href="">Panels</a></li>
+                          <li><a href="">Rules & Acts</a></li>
+                          <li><a href="">Orders & Circulars</a></li>
+                        </ul>
+                      </div>
+                    </li> -->
+                    
+                    <li class="nav-item"><a href="">Training</a>
+                      <div class="sub-nav">
+                        <ul id="nav">
+                      <!--    <li><a href="">STI-Orathanadu</a></li>-->
+                          <li><a href="/index.php/Home/cstar">CSTAR-Chennai</a></li>
+                           <li><a href="/index.php/Home/licensed_survey">Licensed Surveyors</a></li>
+                          <!--<li><a href="">Licentiate Course</a></li>-->
+                        </ul>
+                      </div>
+                    </li>
+                    
+                    <li class="nav-item"><a href="">Right to Information</a>
+
+                      <div class="sub-nav">
+                        <ul id="nav">
+                          <li><a href="/assets2/pdf/rti-act.pdf" target="_blank">RTI Act</a></li>
+                          <li><a href="/index.php/Home/rti_authorities">RTI Authorities</a></li>
+						  <li><a href="/index.php/Home/pio">Public Information Officer</a></li>
+                        </ul>
+                      </div>
+                    </li>
+					
+					<li class="nav-item"><a href="" style="text-transform:capitalize">G.Os</a>
+
+                      <div class="sub-nav">
+                        <ul id="nav">
+                          <li><a href="/index.php/Home/gocircular">G.O</a></li>
+                          <li><a href="/index.php/Home/othercircular">Circular</a></li>
+                        </ul>
+                      </div>
+                    </li>
+
+                    <!-- <li class="nav-item"><a href='http://irs.annauniv.edu/irs/cstarHome.html' target="_blank" rel="noopener noreferrer"> CSTAR</a></li> -->					  
+                    <li class="nav-item"><a href="/index.php/Home/gallery_new">Gallery</a></li>                            
+                    <li class="nav-item"><a href="/index.php/Home/contacts">Contact Us</a></li>   
+                     <li class="nav-item"><a href="/index.php/Feedback">Feedback</a></li>
+                     <!--<li class="nav-item"><a target="_blank" href="http://www.tnscda.com/conversion.html"><i class="fa fa-random font-weight-bold"></i>&ensp;Conversion Tool</a></li> -->
+					 <!--<li class="nav-item"><a href="/index.php/Home/who">Who's Who</a></li>      -->     
+                  </ul>
+               </nav>
+               <nav class="main-menu clearfix" id="overflow_menu">
+                  <ul class="nav-menu clearfix">
+                  </ul>
+               </nav>
+            </div>
+         </section>
+      </header>
+             
+       
+   </body>
+</html>
+
+<!--<Marquee class="text-danger">
+     <h3><b>Website will be down for today 06:00 PM due to maintenance<b></h4>
+</marquee>-->
+
+<form name="maptype" id="maptype" action="/index.php/Select" method="post">
+   
+<input type="hidden" name="map_type" class="map_type_flag">
+
+</form>
+
+<script type="text/javascript">
+   
+$(document).ready(function(){
+
+   $('.map_type').click(function(event){
+
+      event.preventDefault();
+
+      var type =  $(this).attr('at'); //$(this).val();
+
+
+    //  alert(type);
+
+      $('.map_type_flag').val(type);
+
+      $('#maptype').submit();
+   })
+
+
+
+
+})
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>
+
+
+.header-wrapper{
+
+   /*background-image: linear-gradient(lightblue,pink);
+*/
+background: url(/assets2/img/survey_head14.png) !important;
+}
+
+#nav {
+list-style:none inside;
+text-align:left;
+margin-top: -10px;
+margin-bottom: -10px;
+
+}
+#nav ul {
+display:block;
+float:left;
+background: lightblue;
+line-height:15px;
+border: snow 1px solid ;
+
+}
+#nav  li a {
+display:block;
+padding:-80%;
+text-decoration:none;
+width:200px;
+line-height:25px; 
+color:#000000;
+font-size: 13px;
+float: left;
+
+}
+#nav  {
+/*
+  width: 258px;*/
+   
+   } 
+#nav li:hover {
+   
+   background-color:#f3b45b;
+
+
+    padding-right: 24px;
+    padding-left:20px;
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.4s;
+}
+#nav ul  {
+position:absolute;
+
+left:100.6%;
+display:none; 
+
+}
+#nav li:hover ul ul {display:none;}
+#nav li:hover ul {display:block;} 
+#nav li li:hover ul {
+display:block; 
+margin-left:200px;
+margin-top:-35px;
+
+}
+
+.main-menu .sub-nav-group>li>a {
+  background: none;
+}
+.sub-nav { 
+    background: lightblue;
+    border: 1px solid;
+}
+
+#nav ul li a:hover {
+    background-color: #91610F; 
+
+}
+
+.sub-nav ul {
+    display: inline-block;
+    vertical-align: top;
+    margin: 0 1em 0 0;
+    padding: 0;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+nav#main_menu ul li a {
+  text-decoration: none !important;
+}
+
+#nav1 li a:hover:after {
+  opacity: 1;
+  right: 15px;
+}
+
+table th{
+
+background-color:#0e4d92 !important;
+}
+
+
+
+/*#nav1  li a{
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+#nav1 li a:after {
+  content: '»';
+  font-size:25px;
+  position: absolute;
+  opacity: 0;  
+  top: 6px;
+  right: -15px;
+  padding-right: 20px;
+  transition: 0.4s;
+}
+
+#nav1  li a:hover{*/
+ /* padding-right: 24px;
+  padding-left:20px;*/
+
+ @media only screen and (min-width: 320px) and (max-width: 350px)  {
+
+div.float-element{
+
+     margin-top: -135px;
+    /* margin-left: 17px; */
+    margin-right: -60px;
+  
+    width: 50px;
+   
+}
+ div.float-element a.sw-logo
+ {
+  margin-right: -35px;
+    margin-left: 30px;
+}
+
+
+ }
+
+@media only screen and (min-width: 375px) and (max-width: 420px)  {
+
+div.float-element{
+
+     margin-top: -110px;
+    /* margin-left: 17px; */
+    margin-right: -60px;
+    display: block !important;
+    width: 50px;
+   
+}
+   
+ div.float-element a.sw-logo
+ {
+  margin-right: -35px;
+    margin-left: 30px;
+}
+}
+
+@media only screen and (min-width: 425px) and (max-width:520px)  {
+
+   div.float-element{
+
+     margin-top: -92px;
+    /* margin-left: 17px; */
+    margin-right: -60px;
+  
+    width: 50px;
+   
+}
+}
+@media only screen and (min-width: 760px) and (max-width: 1023px)  {
+   div.float-element{
+
+      margin-top: -97px;
+    /* margin-left: 17px; */
+    margin-right: -100px;
+    display: block !important;
+}
+}
+
+
+
+
+</style>
+
+
+      <section class="wrapper">
+        <!--overview start-->
+        <div class="row">
+          <div class="col-lg-12">
+           
+            <ol class="breadcrumb">
+              <li><i class="fa fa-home"></i><a href="/index.php/Home">Home</a></li>
+              <li><i class="fa fa-laptop"></i>Taluk list</li>
+              
+            </ol>
+          </div>
+        </div>
+
+
+
+
+        <div class="container-fluid" style="margin: 30px">
+             <a  href="/index.php/Home/index"><button type="button" class="btn btn-primary btn-circle btn-sm"><i class="
+fa fa-angle-double-left">
+   </i></button></a>&ensp;<span style="font-weight: bold;">Back to Home Page </span>
+
+
+          <div class="col-md-12 col-lg-12"><br>
+          <div class="table-responsive" style="width:60%;margin-left:120px">
+<table class="table table-bordered table-striped text-center" wid>
+    <thead style="background-color: #483D8B;color:white; font-size:18px !important">
+      <tr>
+        <th class="col-md- text-center" style="color:white">S.No</th>
+        <th class="col-md- text-center" style="color:white">Name of Districts </th>
+        <th class="col-md- text-center" style="color:white">Name of Taluks </th>
+      </tr>
+    </thead>
+
+
+<!--9AB7F6-->
+
+    <tbody style="background-color: font-size:18px;">
+
+             <tr><td>1</td><td>TIRUVALLUR</td> <td class="text-left">AVADI</td></tr><tr><td>2</td><td>TIRUVALLUR</td> <td class="text-left">GUMMIDIPOONDI</td></tr><tr><td>3</td><td>TIRUVALLUR</td> <td class="text-left">PALLIPET</td></tr><tr><td>4</td><td>TIRUVALLUR</td> <td class="text-left">PONNERI</td></tr><tr><td>5</td><td>TIRUVALLUR</td> <td class="text-left">POONAMALLEE</td></tr><tr><td>6</td><td>TIRUVALLUR</td> <td class="text-left">R.K. PET</td></tr><tr><td>7</td><td>TIRUVALLUR</td> <td class="text-left">TIRUTTANI</td></tr><tr><td>8</td><td>TIRUVALLUR</td> <td class="text-left">TIRUVALLUR</td></tr><tr><td>9</td><td>TIRUVALLUR</td> <td class="text-left">UTHUKOTTAI</td></tr><tr><td>10</td><td>CHENNAI</td> <td class="text-left">ALANDUR</td></tr><tr><td>11</td><td>CHENNAI</td> <td class="text-left">AMBATTUR</td></tr><tr><td>12</td><td>CHENNAI</td> <td class="text-left">AMINJIKARAI</td></tr><tr><td>13</td><td>CHENNAI</td> <td class="text-left">AYANAVARAM</td></tr><tr><td>14</td><td>CHENNAI</td> <td class="text-left">EGMORE</td></tr><tr><td>15</td><td>CHENNAI</td> <td class="text-left">GUINDY</td></tr><tr><td>16</td><td>CHENNAI</td> <td class="text-left">KOLATHUR</td></tr><tr><td>17</td><td>CHENNAI</td> <td class="text-left">MADHAVARAM</td></tr><tr><td>18</td><td>CHENNAI</td> <td class="text-left">MADURAVOYAL</td></tr><tr><td>19</td><td>CHENNAI</td> <td class="text-left">MAMBALAM</td></tr><tr><td>20</td><td>CHENNAI</td> <td class="text-left">MYLAPORE</td></tr><tr><td>21</td><td>CHENNAI</td> <td class="text-left">PERAMBUR</td></tr><tr><td>22</td><td>CHENNAI</td> <td class="text-left">PURASAWALKAM</td></tr><tr><td>23</td><td>CHENNAI</td> <td class="text-left">SHOZHINGANALLUR</td></tr><tr><td>24</td><td>CHENNAI</td> <td class="text-left">THIRUVOTTIYUR</td></tr><tr><td>25</td><td>CHENNAI</td> <td class="text-left">TONDIARPET</td></tr><tr><td>26</td><td>CHENNAI</td> <td class="text-left">VELACHERY</td></tr><tr><td>27</td><td>KANCHEEPURAM</td> <td class="text-left">KANCHEEPURAM</td></tr><tr><td>28</td><td>KANCHEEPURAM</td> <td class="text-left">KUNDRATHUR</td></tr><tr><td>29</td><td>KANCHEEPURAM</td> <td class="text-left">SRIPERUMBUDUR</td></tr><tr><td>30</td><td>KANCHEEPURAM</td> <td class="text-left">UTHIRAMERUR</td></tr><tr><td>31</td><td>KANCHEEPURAM</td> <td class="text-left">WALAJABAD</td></tr><tr><td>32</td><td>VELLORE</td> <td class="text-left">ANAICUT</td></tr><tr><td>33</td><td>VELLORE</td> <td class="text-left">GUDIYATHAM</td></tr><tr><td>34</td><td>VELLORE</td> <td class="text-left">KATPADI</td></tr><tr><td>35</td><td>VELLORE</td> <td class="text-left">K.V. KUPPAM</td></tr><tr><td>36</td><td>VELLORE</td> <td class="text-left">PERNAMBUT</td></tr><tr><td>37</td><td>VELLORE</td> <td class="text-left">VELLORE</td></tr><tr><td>38</td><td>DHARMAPURI</td> <td class="text-left">DHARMAPURI</td></tr><tr><td>39</td><td>DHARMAPURI</td> <td class="text-left">HARUR</td></tr><tr><td>40</td><td>DHARMAPURI</td> <td class="text-left">KARIMANGALAM</td></tr><tr><td>41</td><td>DHARMAPURI</td> <td class="text-left">NALLAMPALLI</td></tr><tr><td>42</td><td>DHARMAPURI</td> <td class="text-left">PALACODE</td></tr><tr><td>43</td><td>DHARMAPURI</td> <td class="text-left">PAPPIREDDIPATTY</td></tr><tr><td>44</td><td>DHARMAPURI</td> <td class="text-left">PENNAGARAM</td></tr><tr><td>45</td><td>TIRUVANNAMALAI</td> <td class="text-left">ARANI</td></tr><tr><td>46</td><td>TIRUVANNAMALAI</td> <td class="text-left">CHENGAM</td></tr><tr><td>47</td><td>TIRUVANNAMALAI</td> <td class="text-left">CHETPET</td></tr><tr><td>48</td><td>TIRUVANNAMALAI</td> <td class="text-left">CHEYYAR</td></tr><tr><td>49</td><td>TIRUVANNAMALAI</td> <td class="text-left">JAMUNAMARATHOOR</td></tr><tr><td>50</td><td>TIRUVANNAMALAI</td> <td class="text-left">KALASAPAKKAM</td></tr><tr><td>51</td><td>TIRUVANNAMALAI</td> <td class="text-left">KILPENNATHUR</td></tr><tr><td>52</td><td>TIRUVANNAMALAI</td> <td class="text-left">POLUR</td></tr><tr><td>53</td><td>TIRUVANNAMALAI</td> <td class="text-left">THANDARAMPATTU</td></tr><tr><td>54</td><td>TIRUVANNAMALAI</td> <td class="text-left">TIRUVANNAMALAI</td></tr><tr><td>55</td><td>TIRUVANNAMALAI</td> <td class="text-left">VANDAVASI</td></tr><tr><td>56</td><td>TIRUVANNAMALAI</td> <td class="text-left">VEMBAKKAM</td></tr><tr><td>57</td><td>VILLUPPURAM</td> <td class="text-left">GINGEE</td></tr><tr><td>58</td><td>VILLUPPURAM</td> <td class="text-left">KANDACHEEPURAM</td></tr><tr><td>59</td><td>VILLUPPURAM</td> <td class="text-left">MARAKKANAM</td></tr><tr><td>60</td><td>VILLUPPURAM</td> <td class="text-left">MELMALAIYANOOR</td></tr><tr><td>61</td><td>VILLUPPURAM</td> <td class="text-left">THIRUVENNAINALLUR</td></tr><tr><td>62</td><td>VILLUPPURAM</td> <td class="text-left">TINDIVANAMM</td></tr><tr><td>63</td><td>VILLUPPURAM</td> <td class="text-left">VANUR</td></tr><tr><td>64</td><td>VILLUPPURAM</td> <td class="text-left">VIKRAVANDI</td></tr><tr><td>65</td><td>VILLUPPURAM</td> <td class="text-left">VILUPPURAM</td></tr><tr><td>66</td><td>SALEM</td> <td class="text-left">ATTUR</td></tr><tr><td>67</td><td>SALEM</td> <td class="text-left">EDAPPADY</td></tr><tr><td>68</td><td>SALEM</td> <td class="text-left">GANGAVALLI</td></tr><tr><td>69</td><td>SALEM</td> <td class="text-left">KADAYAMPATTI</td></tr><tr><td>70</td><td>SALEM</td> <td class="text-left">METTUR</td></tr><tr><td>71</td><td>SALEM</td> <td class="text-left">OMALUR</td></tr><tr><td>72</td><td>SALEM</td> <td class="text-left">PETHANAICKENPALAYAM</td></tr><tr><td>73</td><td>SALEM</td> <td class="text-left">SALEM</td></tr><tr><td>74</td><td>SALEM</td> <td class="text-left">SALEM SOUTH</td></tr><tr><td>75</td><td>SALEM</td> <td class="text-left">SALEM WEST</td></tr><tr><td>76</td><td>SALEM</td> <td class="text-left">SANKARI</td></tr><tr><td>77</td><td>SALEM</td> <td class="text-left">THALAIVASAL</td></tr><tr><td>78</td><td>SALEM</td> <td class="text-left">VALAPADY</td></tr><tr><td>79</td><td>SALEM</td> <td class="text-left">YERCAUD</td></tr><tr><td>80</td><td>NAMAKKAL</td> <td class="text-left">KOLLI HILLS</td></tr><tr><td>81</td><td>NAMAKKAL</td> <td class="text-left">KUMARAPALAYAM</td></tr><tr><td>82</td><td>NAMAKKAL</td> <td class="text-left">MOHANUR</td></tr><tr><td>83</td><td>NAMAKKAL</td> <td class="text-left">NAMAKKAL</td></tr><tr><td>84</td><td>NAMAKKAL</td> <td class="text-left">PARAMATHIVELUR</td></tr><tr><td>85</td><td>NAMAKKAL</td> <td class="text-left">RASIPURAM</td></tr><tr><td>86</td><td>NAMAKKAL</td> <td class="text-left">SENDAMANGALAM</td></tr><tr><td>87</td><td>NAMAKKAL</td> <td class="text-left">THIRUCHENCODE</td></tr><tr><td>88</td><td>ERODE</td> <td class="text-left">ANTHIYUR</td></tr><tr><td>89</td><td>ERODE</td> <td class="text-left">BHAVANI</td></tr><tr><td>90</td><td>ERODE</td> <td class="text-left">ERODE</td></tr><tr><td>91</td><td>ERODE</td> <td class="text-left">GOBICHETTIPALAYM</td></tr><tr><td>92</td><td>ERODE</td> <td class="text-left">KODUMUDI</td></tr><tr><td>93</td><td>ERODE</td> <td class="text-left">MODAKKURICHI</td></tr><tr><td>94</td><td>ERODE</td> <td class="text-left">NAMBIYUR</td></tr><tr><td>95</td><td>ERODE</td> <td class="text-left">PERUNDURAI</td></tr><tr><td>96</td><td>ERODE</td> <td class="text-left">SATHYAMANGALAM</td></tr><tr><td>97</td><td>ERODE</td> <td class="text-left">THALAVADI</td></tr><tr><td>98</td><td>NILGIRIS</td> <td class="text-left">COONOOR</td></tr><tr><td>99</td><td>NILGIRIS</td> <td class="text-left">GUDALUR</td></tr><tr><td>100</td><td>NILGIRIS</td> <td class="text-left">KOTAGIRI</td></tr><tr><td>101</td><td>NILGIRIS</td> <td class="text-left">KUNDAH</td></tr><tr><td>102</td><td>NILGIRIS</td> <td class="text-left">PANDALUR</td></tr><tr><td>103</td><td>NILGIRIS</td> <td class="text-left">UDHAGAI</td></tr><tr><td>104</td><td>COIMBATORE</td> <td class="text-left">ANAIMALAI</td></tr><tr><td>105</td><td>COIMBATORE</td> <td class="text-left">ANNUR</td></tr><tr><td>106</td><td>COIMBATORE</td> <td class="text-left">COIMBATORE (N)</td></tr><tr><td>107</td><td>COIMBATORE</td> <td class="text-left">COIMBATORE (S)</td></tr><tr><td>108</td><td>COIMBATORE</td> <td class="text-left">KINATHUKKDAVU</td></tr><tr><td>109</td><td>COIMBATORE</td> <td class="text-left">MADUKKARAI</td></tr><tr><td>110</td><td>COIMBATORE</td> <td class="text-left">METTUPALAYAM</td></tr><tr><td>111</td><td>COIMBATORE</td> <td class="text-left">PERUR</td></tr><tr><td>112</td><td>COIMBATORE</td> <td class="text-left">POLLACHI</td></tr><tr><td>113</td><td>COIMBATORE</td> <td class="text-left">SULUR</td></tr><tr><td>114</td><td>COIMBATORE</td> <td class="text-left">VALPARAI</td></tr><tr><td>115</td><td>DINDIGUL</td> <td class="text-left">ATHOOR</td></tr><tr><td>116</td><td>DINDIGUL</td> <td class="text-left">DINDIGUL EAST</td></tr><tr><td>117</td><td>DINDIGUL</td> <td class="text-left">DINDIGUL WEST</td></tr><tr><td>118</td><td>DINDIGUL</td> <td class="text-left">GUJILIAMPARAI</td></tr><tr><td>119</td><td>DINDIGUL</td> <td class="text-left">KODAIKANAL</td></tr><tr><td>120</td><td>DINDIGUL</td> <td class="text-left">NATHAM</td></tr><tr><td>121</td><td>DINDIGUL</td> <td class="text-left">NILAKOTTAI</td></tr><tr><td>122</td><td>DINDIGUL</td> <td class="text-left">ODDENCHATRAM</td></tr><tr><td>123</td><td>DINDIGUL</td> <td class="text-left">PALANI</td></tr><tr><td>124</td><td>DINDIGUL</td> <td class="text-left">VEDASANDUR</td></tr><tr><td>125</td><td>KARUR</td> <td class="text-left">ARVAKURICHI</td></tr><tr><td>126</td><td>KARUR</td> <td class="text-left">KADAVUR</td></tr><tr><td>127</td><td>KARUR</td> <td class="text-left">KARUR</td></tr><tr><td>128</td><td>KARUR</td> <td class="text-left">KRISHNARAYAPURAM</td></tr><tr><td>129</td><td>KARUR</td> <td class="text-left">KULITHALAI</td></tr><tr><td>130</td><td>KARUR</td> <td class="text-left">MANMANGALAM</td></tr><tr><td>131</td><td>KARUR</td> <td class="text-left">PUGALUR</td></tr><tr><td>132</td><td>THIRUCHIRAPPALLI</td> <td class="text-left">LALGUDI</td></tr><tr><td>133</td><td>THIRUCHIRAPPALLI</td> <td class="text-left">MANACHANALLUR</td></tr><tr><td>134</td><td>THIRUCHIRAPPALLI</td> <td class="text-left">MANAPPARAI</td></tr><tr><td>135</td><td>THIRUCHIRAPPALLI</td> <td class="text-left">MARUNGAPURI</td></tr><tr><td>136</td><td>THIRUCHIRAPPALLI</td> <td class="text-left">MUSIRI</td></tr><tr><td>137</td><td>THIRUCHIRAPPALLI</td> <td class="text-left">SRIRANGAM</td></tr><tr><td>138</td><td>THIRUCHIRAPPALLI</td> <td class="text-left">THIRUVERUMBUR</td></tr><tr><td>139</td><td>THIRUCHIRAPPALLI</td> <td class="text-left">THOTTIAM</td></tr><tr><td>140</td><td>THIRUCHIRAPPALLI</td> <td class="text-left">THURAIYUR</td></tr><tr><td>141</td><td>THIRUCHIRAPPALLI</td> <td class="text-left">TIRUCHIRAPPALLI EAST</td></tr><tr><td>142</td><td>THIRUCHIRAPPALLI</td> <td class="text-left">TIRUCHIRAPPALLI  WEST</td></tr><tr><td>143</td><td>PERAMBALUR</td> <td class="text-left">ALATHUR</td></tr><tr><td>144</td><td>PERAMBALUR</td> <td class="text-left">KUNNAM</td></tr><tr><td>145</td><td>PERAMBALUR</td> <td class="text-left">PERAMBALUR</td></tr><tr><td>146</td><td>PERAMBALUR</td> <td class="text-left">VEPPANTHATTAI</td></tr><tr><td>147</td><td>ARIYALUR</td> <td class="text-left">ANDIMADAM</td></tr><tr><td>148</td><td>ARIYALUR</td> <td class="text-left">ARIYALUR</td></tr><tr><td>149</td><td>ARIYALUR</td> <td class="text-left">SENDURAI</td></tr><tr><td>150</td><td>ARIYALUR</td> <td class="text-left">UDAYARPALAYAM</td></tr><tr><td>151</td><td>CUDDALORE</td> <td class="text-left">BHUVANAGIRI</td></tr><tr><td>152</td><td>CUDDALORE</td> <td class="text-left">CHIDAMBARAM</td></tr><tr><td>153</td><td>CUDDALORE</td> <td class="text-left">CUDDALORE</td></tr><tr><td>154</td><td>CUDDALORE</td> <td class="text-left">KATTUMANNARKOIL</td></tr><tr><td>155</td><td>CUDDALORE</td> <td class="text-left">KURINJIPADI</td></tr><tr><td>156</td><td>CUDDALORE</td> <td class="text-left">PANRUTI</td></tr><tr><td>157</td><td>CUDDALORE</td> <td class="text-left">SRIMUSHNAM</td></tr><tr><td>158</td><td>CUDDALORE</td> <td class="text-left">TITAGUDI</td></tr><tr><td>159</td><td>CUDDALORE</td> <td class="text-left">VEPPUR</td></tr><tr><td>160</td><td>CUDDALORE</td> <td class="text-left">VRIDHACHALAM</td></tr><tr><td>161</td><td>NAGAPATTINAM</td> <td class="text-left">KILVELUR</td></tr><tr><td>162</td><td>NAGAPATTINAM</td> <td class="text-left">NAGAPATTINAM</td></tr><tr><td>163</td><td>NAGAPATTINAM</td> <td class="text-left">THIRUKKUVALAI</td></tr><tr><td>164</td><td>NAGAPATTINAM</td> <td class="text-left">VEDARANYAM</td></tr><tr><td>165</td><td>THIRUVARUR</td> <td class="text-left">KOOTHANALLUR</td></tr><tr><td>166</td><td>THIRUVARUR</td> <td class="text-left">KUDAVASAL</td></tr><tr><td>167</td><td>THIRUVARUR</td> <td class="text-left">MANNARGUDI</td></tr><tr><td>168</td><td>THIRUVARUR</td> <td class="text-left">MUTHUPETTAI</td></tr><tr><td>169</td><td>THIRUVARUR</td> <td class="text-left">NANNILAM</td></tr><tr><td>170</td><td>THIRUVARUR</td> <td class="text-left">NEEDAMANGALAM</td></tr><tr><td>171</td><td>THIRUVARUR</td> <td class="text-left">THIRUTHURAIPOONDI</td></tr><tr><td>172</td><td>THIRUVARUR</td> <td class="text-left">THIRUVARUR</td></tr><tr><td>173</td><td>THIRUVARUR</td> <td class="text-left">VALANGAIMAN</td></tr><tr><td>174</td><td>THANJAVUR</td> <td class="text-left">BUDALUR</td></tr><tr><td>175</td><td>THANJAVUR</td> <td class="text-left">KUMBAKONAM</td></tr><tr><td>176</td><td>THANJAVUR</td> <td class="text-left">ORATHANAD</td></tr><tr><td>177</td><td>THANJAVUR</td> <td class="text-left">PAPANASAM</td></tr><tr><td>178</td><td>THANJAVUR</td> <td class="text-left">PATTUKKOTAI</td></tr><tr><td>179</td><td>THANJAVUR</td> <td class="text-left">PERAVURANI</td></tr><tr><td>180</td><td>THANJAVUR</td> <td class="text-left">THANJAVUR</td></tr><tr><td>181</td><td>THANJAVUR</td> <td class="text-left">THIRUVAIYARU</td></tr><tr><td>182</td><td>THANJAVUR</td> <td class="text-left">THIRUVIDAIMARUDUR</td></tr><tr><td>183</td><td>THANJAVUR</td> <td class="text-left">THIRUVONAM</td></tr><tr><td>184</td><td>PUDUKKOTTAI</td> <td class="text-left">ALANGUDI</td></tr><tr><td>185</td><td>PUDUKKOTTAI</td> <td class="text-left">ARANTHANGI</td></tr><tr><td>186</td><td>PUDUKKOTTAI</td> <td class="text-left">AVUDAIYARKOIL</td></tr><tr><td>187</td><td>PUDUKKOTTAI</td> <td class="text-left">GANDARVAKOTTAI</td></tr><tr><td>188</td><td>PUDUKKOTTAI</td> <td class="text-left">ILLUPUR</td></tr><tr><td>189</td><td>PUDUKKOTTAI</td> <td class="text-left">KARAMBAKUDI</td></tr><tr><td>190</td><td>PUDUKKOTTAI</td> <td class="text-left">KULATHUR</td></tr><tr><td>191</td><td>PUDUKKOTTAI</td> <td class="text-left">MANAMELKUDI</td></tr><tr><td>192</td><td>PUDUKKOTTAI</td> <td class="text-left">PONNAMARAVATHI</td></tr><tr><td>193</td><td>PUDUKKOTTAI</td> <td class="text-left">PUDUKKOTTAI</td></tr><tr><td>194</td><td>PUDUKKOTTAI</td> <td class="text-left">THIRUMAYAM</td></tr><tr><td>195</td><td>PUDUKKOTTAI</td> <td class="text-left">VIRALIMALAI</td></tr><tr><td>196</td><td>SIVAGANGAI</td> <td class="text-left">DEVAKOTTAI</td></tr><tr><td>197</td><td>SIVAGANGAI</td> <td class="text-left">ILAYANKUDI</td></tr><tr><td>198</td><td>SIVAGANGAI</td> <td class="text-left">KALAIYARKOVIL</td></tr><tr><td>199</td><td>SIVAGANGAI</td> <td class="text-left">KARAIKUDI</td></tr><tr><td>200</td><td>SIVAGANGAI</td> <td class="text-left">MANAMADURAI</td></tr><tr><td>201</td><td>SIVAGANGAI</td> <td class="text-left">SINGAMPUNARI</td></tr><tr><td>202</td><td>SIVAGANGAI</td> <td class="text-left">SIVAGANGA</td></tr><tr><td>203</td><td>SIVAGANGAI</td> <td class="text-left">THIRUPPATTUR</td></tr><tr><td>204</td><td>SIVAGANGAI</td> <td class="text-left">THIRUPPUVANAM</td></tr><tr><td>205</td><td>MADURAI</td> <td class="text-left">KALLIGUDI</td></tr><tr><td>206</td><td>MADURAI</td> <td class="text-left">MADURAI EAST</td></tr><tr><td>207</td><td>MADURAI</td> <td class="text-left">MADURAI NORTH</td></tr><tr><td>208</td><td>MADURAI</td> <td class="text-left">MADURAI SOUTH</td></tr><tr><td>209</td><td>MADURAI</td> <td class="text-left">MADURAI WEST</td></tr><tr><td>210</td><td>MADURAI</td> <td class="text-left">MELUR</td></tr><tr><td>211</td><td>MADURAI</td> <td class="text-left">PERAIYUR</td></tr><tr><td>212</td><td>MADURAI</td> <td class="text-left">THIRUPPARANKUNDRAM</td></tr><tr><td>213</td><td>MADURAI</td> <td class="text-left">TIRUMANGALAM</td></tr><tr><td>214</td><td>MADURAI</td> <td class="text-left">USILAMPATTI</td></tr><tr><td>215</td><td>MADURAI</td> <td class="text-left">VADIPATTI</td></tr><tr><td>216</td><td>THENI</td> <td class="text-left">AUNDIPATTI</td></tr><tr><td>217</td><td>THENI</td> <td class="text-left">BODINAYAKKANUR</td></tr><tr><td>218</td><td>THENI</td> <td class="text-left">PERIYAKULAM</td></tr><tr><td>219</td><td>THENI</td> <td class="text-left">THENI</td></tr><tr><td>220</td><td>THENI</td> <td class="text-left">UTHAMAPALAYAM</td></tr><tr><td>221</td><td>VIRUDHUNAGAR</td> <td class="text-left">ARUPPUKKOTTAI</td></tr><tr><td>222</td><td>VIRUDHUNAGAR</td> <td class="text-left">KARIYAPATTI</td></tr><tr><td>223</td><td>VIRUDHUNAGAR</td> <td class="text-left">RAJAPALAIAM</td></tr><tr><td>224</td><td>VIRUDHUNAGAR</td> <td class="text-left">SATTUR</td></tr><tr><td>225</td><td>VIRUDHUNAGAR</td> <td class="text-left">SIVAKASI</td></tr><tr><td>226</td><td>VIRUDHUNAGAR</td> <td class="text-left">SRIVILLIPUTHUR</td></tr><tr><td>227</td><td>VIRUDHUNAGAR</td> <td class="text-left">TIRUCHULI</td></tr><tr><td>228</td><td>VIRUDHUNAGAR</td> <td class="text-left">VEMBAKKOTTAI</td></tr><tr><td>229</td><td>VIRUDHUNAGAR</td> <td class="text-left">VIRUDHUNAGAR</td></tr><tr><td>230</td><td>VIRUDHUNAGAR</td> <td class="text-left">WATRAP</td></tr><tr><td>231</td><td>RAMANATHAPURAM</td> <td class="text-left">KADALADI</td></tr><tr><td>232</td><td>RAMANATHAPURAM</td> <td class="text-left">KAMUTHI</td></tr><tr><td>233</td><td>RAMANATHAPURAM</td> <td class="text-left">KILAKARAI</td></tr><tr><td>234</td><td>RAMANATHAPURAM</td> <td class="text-left">MUDUKULATHUR</td></tr><tr><td>235</td><td>RAMANATHAPURAM</td> <td class="text-left">PARAMAKUDI</td></tr><tr><td>236</td><td>RAMANATHAPURAM</td> <td class="text-left">RAJASINGAMANGALAM</td></tr><tr><td>237</td><td>RAMANATHAPURAM</td> <td class="text-left">RAMANATHAPURAM</td></tr><tr><td>238</td><td>RAMANATHAPURAM</td> <td class="text-left">RAMESHWARAM</td></tr><tr><td>239</td><td>RAMANATHAPURAM</td> <td class="text-left">THIRUVADANI</td></tr><tr><td>240</td><td>THOOTHUKKUDI</td> <td class="text-left">ERAL</td></tr><tr><td>241</td><td>THOOTHUKKUDI</td> <td class="text-left">ETTAYAPURAM</td></tr><tr><td>242</td><td>THOOTHUKKUDI</td> <td class="text-left">KAYATHAR</td></tr><tr><td>243</td><td>THOOTHUKKUDI</td> <td class="text-left">KOVILPATTI</td></tr><tr><td>244</td><td>THOOTHUKKUDI</td> <td class="text-left">OTTAPIDARAM</td></tr><tr><td>245</td><td>THOOTHUKKUDI</td> <td class="text-left">SATTANKULAM</td></tr><tr><td>246</td><td>THOOTHUKKUDI</td> <td class="text-left">SRIVAIKUNDAM</td></tr><tr><td>247</td><td>THOOTHUKKUDI</td> <td class="text-left">THOOTHUKUDI</td></tr><tr><td>248</td><td>THOOTHUKKUDI</td> <td class="text-left">TIRUCHENDUR</td></tr><tr><td>249</td><td>THOOTHUKKUDI</td> <td class="text-left">VILATHIKULAM</td></tr><tr><td>250</td><td>TIRUNELVELI</td> <td class="text-left">AMBASAMUDRAM</td></tr><tr><td>251</td><td>TIRUNELVELI</td> <td class="text-left">CHERANMAHADEVI</td></tr><tr><td>252</td><td>TIRUNELVELI</td> <td class="text-left">MANUR</td></tr><tr><td>253</td><td>TIRUNELVELI</td> <td class="text-left">NANGUNERI</td></tr><tr><td>254</td><td>TIRUNELVELI</td> <td class="text-left">PALAYAMKOTTAI</td></tr><tr><td>255</td><td>TIRUNELVELI</td> <td class="text-left">RADHAPURAM</td></tr><tr><td>256</td><td>TIRUNELVELI</td> <td class="text-left">THISAYANVILAI</td></tr><tr><td>257</td><td>TIRUNELVELI</td> <td class="text-left">TIRUNELVELI</td></tr><tr><td>258</td><td>KANYAKUMARI</td> <td class="text-left">AGASTHEESWARAM</td></tr><tr><td>259</td><td>KANYAKUMARI</td> <td class="text-left">KALKULAM</td></tr><tr><td>260</td><td>KANYAKUMARI</td> <td class="text-left">KILLIYOOR</td></tr><tr><td>261</td><td>KANYAKUMARI</td> <td class="text-left">THIRUVATTAR</td></tr><tr><td>262</td><td>KANYAKUMARI</td> <td class="text-left">THOVALAI</td></tr><tr><td>263</td><td>KANYAKUMARI</td> <td class="text-left">VILAVAMCODE</td></tr><tr><td>264</td><td>KRISHNAGIRI</td> <td class="text-left">ANCHETTY</td></tr><tr><td>265</td><td>KRISHNAGIRI</td> <td class="text-left">BARGUR</td></tr><tr><td>266</td><td>KRISHNAGIRI</td> <td class="text-left">DENKANIKOTTAI</td></tr><tr><td>267</td><td>KRISHNAGIRI</td> <td class="text-left">HOSUR</td></tr><tr><td>268</td><td>KRISHNAGIRI</td> <td class="text-left">KRISHNAGIRI</td></tr><tr><td>269</td><td>KRISHNAGIRI</td> <td class="text-left">POCHAMPALLI</td></tr><tr><td>270</td><td>KRISHNAGIRI</td> <td class="text-left">SHOOLAGIRI</td></tr><tr><td>271</td><td>KRISHNAGIRI</td> <td class="text-left">UTHANGARAI</td></tr><tr><td>272</td><td>TIRUPPUR</td> <td class="text-left">AVINASHI</td></tr><tr><td>273</td><td>TIRUPPUR</td> <td class="text-left">DHARAPURAM</td></tr><tr><td>274</td><td>TIRUPPUR</td> <td class="text-left">KANGAYAM</td></tr><tr><td>275</td><td>TIRUPPUR</td> <td class="text-left">MADATHUKULAM</td></tr><tr><td>276</td><td>TIRUPPUR</td> <td class="text-left">PALLADAM</td></tr><tr><td>277</td><td>TIRUPPUR</td> <td class="text-left">TIRUPPUR NORTH</td></tr><tr><td>278</td><td>TIRUPPUR</td> <td class="text-left">TIRUPPUR SOUTH</td></tr><tr><td>279</td><td>TIRUPPUR</td> <td class="text-left">UDUMALAIPET</td></tr><tr><td>280</td><td>TIRUPPUR</td> <td class="text-left">UTHUKKULI</td></tr><tr><td>281</td><td>KALLAKURICHI</td> <td class="text-left">CHINNASALEM</td></tr><tr><td>282</td><td>KALLAKURICHI</td> <td class="text-left">KALLAKURICHI</td></tr><tr><td>283</td><td>KALLAKURICHI</td> <td class="text-left">KALVARAYAN HILLS</td></tr><tr><td>284</td><td>KALLAKURICHI</td> <td class="text-left">SANKARAPURAM</td></tr><tr><td>285</td><td>KALLAKURICHI</td> <td class="text-left">TIRUKKOILUR</td></tr><tr><td>286</td><td>KALLAKURICHI</td> <td class="text-left">ULUNDURPET</td></tr><tr><td>287</td><td>KALLAKURICHI</td> <td class="text-left">VANAPURAM</td></tr><tr><td>288</td><td>TENKASI</td> <td class="text-left">ALANGULAM</td></tr><tr><td>289</td><td>TENKASI</td> <td class="text-left">KADAYANALLUR</td></tr><tr><td>290</td><td>TENKASI</td> <td class="text-left">SANKARANKOIL</td></tr><tr><td>291</td><td>TENKASI</td> <td class="text-left">SHENKOTTAI</td></tr><tr><td>292</td><td>TENKASI</td> <td class="text-left">SIVAGIRI</td></tr><tr><td>293</td><td>TENKASI</td> <td class="text-left">TENKASI</td></tr><tr><td>294</td><td>TENKASI</td> <td class="text-left">THIRUVENGADAM</td></tr><tr><td>295</td><td>TENKASI</td> <td class="text-left">VEERAKERALAMPUDUR</td></tr><tr><td>296</td><td>CHENGALPATTU</td> <td class="text-left">CHENGALPATTU</td></tr><tr><td>297</td><td>CHENGALPATTU</td> <td class="text-left">CHEYYUR</td></tr><tr><td>298</td><td>CHENGALPATTU</td> <td class="text-left">MADURAMDAGAM</td></tr><tr><td>299</td><td>CHENGALPATTU</td> <td class="text-left">PALLAVARAM</td></tr><tr><td>300</td><td>CHENGALPATTU</td> <td class="text-left">TAMBARAM</td></tr><tr><td>301</td><td>CHENGALPATTU</td> <td class="text-left">THIRUPORUR</td></tr><tr><td>302</td><td>CHENGALPATTU</td> <td class="text-left">TIRUKALUKUNDRAM</td></tr><tr><td>303</td><td>CHENGALPATTU</td> <td class="text-left">VANDALUR</td></tr><tr><td>304</td><td>THIRUPATHUR</td> <td class="text-left">AMBUR</td></tr><tr><td>305</td><td>THIRUPATHUR</td> <td class="text-left">NATARAMPALLI</td></tr><tr><td>306</td><td>THIRUPATHUR</td> <td class="text-left">TIRUPATHUR</td></tr><tr><td>307</td><td>THIRUPATHUR</td> <td class="text-left">VANIYAMBADI</td></tr><tr><td>308</td><td>RANIPET</td> <td class="text-left">ARAKKONAM</td></tr><tr><td>309</td><td>RANIPET</td> <td class="text-left">ARCOT</td></tr><tr><td>310</td><td>RANIPET</td> <td class="text-left">KALAVAI</td></tr><tr><td>311</td><td>RANIPET</td> <td class="text-left">NEMILI</td></tr><tr><td>312</td><td>RANIPET</td> <td class="text-left">SHOLINGHUR</td></tr><tr><td>313</td><td>RANIPET</td> <td class="text-left">WALAJAPET</td></tr><tr><td>314</td><td>MAYILADUTHURAI</td> <td class="text-left">KUTHALAM</td></tr><tr><td>315</td><td>MAYILADUTHURAI</td> <td class="text-left">MAYILADUTHURAI</td></tr><tr><td>316</td><td>MAYILADUTHURAI</td> <td class="text-left">SIRKAZHI</td></tr><tr><td>317</td><td>MAYILADUTHURAI</td> <td class="text-left">THARANGAMBADI</td></tr>
+      </tbody>
+  </table>
+</div>
+</div>
+         
+</div><br>
+
+
+        
+      </section>
+
+
+
+       <div style="padding-top: 50px">
+ 
+
+
+<style type="text/css"> 
+    /*img {
+        max-width: 60% !important;
+    }
+*/
+</style>
+
+      <section class="wrapper carousel-wrapper">
+         <div class="container common-container four_content carousel-container">
+            <div id="flexCarousel" class="flexslider carousel">
+               <ul class="slides">
+
+                  <li><a target="_blank" href="https://eservices.tn.gov.in/" title="External Link that opens in a new window">
+                     <img src="/assets2/img/anywhere.png" alt="Digital India"></a>
+                  </li>
+
+                 
+
+                  <li><a target="_blank" href="http://india.gov.in/" title="External Link that opens in a new window">
+                     <img src="/assets/images/carousel/india-gov.png" alt="National Portal of India"></a>
+                  </li>
+
+                  <li><a target="_blank" href="http://www.tn.nic.in/" title="External Link that opens in a new window">
+                     <img src="/assets2/img/NIC-LOGO.png" alt="GOI Web Directory"></a>
+                  </li>
+
+                   <li><a target="_blank" href="https://www.tn.gov.in/" title="External Link that opens in a new window"> 
+                     <img src="/assets2/img/TNG.png" alt="Make In India"></a>
+                  </li>
+
+                     <li><a target="_blank" href="https://collabland.gov.in/" title="External Link that opens in a new window">
+                     <img src="/assets2/img/cland.png" alt="Digital India"></a>
+                  </li>
+
+                 
+
+                  <!-- <li><a target="_blank" href="http://india.gov.in/" title="External Link that opens in a new window">
+                     <img src="/assets2/img/kar-logo.png" alt="National Portal of India"></a>
+                  </li> -->
+            
+
+               <!--    <li><a target="_blank" href="https://data.gov.in/" title="Data portal, External Link that opens in a new window" >
+                     <img src="assets/images/carousel/data-gov.png" alt="Data portal"></a>
+                  </li>
+
+                  <li><a target="_blank" href="https://mygov.in/" title="MyGov, External Link that opens in a new window">
+                     <img src="assets/images/carousel/mygov.png" alt="MyGov Portal"></a>
+                  </li> -->
+                  
+               </ul>
+            </div>
+         </div>
+      </section>
+
+      
+      
+      <!--/.carousel-wrapper-->
+      
+           <footer class="wrapper footer-wrapper fixed-bottom">
+         <div class="footer-top-wrapper">
+            <div class="container-fluid common-container four_content footer-top-container"  style="margin-bottom:-15px">
+               <ul>
+                  <li style="color:lightblue;font-weight:bold"> No of Visitors : <span id="counter" style="color:yellow;font-weight:bold">5189083</span> </li>
+                  <li><a href="/index.php/Home/webpolicy" >Website policies</a></li>
+                  <li><a href="/index.php/Home/webpolicy" >Terms and Conditions </a></li>
+                  <li><a href="/index.php/Home/Feedback" >Feedback </a></li>             
+                  <li><a href= "/index.php/Home/contacts" >Contact Us</a></li>
+               </ul>
+            </div>
+         </div>
+         <div class="footer-bottom-wrapper">
+            <div class="container-fluid common-container four_content footer-bottom-container" style="margin:0px">
+               <div class="footer-content clearfix">
+                  <div class="copyright-content" style="font-size:12px"> Website Content Managed by <strong>Department of Survey and Settlement, Chennai 
+                     Designed, Developed and Hosted by 
+                        <a target="_blank" title="NIC, External Link that opens in a new window" href="http://www.nic.in/">
+                           <strong>National Informatics Centre</strong>
+                        </a><strong> ( NIC )</strong>
+                     
+                  </div>
+                  <div class="last-updated">
+                     <strong>Last Seen: 06/04/2026 11:29:26am</strong>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </footer>
+
+
+     <!--/.footer-wrapper
+      <script type="text/javascript" src="assets2/js/jquery.min.js"></script>-->
+      <script type="text/javascript"src="/assets/js/jquery-accessibleMegaMenu.js"></script>
+    <!--  <script type="text/javascript" src="assets/js/framework.js"></script>-->
+      <script type="text/javascript" src="/assets/js/jquery.flexslider.js"></script>
+      <script type="text/javascript" src="/assets/js/font-size.js"></script>
+      <script type="text/javascript" src="/assets/js/swithcer.js"></script>
+      <script type="text/javascript" src="/theme/js/ma5gallery.js"></script>
+      <script type="text/javascript" src="/assets/js/megamenu.js"></script>
+      <script type="text/javascript" src="/theme/js/easyResponsiveTabs.js"></script>
+      <!--<script type="text/javascript" src="theme/js/custom.js"></script>-->
+
+      <!-- <script src="assets/js/jquery-2.1.1.min.js"></script> -->
+      
+      <script type="text/javascript" src="/assets2/js/pdf.min.js"></script>
+      <script type="text/javascript" src="/assets2/js/pdf.worker.min.js"></script>
+     <!-- <script type="text/javascript" src="/assets2/js/jquery-ui-1.9.2.custom.min.js"></script>-->
+       <script type="text/javascript" src="/assets2/js/jquery-ui.min.js"></script>
+      <script type="text/javascript" src="/assets2/js/bootstrap.min.js"></script>
+      <script type="text/javascript" src="/assets2/js/jquery.nicescroll.js"></script>
+     <!-- <script type="text/javascript" src="assets2/js/newscript.js"></script>-->
+      <script type="text/javascript" src="/assets2/js/slick.js"></script>
+      <script type="text/javascript" src="/assets2/js/ImageScroll.js"></script>
+      <script type="text/javascript" src="/assets2/js/baguetteBox.min.js"></script>
+
+      <script>
+$(window).ready(function(){
+
+      $('#flexCarousel').flexslider({
+        animation: "slide",
+        animationLoop: false,
+        itemWidth: 200,
+        itemMargin: 5,
+        minItems: 2,
+        maxItems: 6,
+		slideshow: 1,
+		move: 1,
+		pausePlay: true,
+    	pauseText: 'Pause',
+    	playText: 'Play', 
+		controlNav: false,
+        start: function(slider){
+          $('body').removeClass('loading');
+		  if (slider.pagingCount === 1) slider.addClass('flex-centered');
+        }
+      });
+ 
+  $('#flexCarousel1').flexslider({
+        animation: "slide",
+        animationLoop: false,
+        itemWidth: 168,
+        itemMargin: 20,
+        minItems:1,
+        maxItems: 4,
+		slideshow: 1,
+		move: 1,
+		controlNav: false,
+        start: function(slider){
+          $('body').removeClass('loading');
+		  
+        }
+
+
+
+
+      });
+
+    $('#flexCarousel').flexslider({
+        animation: "slide",
+        animationLoop: false,
+        itemWidth: 200,
+        itemMargin: 5,
+        minItems: 2,
+        maxItems: 6,
+    slideshow: 1,
+    move: 1,
+    pausePlay: true,
+      pauseText: 'Pause',
+      playText: 'Play', 
+    controlNav: false,
+        start: function(slider){
+          $('body').removeClass('loading');
+      if (slider.pagingCount === 1) slider.addClass('flex-centered');
+        }
+      });
+ 
+  $('#flexCarousel1').flexslider({
+        animation: "slide",
+        animationLoop: false,
+        itemWidth: 168,
+        itemMargin: 20,
+        minItems:1,
+        maxItems: 4,
+    slideshow: 1,
+    move: 1,
+    controlNav: false,
+        start: function(slider){
+          $('body').removeClass('loading');
+      
+        }
+
+
+
+
+      });
+
+
+     $(document).scroll(function() { 
+        if ($(this).scrollTop() > 100) { 
+            $('#scroll').fadeIn(); 
+        } else { 
+            $('#scroll').fadeOut(); 
+        } 
+    }); 
+    $('#scroll').click(function(){
+        $("html, body").animate({ scrollTop: 0 }, 800); 
+        return false; 
+    }); 
+
+});
+
+      </script>
+</div>
+

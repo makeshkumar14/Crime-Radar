@@ -6,33 +6,31 @@ export default function StatsBar({ activeView, is3D, setIs3D }) {
     total: 0,
     topCrime: "N/A",
     districts: 0,
+    stations: 0,
   });
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8000/api/crimes/summary")
-      .then((res) => {
-        const data = res.data.summary;
-        const total = data.reduce((sum, r) => sum + r.total_count, 0);
-        const topCrime = data[0]?.category || "N/A";
-        setStats((prev) => ({ ...prev, total, topCrime }));
-      })
-      .catch((err) => console.error(err));
-
-    axios
-      .get("http://localhost:8000/api/fir/districts")
-      .then((res) => {
-        setStats((prev) => ({
-          ...prev,
-          districts: res.data.districts.length,
-        }));
+    Promise.all([
+      axios.get("http://localhost:8000/api/crimes/summary"),
+      axios.get("http://localhost:8000/api/fir/map-layers"),
+    ])
+      .then(([summaryRes, mapRes]) => {
+        const summary = summaryRes.data.summary;
+        const total = summary.reduce((sum, row) => sum + row.total_count, 0);
+        const topCrime = summary[0]?.category || "N/A";
+        setStats({
+          total,
+          topCrime,
+          districts: mapRes.data.summary.districts,
+          stations: mapRes.data.summary.stations,
+        });
       })
       .catch((err) => console.error(err));
   }, []);
 
   const cards = [
     {
-      label: "Total Crime Records",
+      label: "Synthetic Incident Load",
       value: stats.total.toLocaleString(),
       color: "text-white",
     },
@@ -41,8 +39,9 @@ export default function StatsBar({ activeView, is3D, setIs3D }) {
       value: stats.districts,
       color: "text-blue-400",
     },
+    { label: "Stations Covered", value: stats.stations, color: "text-cyan-400" },
     { label: "Top Crime Type", value: stats.topCrime, color: "text-amber-400" },
-    { label: "Data Years", value: "2001 - 2014", color: "text-green-400" },
+    { label: "Data Window", value: "2024 - 2026", color: "text-green-400" },
   ];
 
   return (

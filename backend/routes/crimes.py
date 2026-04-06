@@ -1,21 +1,24 @@
-from fastapi import APIRouter, Query
-from database import get_connection
 from typing import Optional
 
+from fastapi import APIRouter, Query
+
+from database import get_connection
+
 router = APIRouter()
+
 
 @router.get("/summary")
 def get_crime_summary(
     year: Optional[int] = Query(None),
-    district: Optional[str] = Query(None)
+    district: Optional[str] = Query(None),
 ):
     conn = get_connection()
     cursor = conn.cursor()
 
     query = """
         SELECT category, severity,
-               COUNT(*) as total_cases,
-               SUM(count) as total_count
+               COUNT(*) AS record_count,
+               SUM(count) AS total_count
         FROM fir_records
         WHERE 1=1
     """
@@ -31,20 +34,21 @@ def get_crime_summary(
     cursor.execute(query, params)
     rows = cursor.fetchall()
     conn.close()
-    return {"summary": [dict(r) for r in rows]}
+    return {"summary": [dict(row) for row in rows]}
 
 
 @router.get("/trend")
 def get_crime_trend(
     district: Optional[str] = Query(None),
-    category: Optional[str] = Query(None)
+    category: Optional[str] = Query(None),
 ):
     conn = get_connection()
     cursor = conn.cursor()
 
     query = """
-        SELECT year, COUNT(*) as cases
-        FROM fir_records WHERE 1=1
+        SELECT year, SUM(count) AS cases
+        FROM fir_records
+        WHERE 1=1
     """
     params = []
     if district:
@@ -58,22 +62,24 @@ def get_crime_trend(
     cursor.execute(query, params)
     rows = cursor.fetchall()
     conn.close()
-    return {"trend": [dict(r) for r in rows]}
+    return {"trend": [dict(row) for row in rows]}
 
 
 @router.get("/by-ipc")
 def get_by_ipc(ipc_section: str = Query(...)):
     conn = get_connection()
     cursor = conn.cursor()
-    cursor.execute("""
-        SELECT f.district, f.year, SUM(f.count) as total,
-               c.category, c.severity, c.description
-        FROM fir_records f
-        JOIN crime_categories c ON f.ipc_section = c.ipc_section
-        WHERE f.ipc_section = ?
-        GROUP BY f.district, f.year
+    cursor.execute(
+        """
+        SELECT ipc_section, district, year, category, severity,
+               SUM(count) AS total
+        FROM fir_records
+        WHERE ipc_section = ?
+        GROUP BY ipc_section, district, year, category, severity
         ORDER BY total DESC
-    """, [ipc_section])
+        """,
+        [ipc_section],
+    )
     rows = cursor.fetchall()
     conn.close()
-    return {"data": [dict(r) for r in rows]}
+    return {"data": [dict(row) for row in rows]}
