@@ -5,6 +5,8 @@ import Sidebar from "./components/Sidebar";
 import StatsBar from "./components/StatsBar";
 import Analytics from "./components/Analytics";
 import RiskCard from "./components/RiskCard";
+import TravelAdvisor from "./components/TravelAdvisor";
+import AreaSafetyReport from "./components/AreaSafetyReport";
 
 function App() {
   const [filters, setFilters] = useState({});
@@ -16,7 +18,6 @@ function App() {
 
   return (
     <div className="flex h-screen w-screen overflow-hidden bg-gray-950">
-      {/* Sidebar */}
       <div style={{ display: "flex", transition: "width 0.3s ease" }}>
         {sidebarOpen && (
           <Sidebar
@@ -41,11 +42,10 @@ function App() {
             zIndex: 1000,
           }}
         >
-          {sidebarOpen ? "◀" : "▶"}
+          {sidebarOpen ? "<" : ">"}
         </button>
       </div>
 
-      {/* Main content */}
       <div className="flex flex-col flex-1 overflow-hidden">
         <StatsBar activeView={activeView} is3D={is3D} setIs3D={setIs3D} />
 
@@ -77,13 +77,15 @@ function App() {
                   zIndex: 1000,
                 }}
               >
-                {riskCardOpen ? "▶" : "◀"}
+                {riskCardOpen ? ">" : "<"}
               </button>
 
               {riskCardOpen && <RiskCard district={selectedDistrict} />}
             </>
           )}
           {activeView === "analytics" && <Analytics />}
+          {activeView === "travel" && <TravelAdvisor />}
+          {activeView === "relocation" && <AreaSafetyReport />}
         </div>
       </div>
     </div>

@@ -7,11 +7,13 @@ import re
 from collections import defaultdict
 from pathlib import Path
 
-from database import get_connection
+from crime_catalog import catalog_by_category
+from database import get_connection, init_db
+from models import seed_ipc_categories
 
 BASE_DIR = Path(__file__).resolve().parent
 RAW_DIR = BASE_DIR / "data" / "raw"
-DATA_SEED_VERSION = "ops_seed_v1"
+DATA_SEED_VERSION = "ops_seed_v2"
 YEARS = [2024, 2025, 2026]
 
 DISTRICT_ALIASES = {
@@ -95,63 +97,104 @@ HILL_TOURISM_DISTRICTS = {
 }
 
 CATEGORY_CONFIG = {
+    "State Security": {
+        "base": 0.08,
+        "month": [0.98, 0.96, 0.97, 0.98, 1.0, 1.02, 1.01, 1.0, 1.0, 1.02, 1.01, 0.99],
+        "time_slots": [("NIGHT", 0.34), ("EVENING", 0.3), ("AFTERNOON", 0.2), ("MORNING", 0.16)],
+    },
     "Violent": {
-        "ipc": ["302", "307", "324"],
-        "severity": "HIGH",
         "base": 0.82,
         "month": [0.94, 0.92, 0.95, 1.0, 1.04, 1.08, 1.1, 1.06, 1.0, 1.03, 1.08, 1.12],
         "time_slots": [("NIGHT", 0.38), ("EVENING", 0.34), ("AFTERNOON", 0.18), ("MORNING", 0.1)],
     },
+    "Public Nuisance": {
+        "base": 0.36,
+        "month": [0.95, 0.93, 0.96, 0.98, 1.0, 1.03, 1.04, 1.02, 1.01, 1.0, 1.0, 0.98],
+        "time_slots": [("EVENING", 0.34), ("AFTERNOON", 0.32), ("MORNING", 0.2), ("NIGHT", 0.14)],
+    },
     "Property": {
-        "ipc": ["379", "392"],
-        "severity": "MEDIUM",
         "base": 1.26,
         "month": [0.86, 0.88, 0.9, 0.96, 1.0, 1.03, 1.02, 1.0, 1.08, 1.2, 1.24, 1.26],
         "time_slots": [("EVENING", 0.4), ("NIGHT", 0.28), ("AFTERNOON", 0.2), ("MORNING", 0.12)],
     },
+    "Burglary": {
+        "base": 0.74,
+        "month": [0.88, 0.89, 0.9, 0.94, 0.98, 1.0, 1.02, 1.0, 1.08, 1.16, 1.18, 1.22],
+        "time_slots": [("NIGHT", 0.48), ("EVENING", 0.28), ("AFTERNOON", 0.14), ("MORNING", 0.1)],
+    },
     "Fraud": {
-        "ipc": ["420", "465"],
-        "severity": "MEDIUM",
         "base": 0.76,
         "month": [0.92, 0.94, 0.95, 0.98, 1.0, 1.02, 1.0, 1.01, 1.05, 1.1, 1.12, 1.08],
         "time_slots": [("AFTERNOON", 0.42), ("MORNING", 0.3), ("EVENING", 0.2), ("NIGHT", 0.08)],
     },
     "Women Safety": {
-        "ipc": ["354", "376", "498-A"],
-        "severity": "HIGH",
         "base": 0.88,
         "month": [0.9, 0.92, 0.95, 0.97, 1.0, 1.04, 1.05, 1.04, 1.02, 1.08, 1.12, 1.14],
         "time_slots": [("EVENING", 0.36), ("NIGHT", 0.32), ("AFTERNOON", 0.18), ("MORNING", 0.14)],
     },
+    "Kidnapping": {
+        "base": 0.34,
+        "month": [0.92, 0.93, 0.95, 0.98, 1.0, 1.02, 1.04, 1.03, 1.02, 1.06, 1.08, 1.07],
+        "time_slots": [("EVENING", 0.34), ("NIGHT", 0.28), ("AFTERNOON", 0.22), ("MORNING", 0.16)],
+    },
     "Public Order": {
-        "ipc": ["147", "153-A"],
-        "severity": "MEDIUM",
         "base": 0.66,
         "month": [0.9, 0.9, 0.96, 1.04, 1.08, 1.06, 1.0, 0.96, 1.0, 1.08, 1.1, 1.02],
         "time_slots": [("EVENING", 0.38), ("AFTERNOON", 0.3), ("NIGHT", 0.18), ("MORNING", 0.14)],
     },
     "NDPS": {
-        "ipc": ["20", "21"],
-        "severity": "HIGH",
         "base": 0.38,
         "month": [0.95, 0.95, 0.96, 0.98, 1.0, 1.02, 1.04, 1.03, 1.02, 1.05, 1.08, 1.1],
         "time_slots": [("NIGHT", 0.46), ("EVENING", 0.3), ("AFTERNOON", 0.16), ("MORNING", 0.08)],
     },
+    "Gambling": {
+        "base": 0.28,
+        "month": [0.94, 0.92, 0.94, 0.97, 1.0, 1.01, 1.02, 1.0, 1.02, 1.06, 1.08, 1.12],
+        "time_slots": [("NIGHT", 0.42), ("EVENING", 0.3), ("AFTERNOON", 0.18), ("MORNING", 0.1)],
+    },
+    "Arms Act": {
+        "base": 0.18,
+        "month": [0.94, 0.94, 0.95, 0.98, 1.0, 1.01, 1.02, 1.0, 1.01, 1.03, 1.04, 1.03],
+        "time_slots": [("NIGHT", 0.4), ("EVENING", 0.3), ("AFTERNOON", 0.18), ("MORNING", 0.12)],
+    },
     "Excise Act": {
-        "ipc": ["60", "72"],
-        "severity": "MEDIUM",
         "base": 0.42,
         "month": [0.92, 0.92, 0.95, 0.98, 1.0, 1.03, 1.04, 1.02, 1.01, 1.06, 1.08, 1.12],
         "time_slots": [("NIGHT", 0.34), ("EVENING", 0.3), ("AFTERNOON", 0.2), ("MORNING", 0.16)],
     },
+    "Cow Protection": {
+        "base": 0.14,
+        "month": [0.95, 0.95, 0.96, 0.98, 1.0, 1.0, 1.01, 1.0, 1.01, 1.03, 1.03, 1.02],
+        "time_slots": [("NIGHT", 0.28), ("EVENING", 0.28), ("AFTERNOON", 0.24), ("MORNING", 0.2)],
+    },
+    "SC/ST Act": {
+        "base": 0.2,
+        "month": [0.96, 0.96, 0.97, 0.99, 1.0, 1.02, 1.03, 1.01, 1.01, 1.04, 1.05, 1.03],
+        "time_slots": [("EVENING", 0.3), ("AFTERNOON", 0.28), ("NIGHT", 0.24), ("MORNING", 0.18)],
+    },
+    "Mining Act": {
+        "base": 0.24,
+        "month": [0.93, 0.93, 0.95, 0.99, 1.02, 1.04, 1.05, 1.04, 1.02, 1.01, 1.0, 0.98],
+        "time_slots": [("MORNING", 0.32), ("AFTERNOON", 0.3), ("EVENING", 0.22), ("NIGHT", 0.16)],
+    },
+    "ITPA": {
+        "base": 0.16,
+        "month": [0.95, 0.95, 0.96, 0.98, 1.0, 1.01, 1.02, 1.01, 1.02, 1.04, 1.05, 1.05],
+        "time_slots": [("NIGHT", 0.44), ("EVENING", 0.3), ("AFTERNOON", 0.16), ("MORNING", 0.1)],
+    },
+    "Goonda Act": {
+        "base": 0.12,
+        "month": [0.96, 0.95, 0.96, 0.98, 1.0, 1.02, 1.02, 1.01, 1.01, 1.02, 1.03, 1.02],
+        "time_slots": [("NIGHT", 0.36), ("EVENING", 0.3), ("AFTERNOON", 0.2), ("MORNING", 0.14)],
+    },
     "Accident": {
-        "ipc": ["IRAD-ACCIDENT"],
-        "severity": "HIGH",
         "base": 0.84,
         "month": [0.94, 0.93, 0.95, 0.97, 1.0, 1.02, 1.02, 1.0, 1.08, 1.16, 1.18, 1.1],
         "time_slots": [("EVENING", 0.34), ("NIGHT", 0.28), ("AFTERNOON", 0.22), ("MORNING", 0.16)],
     },
 }
+
+CATEGORY_CODES = catalog_by_category()
 
 
 def normalize_text(value: str) -> str:
@@ -361,6 +404,12 @@ def district_category_multiplier(district, category):
         multiplier *= 1.16
     if district in HILL_TOURISM_DISTRICTS and category in {"Accident", "Property", "Women Safety"}:
         multiplier *= 1.12
+    if district in COASTAL_DISTRICTS and category in {"ITPA", "Excise Act"}:
+        multiplier *= 1.16
+    if district in HIGHWAY_DISTRICTS and category in {"Arms Act", "Goonda Act"}:
+        multiplier *= 1.1
+    if district in INDUSTRIAL_DISTRICTS and category in {"Mining Act", "Fraud"}:
+        multiplier *= 1.12
 
     return multiplier
 
@@ -378,6 +427,12 @@ def taluk_keyword_multiplier(taluk_name, category):
     if any(term in keywords for term in ("PORT", "NAGAPATTINAM", "RAMESHWARAM")):
         if category in {"Excise Act", "NDPS", "Accident"}:
             multiplier *= 1.14
+    if any(term in keywords for term in ("NORTH", "SOUTH", "EAST", "WEST")):
+        if category in {"Burglary", "Kidnapping"}:
+            multiplier *= 1.08
+    if any(term in keywords for term in ("HILLS", "KALVARAYAN", "SATHYAMANGALAM")):
+        if category in {"Goonda Act", "Arms Act", "NDPS"}:
+            multiplier *= 1.1
 
     return multiplier
 
@@ -582,6 +637,9 @@ def build_incidents(taluks, station_by_id):
             year_growth = {2024: 0.94, 2025: 1.0, 2026: 1.08}[year]
             for month in range(1, 13):
                 for category, config in CATEGORY_CONFIG.items():
+                    code_options = CATEGORY_CODES.get(category, [])
+                    if not code_options:
+                        continue
                     rng = random.Random(
                         f"{taluk['taluk_id']}|{category}|{year}|{month}"
                     )
@@ -615,6 +673,7 @@ def build_incidents(taluks, station_by_id):
                         f"{taluk['taluk_id']}|{category}|{incident_date}",
                         max(2.5, taluk["radius_km"] / 2.2),
                     )
+                    legal_entry = rng.choice(code_options)
 
                     incidents.append(
                         {
@@ -625,9 +684,10 @@ def build_incidents(taluks, station_by_id):
                             "station_name": station["station_name"],
                             "lat": round(lat, 6),
                             "lng": round(lng, 6),
-                            "ipc_section": rng.choice(config["ipc"]),
+                            "law_name": legal_entry["law_name"],
+                            "ipc_section": legal_entry["ipc_section"],
                             "category": category,
-                            "severity": config["severity"],
+                            "severity": legal_entry["severity"],
                             "year": year,
                             "month": month,
                             "day_of_week": day_of_week,
@@ -719,6 +779,8 @@ def build_hotspots_and_routes(taluks, incidents):
 
 
 def seed_operational_data(force=False):
+    init_db()
+    seed_ipc_categories()
     conn = get_connection()
     cursor = conn.cursor()
     cursor.execute(
@@ -772,11 +834,11 @@ def seed_operational_data(force=False):
     cursor.executemany(
         """
         INSERT INTO fir_records
-        (district, taluk_id, taluk, station_id, station_name, lat, lng, ipc_section,
+        (district, taluk_id, taluk, station_id, station_name, lat, lng, law_name, ipc_section,
          category, severity, year, month, day_of_week, time_slot, incident_date,
          source_type, count)
         VALUES (:district, :taluk_id, :taluk, :station_id, :station_name, :lat, :lng,
-                :ipc_section, :category, :severity, :year, :month, :day_of_week,
+                :law_name, :ipc_section, :category, :severity, :year, :month, :day_of_week,
                 :time_slot, :incident_date, :source_type, :count)
         """,
         incidents,

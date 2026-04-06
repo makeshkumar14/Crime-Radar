@@ -10,22 +10,13 @@ import {
 } from "react-leaflet";
 import axios from "axios";
 import "leaflet/dist/leaflet.css";
+import { CATEGORY_COLORS, getCategoryColor } from "../lib/crimePalette";
+import { fetchRoadRoute } from "../lib/roadRouting";
 
 const RISK_COLORS = {
   HIGH: "#EF4444",
   MEDIUM: "#F59E0B",
   LOW: "#22C55E",
-};
-
-const CATEGORY_COLORS = {
-  Violent: "#EF4444",
-  Property: "#F59E0B",
-  Fraud: "#3B82F6",
-  "Women Safety": "#EC4899",
-  "Public Order": "#06B6D4",
-  NDPS: "#8B5CF6",
-  "Excise Act": "#84CC16",
-  Accident: "#F97316",
 };
 
 const MAP_STYLES = {
@@ -95,6 +86,9 @@ function MapController({ focusDistrict, fallbackCenter }) {
 export default function Map({ filters = {}, onDistrictClick }) {
   const [mapStyle, setMapStyle] = useState("street");
   const [layers, setLayers] = useState(null);
+  const [availableCategories, setAvailableCategories] = useState(
+    Object.keys(CATEGORY_COLORS),
+  );
   const [loading, setLoading] = useState(true);
   const [activeDistrict, setActiveDistrict] = useState(null);
   const [showDistricts, setShowDistricts] = useState(true);
@@ -107,6 +101,8 @@ export default function Map({ filters = {}, onDistrictClick }) {
   const [demoCategory, setDemoCategory] = useState("Women Safety");
   const [demoCount, setDemoCount] = useState(6);
   const [submittingDemo, setSubmittingDemo] = useState(false);
+  const [patrolRouteGeometry, setPatrolRouteGeometry] = useState({});
+  const [patrolRouteState, setPatrolRouteState] = useState("idle");
 
   const fetchLayers = async (nextFilters = filters) => {
     const query = buildQuery(nextFilters);
@@ -128,6 +124,56 @@ export default function Map({ filters = {}, onDistrictClick }) {
   useEffect(() => {
     fetchLayers(filters);
   }, [filters]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8000/api/fir/categories")
+      .then((response) => {
+        const categories = response.data.categories || [];
+        if (categories.length) {
+          setAvailableCategories(categories);
+          if (!categories.includes(demoCategory)) {
+            setDemoCategory(categories[0]);
+          }
+        }
+      })
+      .catch((error) => {
+        console.error("Category load error:", error);
+      });
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    if (!showPatrol || !layers?.patrol_routes?.length) {
+      setPatrolRouteGeometry({});
+      setPatrolRouteState("idle");
+      return undefined;
+    }
+
+    setPatrolRouteState("loading");
+
+    Promise.all(
+      layers.patrol_routes.map(async (route) => [
+        route.route_id,
+        await fetchRoadRoute(route.path),
+      ]),
+    )
+      .then((entries) => {
+        if (cancelled) return;
+        setPatrolRouteGeometry(Object.fromEntries(entries));
+        setPatrolRouteState("ready");
+      })
+      .catch(() => {
+        if (cancelled) return;
+        setPatrolRouteGeometry({});
+        setPatrolRouteState("idle");
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [layers, showPatrol]);
 
   const handleDistrictSelect = (district) => {
     setActiveDistrict(district);
@@ -167,6 +213,9 @@ export default function Map({ filters = {}, onDistrictClick }) {
   const focusDistrict =
     layers.districts.find((item) => item.district === (filters.district || activeDistrict)) ||
     null;
+  const patrolFallbackCount = Object.values(patrolRouteGeometry).filter(
+    (route) => route?.source === "fallback",
+  ).length;
 
   return (
     <div className="flex-1 relative">
@@ -191,7 +240,7 @@ export default function Map({ filters = {}, onDistrictClick }) {
 
         {showZones &&
           layers.zones.map((zone) => {
-            const color = CATEGORY_COLORS[zone.dominant_category] || "#64748b";
+            const color = getCategoryColor(zone.dominant_category);
             const isActive = activeDistrict === zone.district;
             return (
               <Circle
@@ -302,7 +351,7 @@ export default function Map({ filters = {}, onDistrictClick }) {
           layers.patrol_routes.map((route) => (
             <Polyline
               key={route.route_id}
-              positions={route.path.map((point) => [point.lat, point.lng])}
+              positions={patrolRouteGeometry[route.route_id]?.coordinates || []}
               pathOptions={{
                 color: "#38BDF8",
                 weight: 3,
@@ -364,6 +413,17 @@ export default function Map({ filters = {}, onDistrictClick }) {
             </label>
           ))}
         </div>
+        {showPatrol && patrolRouteState === "loading" && (
+          <p className="mb-2 text-[8px] leading-4 text-cyan-100/80">
+            Snapping patrol routes to real roads...
+          </p>
+        )}
+        {showPatrol && patrolRouteState === "ready" && patrolFallbackCount > 0 && (
+          <p className="mb-2 text-[8px] leading-4 text-amber-200/90">
+            {patrolFallbackCount} patrol route
+            {patrolFallbackCount > 1 ? "s are" : " is"} still approximate.
+          </p>
+        )}
 
         <div className="mb-2 h-px w-full bg-white/10" />
 
@@ -378,7 +438,7 @@ export default function Map({ filters = {}, onDistrictClick }) {
                   onChange={(event) => setDemoCategory(event.target.value)}
                   className="w-full rounded border border-gray-700 bg-gray-900 px-1.5 py-0.5 text-[8.5px] text-white"
                 >
-                  {Object.keys(CATEGORY_COLORS).map((category) => (
+                  {availableCategories.map((category) => (
                     <option key={category} value={category}>
                       {category}
                     </option>
@@ -446,9 +506,12 @@ export default function Map({ filters = {}, onDistrictClick }) {
           </div>
           <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[8px]">
             <span className="font-bold uppercase tracking-widest text-white/50">Crime:</span>
-            {Object.entries(CATEGORY_COLORS).map(([label, color]) => (
+            {availableCategories.slice(0, 8).map((label) => (
               <div key={label} className="flex items-center gap-0.5">
-                <div className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: color }} />
+                <div
+                  className="h-1.5 w-1.5 rounded-full"
+                  style={{ backgroundColor: getCategoryColor(label) }}
+                />
                 <span className="text-white/80">{label}</span>
               </div>
             ))}

@@ -9,7 +9,6 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer,
   PieChart,
   Pie,
@@ -38,7 +37,7 @@ export default function Analytics() {
     Promise.all([
       axios.get("http://localhost:8000/api/crimes/trend"),
       axios.get("http://localhost:8000/api/crimes/summary"),
-      axios.get("http://localhost:8000/api/predict/seasonal"),
+      axios.get("http://localhost:8000/api/predict/seasonal-ml"),
       axios.get("http://localhost:8000/api/predict/high-risk-districts"),
     ])
       .then(([trendRes, summaryRes, seasonalRes, highRiskRes]) => {
@@ -46,47 +45,43 @@ export default function Analytics() {
         setSummary(summaryRes.data.summary.slice(0, 6));
         setHighRisk(highRiskRes.data.high_risk.slice(0, 8));
 
-        // Process seasonal data — group by month
         const monthMap = {};
-        seasonalRes.data.seasonal.forEach((r) => {
-          if (!monthMap[r.month])
-            monthMap[r.month] = { month: r.month, total: 0 };
-          monthMap[r.month].total += r.cases;
+        (seasonalRes.data.predictions || []).forEach((row) => {
+          const key = `${row.year}-${String(row.month).padStart(2, "0")}`;
+          if (!monthMap[key]) {
+            monthMap[key] = {
+              label: `${row.month_name} ${String(row.year).slice(-2)}`,
+              order: key,
+              total: 0,
+            };
+          }
+          monthMap[key].total += row.predicted_cases;
         });
-        const months = [
-          "",
-          "Jan",
-          "Feb",
-          "Mar",
-          "Apr",
-          "May",
-          "Jun",
-          "Jul",
-          "Aug",
-          "Sep",
-          "Oct",
-          "Nov",
-          "Dec",
-        ];
+
         setSeasonal(
           Object.values(monthMap)
-            .sort((a, b) => a.month - b.month)
-            .map((r) => ({ ...r, month: months[r.month] || r.month })),
+            .sort((a, b) => a.order.localeCompare(b.order))
+            .map((row) => ({
+              month: row.label,
+              total: Number(row.total.toFixed(2)),
+            })),
         );
+
         setLoading(false);
       })
-      .catch((err) => {
-        console.error("Analytics error:", err);
+      .catch((error) => {
+        console.error("Analytics error:", error);
         setLoading(false);
       });
   }, []);
 
-  if (loading)
+  if (loading) {
     return (
       <div className="flex-1 flex items-center justify-center bg-gray-950">
         <p className="text-white animate-pulse">Loading analytics...</p>
       </div>
     );
+  }
 
   return (
     <div className="flex-1 bg-gray-950 overflow-y-auto p-4">
@@ -94,9 +89,7 @@ export default function Analytics() {
         Tamil Nadu Crime Analytics
       </h2>
 
-      {/* Row 1 — Trend + Seasonal */}
       <div className="grid grid-cols-2 gap-4 mb-4">
-        {/* Year on Year Trend */}
         <div className="bg-gray-900 rounded-lg p-4 border border-gray-700">
           <p className="text-gray-400 text-xs font-bold mb-3">
             YEAR-ON-YEAR CRIME TREND
@@ -121,10 +114,9 @@ export default function Analytics() {
           </ResponsiveContainer>
         </div>
 
-        {/* Seasonal Pattern */}
         <div className="bg-gray-900 rounded-lg p-4 border border-gray-700">
           <p className="text-gray-400 text-xs font-bold mb-3">
-            SEASONAL CRIME PATTERN
+            SEASONAL ML FORECAST
           </p>
           <ResponsiveContainer width="100%" height={200}>
             <BarChart data={seasonal}>
@@ -141,9 +133,7 @@ export default function Analytics() {
         </div>
       </div>
 
-      {/* Row 2 — Crime Categories + High Risk Districts */}
       <div className="grid grid-cols-2 gap-4">
-        {/* Crime Category Breakdown */}
         <div className="bg-gray-900 rounded-lg p-4 border border-gray-700">
           <p className="text-gray-400 text-xs font-bold mb-3">
             CRIME CATEGORY BREAKDOWN
@@ -159,8 +149,8 @@ export default function Analytics() {
                   cy="50%"
                   outerRadius={80}
                 >
-                  {summary.map((_, i) => (
-                    <Cell key={i} fill={COLORS[i % COLORS.length]} />
+                  {summary.map((_, index) => (
+                    <Cell key={index} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Pie>
                 <Tooltip
@@ -169,11 +159,11 @@ export default function Analytics() {
               </PieChart>
             </ResponsiveContainer>
             <div className="flex flex-col gap-1">
-              {summary.map((item, i) => (
-                <div key={i} className="flex items-center gap-2">
+              {summary.map((item, index) => (
+                <div key={index} className="flex items-center gap-2">
                   <div
                     className="w-2 h-2 rounded-full"
-                    style={{ backgroundColor: COLORS[i % COLORS.length] }}
+                    style={{ backgroundColor: COLORS[index % COLORS.length] }}
                   />
                   <span className="text-gray-300 text-xs">{item.category}</span>
                 </div>
@@ -182,7 +172,6 @@ export default function Analytics() {
           </div>
         </div>
 
-        {/* Top High Risk Districts */}
         <div className="bg-gray-900 rounded-lg p-4 border border-gray-700">
           <p className="text-gray-400 text-xs font-bold mb-3">
             TOP HIGH RISK DISTRICTS

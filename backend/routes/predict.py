@@ -1,8 +1,10 @@
+from datetime import date
 from typing import Optional
 
 from fastapi import APIRouter, Query
 
 from database import get_connection
+from ml_engine import patrol_ml_prediction, seasonal_ml_prediction
 from ops_queries import risk_level, risk_score
 
 router = APIRouter()
@@ -112,3 +114,32 @@ def get_seasonal_prediction(
     rows = cursor.fetchall()
     conn.close()
     return {"seasonal": [dict(row) for row in rows]}
+
+
+@router.get("/seasonal-ml")
+def get_seasonal_prediction_ml(
+    district: Optional[str] = Query(None),
+    category: Optional[str] = Query(None),
+    horizon: int = Query(6, ge=1, le=12),
+):
+    return {
+        "predictions": seasonal_ml_prediction(
+            district=district,
+            category=category,
+            horizon=horizon,
+        )
+    }
+
+
+@router.get("/patrol-ml")
+def get_patrol_prediction_ml(
+    district: str = Query(...),
+    year: Optional[int] = Query(None),
+    month: Optional[int] = Query(None),
+):
+    today = date.today()
+    return patrol_ml_prediction(
+        district=district,
+        target_year=year or today.year,
+        target_month=month or today.month,
+    )

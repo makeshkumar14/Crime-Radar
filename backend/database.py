@@ -1,7 +1,8 @@
 import sqlite3
+from pathlib import Path
 
-DB_PATH = "crimeradar.db"
-SCHEMA_VERSION = "ops_v1"
+DB_PATH = Path(__file__).resolve().parent / "crimeradar.db"
+SCHEMA_VERSION = "ops_v2"
 
 
 def get_connection():
@@ -81,6 +82,7 @@ def _rebuild_schema(cursor):
             state         TEXT DEFAULT 'Tamil Nadu',
             lat           REAL,
             lng           REAL,
+            law_name      TEXT,
             ipc_section   TEXT,
             category      TEXT,
             severity      TEXT,
@@ -99,6 +101,7 @@ def _rebuild_schema(cursor):
         """
         CREATE TABLE crime_categories (
             id          INTEGER PRIMARY KEY AUTOINCREMENT,
+            law_name    TEXT NOT NULL,
             ipc_section TEXT NOT NULL,
             category    TEXT NOT NULL,
             severity    TEXT NOT NULL,

@@ -4,22 +4,14 @@ from typing import Optional
 from fastapi import APIRouter, Body, Query
 from pydantic import BaseModel
 
+from crime_catalog import catalog_by_category
 from database import get_connection
 from ops_queries import load_map_layers
 
 router = APIRouter()
 
 
-CATEGORY_TO_IPC = {
-    "Violent": ("302", "HIGH"),
-    "Property": ("379", "MEDIUM"),
-    "Fraud": ("420", "MEDIUM"),
-    "Women Safety": ("354", "HIGH"),
-    "Public Order": ("147", "MEDIUM"),
-    "NDPS": ("20", "HIGH"),
-    "Excise Act": ("60", "MEDIUM"),
-    "Accident": ("IRAD-ACCIDENT", "HIGH"),
-}
+CATEGORY_CODES = catalog_by_category()
 
 
 class DemoEntry(BaseModel):
@@ -197,8 +189,8 @@ def create_demo_entry(payload: DemoEntry = Body(...)):
         conn.close()
         return {"status": "error", "message": "No target zone found"}
 
-    category = payload.category if payload.category in CATEGORY_TO_IPC else "Property"
-    ipc_section, severity = CATEGORY_TO_IPC[category]
+    category = payload.category if payload.category in CATEGORY_CODES else "Property"
+    legal_entry = CATEGORY_CODES[category][0]
     today = date.today()
     incident_year = payload.year or today.year
     incident_month = payload.month or today.month
@@ -208,10 +200,10 @@ def create_demo_entry(payload: DemoEntry = Body(...)):
     cursor.execute(
         """
         INSERT INTO fir_records
-        (district, taluk_id, taluk, station_id, station_name, lat, lng, ipc_section,
+        (district, taluk_id, taluk, station_id, station_name, lat, lng, law_name, ipc_section,
          category, severity, year, month, day_of_week, time_slot, incident_date,
          source_type, count)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """,
         [
             taluk_row["district"],
@@ -221,9 +213,10 @@ def create_demo_entry(payload: DemoEntry = Body(...)):
             taluk_row["station_name"],
             taluk_row["lat"],
             taluk_row["lng"],
-            ipc_section,
+            legal_entry["law_name"],
+            legal_entry["ipc_section"],
             category,
-            severity,
+            legal_entry["severity"],
             incident_year,
             incident_month,
             today.isoweekday(),

@@ -2,6 +2,7 @@ import json
 from collections import defaultdict
 
 from database import get_connection
+from ml_engine import patrol_ml_prediction
 
 
 def _filters_sql(year=None, category=None, district=None):
@@ -207,43 +208,35 @@ def load_map_layers(year=None, category=None, district=None):
         if zone["accident_total"] > 0
     ]
 
-    patrol_routes = []
-    zone_groups = defaultdict(list)
-    for zone in zones:
-        if zone["total"] > 0:
-            zone_groups[zone["district"]].append(zone)
-
     district_ranking = sorted(
         district_totals.items(),
         key=lambda item: item[1],
         reverse=True,
     )
     allowed_districts = {name for name, _ in district_ranking[:8]} if not district else {district}
-
-    for district_name, zone_group in zone_groups.items():
-        if district_name not in allowed_districts:
+    patrol_routes = []
+    for district_name in allowed_districts:
+        patrol = patrol_ml_prediction(district_name)
+        if not patrol["route_points"]:
             continue
-        selected = sorted(zone_group, key=lambda item: item["risk_score"], reverse=True)[:4]
-        selected = sorted(selected, key=lambda item: (item["lng"], item["lat"]))
-        if len(selected) < 2:
-            continue
-        path = [
-            {
-                "lat": zone["lat"],
-                "lng": zone["lng"],
-                "name": zone["taluk"],
-                "risk_score": zone["risk_score"],
-            }
-            for zone in selected
-        ]
-        avg_score = sum(point["risk_score"] for point in path) / len(path)
         patrol_routes.append(
             {
                 "route_id": f"PATROL-{district_name}",
                 "district": district_name,
-                "route_name": f"{district_name} HOTSPOT PATROL",
-                "risk_level": risk_level(avg_score),
-                "path": path,
+                "route_name": f"{district_name} ML PATROL",
+                "risk_level": patrol["risk_level"],
+                "summary": patrol["summary"],
+                "path": [
+                    {
+                        "lat": point["lat"],
+                        "lng": point["lng"],
+                        "name": point["taluk"],
+                        "risk_score": point["risk_score"],
+                        "predicted_total": point["predicted_total"],
+                        "predicted_top_category": point["predicted_top_category"],
+                    }
+                    for point in patrol["route_points"]
+                ],
             }
         )
 

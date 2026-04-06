@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import axios from "axios";
+import { CATEGORY_COLORS, getCategoryColor } from "../lib/crimePalette";
 
 const API_KEY = "jYCiT4YmtkMVvqlo7hnB";
 
@@ -24,17 +25,6 @@ const RISK_COLORS = {
   HIGH: "#EF4444",
   MEDIUM: "#F59E0B",
   LOW: "#22C55E",
-};
-
-const CATEGORY_COLORS = {
-  Violent: "#EF4444",
-  Property: "#F59E0B",
-  Fraud: "#3B82F6",
-  "Women Safety": "#EC4899",
-  "Public Order": "#06B6D4",
-  NDPS: "#8B5CF6",
-  "Excise Act": "#84CC16",
-  Accident: "#F97316",
 };
 
 function buildQuery(filters = {}) {
@@ -85,8 +75,14 @@ export default function Map3D({ filters = {}, onDistrictClick }) {
   const mapContainer = useRef(null);
   const map = useRef(null);
   const markersRef = useRef([]);
+  const styleReadyRef = useRef(false);
+  const currentStyleRef = useRef("street");
+  const requestedStyleRef = useRef("street");
 
   const [layers, setLayers] = useState(null);
+  const [availableCategories, setAvailableCategories] = useState(
+    Object.keys(CATEGORY_COLORS),
+  );
   const [mapStyle, setMapStyle] = useState("street");
   const [loading, setLoading] = useState(true);
   const [activeDistrict, setActiveDistrict] = useState(null);
@@ -120,6 +116,23 @@ export default function Map3D({ filters = {}, onDistrictClick }) {
   }, [filters]);
 
   useEffect(() => {
+    axios
+      .get("http://localhost:8000/api/fir/categories")
+      .then((response) => {
+        const categories = response.data.categories || [];
+        if (categories.length) {
+          setAvailableCategories(categories);
+          if (!categories.includes(demoCategory)) {
+            setDemoCategory(categories[0]);
+          }
+        }
+      })
+      .catch((error) => {
+        console.error("Map3D category load error:", error);
+      });
+  }, []);
+
+  useEffect(() => {
     if (map.current || !mapContainer.current) return;
 
     map.current = new maplibregl.Map({
@@ -133,6 +146,14 @@ export default function Map3D({ filters = {}, onDistrictClick }) {
     });
 
     map.current.addControl(new maplibregl.NavigationControl(), "bottom-right");
+    map.current.on("load", () => {
+      styleReadyRef.current = true;
+      currentStyleRef.current = "street";
+    });
+    map.current.on("style.load", () => {
+      styleReadyRef.current = true;
+      currentStyleRef.current = requestedStyleRef.current;
+    });
   }, []);
 
   useEffect(() => {
@@ -153,8 +174,8 @@ export default function Map3D({ filters = {}, onDistrictClick }) {
       } else if (type === "zone") {
         markerConfig = {
           size: 14,
-          color: CATEGORY_COLORS[item.dominant_category] || "#64748b",
-          glow: CATEGORY_COLORS[item.dominant_category] || "#64748b",
+          color: getCategoryColor(item.dominant_category),
+          glow: getCategoryColor(item.dominant_category),
         };
       } else if (type === "station") {
         markerConfig = {
@@ -218,6 +239,10 @@ export default function Map3D({ filters = {}, onDistrictClick }) {
 
   useEffect(() => {
     if (!map.current) return;
+    if (!styleReadyRef.current) return;
+    if (currentStyleRef.current === mapStyle) return;
+    requestedStyleRef.current = mapStyle;
+    styleReadyRef.current = false;
     map.current.setStyle(MAP_STYLES[mapStyle].style);
   }, [mapStyle]);
 
@@ -323,7 +348,7 @@ export default function Map3D({ filters = {}, onDistrictClick }) {
                   onChange={(event) => setDemoCategory(event.target.value)}
                   className="w-full rounded border border-gray-700 bg-gray-900 px-1.5 py-0.5 text-[8.5px] text-white"
                 >
-                  {Object.keys(CATEGORY_COLORS).map((category) => (
+                  {availableCategories.map((category) => (
                     <option key={category} value={category}>
                       {category}
                     </option>
@@ -391,9 +416,12 @@ export default function Map3D({ filters = {}, onDistrictClick }) {
           </div>
           <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[8px]">
             <span className="font-bold uppercase tracking-widest text-white/50">Crime:</span>
-            {Object.entries(CATEGORY_COLORS).slice(0, 4).map(([label, color]) => (
+            {availableCategories.slice(0, 6).map((label) => (
               <div key={label} className="flex items-center gap-0.5">
-                <div className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: color }} />
+                <div
+                  className="h-1.5 w-1.5 rounded-full"
+                  style={{ backgroundColor: getCategoryColor(label) }}
+                />
                 <span className="text-white/80">{label}</span>
               </div>
             ))}

@@ -71,11 +71,11 @@ def get_by_ipc(ipc_section: str = Query(...)):
     cursor = conn.cursor()
     cursor.execute(
         """
-        SELECT ipc_section, district, year, category, severity,
+        SELECT law_name, ipc_section, district, year, category, severity,
                SUM(count) AS total
         FROM fir_records
         WHERE ipc_section = ?
-        GROUP BY ipc_section, district, year, category, severity
+        GROUP BY law_name, ipc_section, district, year, category, severity
         ORDER BY total DESC
         """,
         [ipc_section],

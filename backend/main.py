@@ -3,7 +3,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from database import init_db
 from models import seed_ipc_categories
 from seed_operational_data import seed_operational_data
-from routes import fir, hotspots, crimes, predict
+from routes import citizen, fir, hotspots, crimes, predict
+
+LOCAL_DEV_ORIGIN_REGEX = r"https?://(localhost|127\.0\.0\.1|\[::1\])(:\d+)?$"
 
 app = FastAPI(
     title="CrimeRadar API",
@@ -13,7 +15,8 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=[],
+    allow_origin_regex=LOCAL_DEV_ORIGIN_REGEX,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -33,3 +36,4 @@ app.include_router(fir.router,      prefix="/api/fir",      tags=["FIR"])
 app.include_router(hotspots.router, prefix="/api/hotspots", tags=["Hotspots"])
 app.include_router(crimes.router,   prefix="/api/crimes",   tags=["Crimes"])
 app.include_router(predict.router,  prefix="/api/predict",  tags=["Prediction"])
+app.include_router(citizen.router,  prefix="/api/citizen",  tags=["Citizen"])

@@ -15,7 +15,7 @@ export default function StatsBar({ activeView, is3D, setIs3D }) {
       axios.get("http://localhost:8000/api/fir/map-layers"),
     ])
       .then(([summaryRes, mapRes]) => {
-        const summary = summaryRes.data.summary;
+        const summary = summaryRes.data.summary || [];
         const total = summary.reduce((sum, row) => sum + row.total_count, 0);
         const topCrime = summary[0]?.category || "N/A";
         setStats({
@@ -25,7 +25,7 @@ export default function StatsBar({ activeView, is3D, setIs3D }) {
           stations: mapRes.data.summary.stations,
         });
       })
-      .catch((err) => console.error(err));
+      .catch((error) => console.error(error));
   }, []);
 
   const cards = [
@@ -39,9 +39,21 @@ export default function StatsBar({ activeView, is3D, setIs3D }) {
       value: stats.districts,
       color: "text-blue-400",
     },
-    { label: "Stations Covered", value: stats.stations, color: "text-cyan-400" },
-    { label: "Top Crime Type", value: stats.topCrime, color: "text-amber-400" },
-    { label: "Data Window", value: "2024 - 2026", color: "text-green-400" },
+    {
+      label: "Stations Covered",
+      value: stats.stations,
+      color: "text-cyan-400",
+    },
+    {
+      label: "Top Crime Type",
+      value: stats.topCrime,
+      color: "text-amber-400",
+    },
+    {
+      label: "Data Window",
+      value: "2024 - 2026",
+      color: "text-green-400",
+    },
   ];
 
   return (
@@ -53,8 +65,8 @@ export default function StatsBar({ activeView, is3D, setIs3D }) {
 
       <div className="h-8 w-px bg-gray-700" />
 
-      {cards.map(({ label, value, color }, i) => (
-        <div key={i} className="flex flex-col">
+      {cards.map(({ label, value, color }, index) => (
+        <div key={index} className="flex flex-col">
           <span className="text-gray-500 text-xs">{label}</span>
           <span className={`${color} text-sm font-bold`}>{value}</span>
         </div>
@@ -97,7 +109,7 @@ export default function StatsBar({ activeView, is3D, setIs3D }) {
             </button>
             <span className="text-[#64748b] text-[11px] font-semibold ml-2">
               {is3D
-                ? "Drag to rotate · Right click to tilt"
+                ? "Drag to rotate | Right click to tilt"
                 : "Click district to see risk profile"}
             </span>
           </div>
