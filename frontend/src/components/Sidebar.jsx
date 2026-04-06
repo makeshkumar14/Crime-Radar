@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { FlowButton } from "./ui/FlowButton";
+import { apiUrl } from "../lib/api";
 
 const NAV_ITEMS = [
   { id: "map", label: "Operations" },
@@ -25,24 +26,34 @@ export default function Sidebar({ onFilter, activeView, onViewChange }) {
     districts: [],
     categories: [],
   });
+  const [optionsLoading, setOptionsLoading] = useState(false);
+  const [optionsError, setOptionsError] = useState("");
+
+  const loadOptions = useCallback(async () => {
+    setOptionsLoading(true);
+    setOptionsError("");
+    try {
+      const [yearsRes, districtsRes, categoriesRes] = await Promise.all([
+        axios.get(apiUrl("/api/fir/years")),
+        axios.get(apiUrl("/api/fir/districts")),
+        axios.get(apiUrl("/api/fir/categories")),
+      ]);
+      setOptions({
+        years: yearsRes.data.years || [],
+        districts: districtsRes.data.districts || [],
+        categories: categoriesRes.data.categories || [],
+      });
+    } catch (error) {
+      console.error("Sidebar options error:", error);
+      setOptionsError("Filters could not load from the backend.");
+    } finally {
+      setOptionsLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
-    Promise.all([
-      axios.get("http://localhost:8000/api/fir/years"),
-      axios.get("http://localhost:8000/api/fir/districts"),
-      axios.get("http://localhost:8000/api/fir/categories"),
-    ])
-      .then(([yearsRes, districtsRes, categoriesRes]) => {
-        setOptions({
-          years: yearsRes.data.years || [],
-          districts: districtsRes.data.districts || [],
-          categories: categoriesRes.data.categories || [],
-        });
-      })
-      .catch((error) => {
-        console.error("Sidebar options error:", error);
-      });
-  }, []);
+    loadOptions();
+  }, [loadOptions]);
 
   useEffect(() => {
     const next = {};
@@ -118,6 +129,17 @@ export default function Sidebar({ onFilter, activeView, onViewChange }) {
           </div>
 
           <div className="space-y-4">
+            {optionsError && (
+              <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 p-3 text-xs text-amber-100">
+                <p>{optionsError}</p>
+                <button
+                  onClick={loadOptions}
+                  className="mt-2 rounded-lg border border-amber-300/40 bg-amber-300/10 px-3 py-2 text-[11px] font-semibold text-amber-50 transition hover:bg-amber-300/20"
+                >
+                  Retry filters
+                </button>
+              </div>
+            )}
             <div>
               <label className="mb-2 block text-[10px] font-black uppercase tracking-widest text-[#999999]">
                 Year
@@ -126,6 +148,7 @@ export default function Sidebar({ onFilter, activeView, onViewChange }) {
                 value={pendingFilters.year}
                 onChange={(event) => setPendingValue("year", event.target.value)}
                 className="w-full rounded-xl border border-white/10 bg-black px-3 py-2 text-sm text-white"
+                disabled={optionsLoading}
               >
                 <option value="">All years</option>
                 {options.years.map((year) => (
@@ -144,6 +167,7 @@ export default function Sidebar({ onFilter, activeView, onViewChange }) {
                 value={pendingFilters.district}
                 onChange={(event) => setPendingValue("district", event.target.value)}
                 className="w-full rounded-xl border border-white/10 bg-black px-3 py-2 text-sm text-white"
+                disabled={optionsLoading}
               >
                 <option value="">All districts</option>
                 {options.districts.map((district) => (
@@ -162,6 +186,7 @@ export default function Sidebar({ onFilter, activeView, onViewChange }) {
                 value={pendingFilters.category}
                 onChange={(event) => setPendingValue("category", event.target.value)}
                 className="w-full rounded-xl border border-white/10 bg-black px-3 py-2 text-sm text-white"
+                disabled={optionsLoading}
               >
                 <option value="">All categories</option>
                 {options.categories.map((category) => (

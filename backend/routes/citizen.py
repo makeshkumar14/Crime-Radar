@@ -5,7 +5,8 @@ from typing import Optional
 from fastapi import APIRouter, Query
 from fastapi.responses import FileResponse
 
-from ml_engine import area_safety_snapshot, build_area_report_pdf, route_safety_advisory
+from ml_engine import area_safety_snapshot, build_area_report_pdf
+from navigation_service import build_navigation_from_taluks
 
 router = APIRouter()
 
@@ -18,9 +19,10 @@ def get_route_advisory(
     month: Optional[int] = Query(None),
 ):
     today = date.today()
-    return route_safety_advisory(
+    return build_navigation_from_taluks(
         origin_taluk_id=origin_taluk_id,
         destination_taluk_id=destination_taluk_id,
+        mode="compare",
         target_year=year or today.year,
         target_month=month or today.month,
     )

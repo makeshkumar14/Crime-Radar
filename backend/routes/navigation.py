@@ -23,6 +23,11 @@ def get_route(
     mode: str = Query("compare"),
     year: Optional[int] = Query(None),
     month: Optional[int] = Query(None),
+    accident_buffer_m: Optional[float] = Query(None, ge=150, le=2000),
+    warning_buffer_m: Optional[float] = Query(None, ge=150, le=5000),
+    max_distance_increase_pct: Optional[float] = Query(None, ge=5, le=80),
+    max_eta_increase_pct: Optional[float] = Query(None, ge=5, le=80),
+    alternatives: Optional[int] = Query(None, ge=0, le=6),
 ):
     today = date.today()
     try:
@@ -32,6 +37,11 @@ def get_route(
             mode=normalize_mode(mode),
             target_year=year or today.year,
             target_month=month or today.month,
+            accident_buffer_m=accident_buffer_m,
+            warning_buffer_m=warning_buffer_m,
+            max_distance_increase_pct=max_distance_increase_pct,
+            max_eta_increase_pct=max_eta_increase_pct,
+            alternatives=alternatives,
         )
     except ValueError as exc:
         return {"status": "error", "message": str(exc)}
@@ -44,6 +54,11 @@ def get_taluk_route(
     mode: str = Query("compare"),
     year: Optional[int] = Query(None),
     month: Optional[int] = Query(None),
+    accident_buffer_m: Optional[float] = Query(None, ge=150, le=2000),
+    warning_buffer_m: Optional[float] = Query(None, ge=150, le=5000),
+    max_distance_increase_pct: Optional[float] = Query(None, ge=5, le=80),
+    max_eta_increase_pct: Optional[float] = Query(None, ge=5, le=80),
+    alternatives: Optional[int] = Query(None, ge=0, le=6),
 ):
     today = date.today()
     return build_navigation_from_taluks(
@@ -52,4 +67,9 @@ def get_taluk_route(
         mode=normalize_mode(mode),
         target_year=year or today.year,
         target_month=month or today.month,
+        accident_buffer_m=accident_buffer_m,
+        warning_buffer_m=warning_buffer_m,
+        max_distance_increase_pct=max_distance_increase_pct,
+        max_eta_increase_pct=max_eta_increase_pct,
+        alternatives=alternatives,
     )
