@@ -45,6 +45,7 @@ const MAP_STYLES = {
 };
 
 const TN_CENTER = [10.7905, 78.7047];
+const FIR_BLINK_INTERVAL_MS = 650;
 
 function buildQuery(filters = {}) {
   const params = new URLSearchParams();
@@ -102,7 +103,7 @@ export default function Map({
   filters = {},
   onDistrictClick,
   refreshKey = 0,
-  highlightDistrict = null,
+  highlightTarget = null,
 }) {
   const [mapStyle, setMapStyle] = useState("street");
   const [layers, setLayers] = useState(null);
@@ -120,6 +121,7 @@ export default function Map({
   const [showPatrol, setShowPatrol] = useState(false);
   const [patrolRouteGeometry, setPatrolRouteGeometry] = useState({});
   const [patrolRouteState, setPatrolRouteState] = useState("idle");
+  const [blinkOn, setBlinkOn] = useState(true);
 
   const fetchLayers = async (nextFilters = filters) => {
     const query = buildQuery(nextFilters);
@@ -157,9 +159,23 @@ export default function Map({
   }, []);
 
   useEffect(() => {
-    if (!highlightDistrict) return;
-    setActiveDistrict(highlightDistrict);
-  }, [highlightDistrict]);
+    if (!highlightTarget?.district) return;
+    setActiveDistrict(highlightTarget.district);
+  }, [highlightTarget]);
+
+  useEffect(() => {
+    if (!highlightTarget) {
+      setBlinkOn(true);
+      return undefined;
+    }
+
+    setBlinkOn(true);
+    const interval = globalThis.setInterval(() => {
+      setBlinkOn((current) => !current);
+    }, FIR_BLINK_INTERVAL_MS);
+
+    return () => globalThis.clearInterval(interval);
+  }, [highlightTarget]);
 
   useEffect(() => {
     let cancelled = false;
@@ -234,6 +250,12 @@ export default function Map({
   const visiblePatrolRoutes = focusedDistrictName
     ? layers.patrol_routes.filter((route) => route.district === focusedDistrictName)
     : layers.patrol_routes;
+  const highlightedDistrict = highlightTarget?.district
+    ? layers.districts.find((item) => item.district === highlightTarget.district) || null
+    : null;
+  const highlightedZone = highlightTarget?.taluk_id
+    ? layers.zones.find((item) => item.taluk_id === highlightTarget.taluk_id) || null
+    : null;
   const patrolFallbackCount = Object.values(patrolRouteGeometry).filter(
     (route) => route?.source === "fallback",
   ).length;
@@ -384,6 +406,48 @@ export default function Map({
               }}
             />
           ))}
+
+        {highlightedDistrict && (
+          <CircleMarker
+            center={[highlightedDistrict.lat, highlightedDistrict.lng]}
+            radius={getDistrictRadius(highlightedDistrict.total) + (blinkOn ? 11 : 6)}
+            pathOptions={{
+              color: blinkOn ? "#F8FAFC" : "#60A5FA",
+              fillColor: "#2563EB",
+              fillOpacity: blinkOn ? 0.4 : 0.1,
+              opacity: blinkOn ? 1 : 0.35,
+              weight: blinkOn ? 5 : 2,
+            }}
+          />
+        )}
+
+        {highlightedZone && (
+          <>
+            <Circle
+              center={[highlightedZone.lat, highlightedZone.lng]}
+              radius={Math.max(highlightedZone.radius_km * 1000, 2800)}
+              pathOptions={{
+                color: blinkOn ? "#F8FAFC" : "#38BDF8",
+                fillColor: "#0EA5E9",
+                fillOpacity: blinkOn ? 0.18 : 0.04,
+                opacity: blinkOn ? 0.95 : 0.28,
+                weight: blinkOn ? 4 : 1.5,
+                dashArray: blinkOn ? "8 8" : "4 10",
+              }}
+            />
+            <CircleMarker
+              center={[highlightedZone.lat, highlightedZone.lng]}
+              radius={blinkOn ? 10 : 6}
+              pathOptions={{
+                color: "#F8FAFC",
+                fillColor: blinkOn ? "#38BDF8" : "#1D4ED8",
+                fillOpacity: blinkOn ? 1 : 0.38,
+                opacity: blinkOn ? 1 : 0.35,
+                weight: blinkOn ? 4 : 2,
+              }}
+            />
+          </>
+        )}
       </MapContainer>
 
 

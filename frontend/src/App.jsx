@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Map from "./components/Map";
 import Map3D from "./components/Map3D";
 import Sidebar from "./components/Sidebar";
@@ -10,6 +10,8 @@ import AreaSafetyReport from "./components/AreaSafetyReport";
 import FIRInjectModal from "./components/FIRInjectModal";
 import ScenarioZoneView from "./components/ScenarioZoneView";
 
+const FIR_HIGHLIGHT_DURATION_MS = 30000;
+
 function App() {
   const [filters, setFilters] = useState({});
   const [activeView, setActiveView] = useState("map");
@@ -19,14 +21,35 @@ function App() {
   const [is3D, setIs3D] = useState(false);
   const [isFirModalOpen, setIsFirModalOpen] = useState(false);
   const [dataRefreshKey, setDataRefreshKey] = useState(0);
-  const [highlightDistrict, setHighlightDistrict] = useState(null);
+  const [firHighlight, setFirHighlight] = useState(null);
+
+  useEffect(() => {
+    if (!firHighlight) {
+      return undefined;
+    }
+
+    const timer = globalThis.setTimeout(() => {
+      setFirHighlight(null);
+    }, FIR_HIGHLIGHT_DURATION_MS);
+
+    return () => globalThis.clearTimeout(timer);
+  }, [firHighlight]);
 
   const handleFirCreated = (entry) => {
     setDataRefreshKey((value) => value + 1);
     if (entry?.district) {
+      setFilters((current) => ({
+        ...current,
+        district: entry.district,
+      }));
       setSelectedDistrict(entry.district);
-      setHighlightDistrict(entry.district);
     }
+    setFirHighlight({
+      district: entry?.district || null,
+      taluk_id: entry?.taluk_id || null,
+      taluk: entry?.taluk || null,
+      createdAt: Date.now(),
+    });
   };
 
   return (
@@ -37,6 +60,7 @@ function App() {
             onFilter={setFilters}
             activeView={activeView}
             onViewChange={setActiveView}
+            externalFilters={filters}
           />
         )}
         <button
@@ -76,14 +100,14 @@ function App() {
                   filters={filters}
                   onDistrictClick={setSelectedDistrict}
                   refreshKey={dataRefreshKey}
-                  highlightDistrict={highlightDistrict}
+                  highlightTarget={firHighlight}
                 />
               ) : (
                 <Map
                   filters={filters}
                   onDistrictClick={setSelectedDistrict}
                   refreshKey={dataRefreshKey}
-                  highlightDistrict={highlightDistrict}
+                  highlightTarget={firHighlight}
                 />
               )}
 

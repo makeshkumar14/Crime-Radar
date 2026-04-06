@@ -170,7 +170,8 @@ export default function FIRInjectModal({ open, onClose, onCreated }) {
 
         <form onSubmit={handleSubmit} className="space-y-5 px-6 py-5">
           <p className="text-sm text-slate-400">
-            This writes a new FIR into the database and refreshes the map-backed views.
+            This writes a new FIR into the database, refreshes the map-backed views,
+            and makes the target district and taluk blink for 30 seconds.
           </p>
 
           <div className="grid gap-4 md:grid-cols-2">

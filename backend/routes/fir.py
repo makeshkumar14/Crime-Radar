@@ -239,10 +239,13 @@ def create_demo_entry(payload: DemoEntry = Body(...)):
         "message": "Demo FIR inserted",
         "entry": {
             "district": taluk_row["district"],
+            "taluk_id": taluk_row["taluk_id"],
             "taluk": taluk_row["taluk"],
             "station_name": taluk_row["station_name"],
             "category": category,
             "count": count,
+            "lat": taluk_row["lat"],
+            "lng": taluk_row["lng"],
         },
         "impact": layers,
     }

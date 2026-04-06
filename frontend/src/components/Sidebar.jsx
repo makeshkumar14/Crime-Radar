@@ -17,7 +17,15 @@ const INITIAL_FILTERS = {
   category: "",
 };
 
-export default function Sidebar({ onFilter, activeView, onViewChange }) {
+function normalizeExternalFilters(filters = {}) {
+  return {
+    year: filters.year ? String(filters.year) : "",
+    district: filters.district || "",
+    category: filters.category || "",
+  };
+}
+
+export default function Sidebar({ onFilter, activeView, onViewChange, externalFilters = {} }) {
   const [pendingFilters, setPendingFilters] = useState(INITIAL_FILTERS);
   const [appliedFilters, setAppliedFilters] = useState(INITIAL_FILTERS);
   const [options, setOptions] = useState({
@@ -51,6 +59,17 @@ export default function Sidebar({ onFilter, activeView, onViewChange }) {
     if (appliedFilters.category) next.category = appliedFilters.category;
     onFilter(next);
   }, [appliedFilters, onFilter]);
+
+  useEffect(() => {
+    const normalized = normalizeExternalFilters(externalFilters);
+
+    setPendingFilters((current) =>
+      JSON.stringify(current) === JSON.stringify(normalized) ? current : normalized,
+    );
+    setAppliedFilters((current) =>
+      JSON.stringify(current) === JSON.stringify(normalized) ? current : normalized,
+    );
+  }, [externalFilters.category, externalFilters.district, externalFilters.year]);
 
   const setPendingValue = (key, value) => {
     setPendingFilters((prev) => ({ ...prev, [key]: value }));

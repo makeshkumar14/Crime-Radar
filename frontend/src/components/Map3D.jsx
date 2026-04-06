@@ -26,6 +26,7 @@ const RISK_COLORS = {
   MEDIUM: "#F59E0B",
   LOW: "#22C55E",
 };
+const FIR_BLINK_INTERVAL_MS = 650;
 
 function buildQuery(filters = {}) {
   const params = new URLSearchParams();
@@ -71,15 +72,80 @@ function createMarkerElement({
   return wrapper;
 }
 
+function createHighlightMarkerElement({
+  size,
+  color,
+  label = "",
+  blinkOn = true,
+}) {
+  const wrapper = document.createElement("div");
+  wrapper.style.display = "flex";
+  wrapper.style.flexDirection = "column";
+  wrapper.style.alignItems = "center";
+  wrapper.style.gap = "6px";
+  wrapper.style.pointerEvents = "none";
+
+  const shell = document.createElement("div");
+  shell.style.position = "relative";
+  shell.style.width = `${size + 18}px`;
+  shell.style.height = `${size + 18}px`;
+  shell.style.display = "flex";
+  shell.style.alignItems = "center";
+  shell.style.justifyContent = "center";
+
+  const halo = document.createElement("div");
+  halo.style.position = "absolute";
+  halo.style.width = `${size + 12}px`;
+  halo.style.height = `${size + 12}px`;
+  halo.style.borderRadius = "999px";
+  halo.style.border = `2px solid ${color}`;
+  halo.style.background = color;
+  halo.style.opacity = blinkOn ? "0.28" : "0.08";
+  halo.style.transform = blinkOn ? "scale(1.28)" : "scale(0.94)";
+  halo.style.boxShadow = blinkOn ? `0 0 28px ${color}` : `0 0 12px ${color}`;
+  halo.style.transition = "all 180ms ease";
+  shell.appendChild(halo);
+
+  const dot = document.createElement("div");
+  dot.style.position = "relative";
+  dot.style.width = `${size}px`;
+  dot.style.height = `${size}px`;
+  dot.style.borderRadius = "999px";
+  dot.style.background = color;
+  dot.style.border = "3px solid #f8fafc";
+  dot.style.boxShadow = blinkOn ? `0 0 22px ${color}` : `0 0 8px ${color}`;
+  dot.style.transform = blinkOn ? "scale(1.06)" : "scale(0.94)";
+  dot.style.transition = "all 180ms ease";
+  shell.appendChild(dot);
+  wrapper.appendChild(shell);
+
+  if (label) {
+    const text = document.createElement("div");
+    text.textContent = label;
+    text.style.padding = "2px 8px";
+    text.style.borderRadius = "999px";
+    text.style.fontSize = "10px";
+    text.style.fontWeight = "800";
+    text.style.color = "#f8fafc";
+    text.style.background = "rgba(2, 6, 23, 0.86)";
+    text.style.border = `1px solid ${blinkOn ? color : "rgba(248,250,252,0.25)"}`;
+    text.style.boxShadow = blinkOn ? `0 0 16px ${color}` : "none";
+    wrapper.appendChild(text);
+  }
+
+  return wrapper;
+}
+
 export default function Map3D({
   filters = {},
   onDistrictClick,
   refreshKey = 0,
-  highlightDistrict = null,
+  highlightTarget = null,
 }) {
   const mapContainer = useRef(null);
   const map = useRef(null);
   const markersRef = useRef([]);
+  const highlightMarkersRef = useRef([]);
   const styleReadyRef = useRef(false);
   const currentStyleRef = useRef("street");
   const requestedStyleRef = useRef("street");
@@ -95,6 +161,7 @@ export default function Map3D({
   const [showZones, setShowZones] = useState(true);
   const [showStations, setShowStations] = useState(false);
   const [showHotspots, setShowHotspots] = useState(true);
+  const [blinkOn, setBlinkOn] = useState(true);
 
   const fetchLayers = async (nextFilters = filters) => {
     const query = buildQuery(nextFilters);
@@ -132,9 +199,23 @@ export default function Map3D({
   }, []);
 
   useEffect(() => {
-    if (!highlightDistrict) return;
-    setActiveDistrict(highlightDistrict);
-  }, [highlightDistrict]);
+    if (!highlightTarget?.district) return;
+    setActiveDistrict(highlightTarget.district);
+  }, [highlightTarget]);
+
+  useEffect(() => {
+    if (!highlightTarget) {
+      setBlinkOn(true);
+      return undefined;
+    }
+
+    setBlinkOn(true);
+    const interval = globalThis.setInterval(() => {
+      setBlinkOn((current) => !current);
+    }, FIR_BLINK_INTERVAL_MS);
+
+    return () => globalThis.clearInterval(interval);
+  }, [highlightTarget]);
 
   useEffect(() => {
     if (map.current || !mapContainer.current) return;
@@ -240,6 +321,65 @@ export default function Map3D({
       layers.districts.forEach((district) => attachMarker(district, "district"));
     }
   }, [layers, activeDistrict, onDistrictClick, showDistricts, showHotspots, showStations, showZones]);
+
+  useEffect(() => {
+    highlightMarkersRef.current.forEach((marker) => marker.remove());
+    highlightMarkersRef.current = [];
+
+    if (!map.current || !layers || !highlightTarget) {
+      return undefined;
+    }
+
+    const highlightedDistrict = highlightTarget.district
+      ? layers.districts.find((item) => item.district === highlightTarget.district) || null
+      : null;
+    const highlightedZone = highlightTarget.taluk_id
+      ? layers.zones.find((item) => item.taluk_id === highlightTarget.taluk_id) || null
+      : null;
+
+    const attachHighlightMarker = ({ lat, lng, label, color, size }) => {
+      const element = createHighlightMarkerElement({
+        size,
+        color,
+        label,
+        blinkOn,
+      });
+
+      const marker = new maplibregl.Marker({
+        element,
+        anchor: "center",
+      })
+        .setLngLat([lng, lat])
+        .addTo(map.current);
+
+      highlightMarkersRef.current.push(marker);
+    };
+
+    if (highlightedDistrict) {
+      attachHighlightMarker({
+        lat: highlightedDistrict.lat,
+        lng: highlightedDistrict.lng,
+        label: `${highlightedDistrict.district} district`,
+        color: "#2563EB",
+        size: blinkOn ? 26 : 22,
+      });
+    }
+
+    if (highlightedZone) {
+      attachHighlightMarker({
+        lat: highlightedZone.lat,
+        lng: highlightedZone.lng,
+        label: highlightedZone.taluk || "Injected taluk",
+        color: "#38BDF8",
+        size: blinkOn ? 22 : 18,
+      });
+    }
+
+    return () => {
+      highlightMarkersRef.current.forEach((marker) => marker.remove());
+      highlightMarkersRef.current = [];
+    };
+  }, [blinkOn, highlightTarget, layers]);
 
   useEffect(() => {
     if (!map.current) return;
