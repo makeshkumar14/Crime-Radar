@@ -1,6 +1,7 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import {
+  Circle,
   CircleMarker,
   MapContainer,
   Polyline,
@@ -10,8 +11,7 @@ import {
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { buildGoogleMapsDirectionsUrl } from "../lib/roadRouting";
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
+import { apiUrl } from "../lib/api";
 
 const ROUTE_COLORS = {
   fast: "#2563EB",
@@ -59,9 +59,104 @@ function formatMinutes(value) {
   return `${value} min`;
 }
 
-function accidentMarkerRadius(zone) {
-  const accidentLoad = Number(zone?.predicted_accident) || 0;
-  return Math.max(4, Math.min(10, 4 + accidentLoad / 3));
+function formatDistance(value) {
+  if (!Number.isFinite(value)) {
+    return "n/a";
+  }
+  return `${value} km`;
+}
+
+function formatPercent(value) {
+  if (!Number.isFinite(value)) {
+    return "n/a";
+  }
+  return `${value}%`;
+}
+
+function formatDelta(value, unit) {
+  if (!Number.isFinite(value)) {
+    return "n/a";
+  }
+  if (value === 0) {
+    return `0 ${unit}`;
+  }
+  return `${value > 0 ? "+" : ""}${value} ${unit}`;
+}
+
+function routeRiskTone(riskLabel) {
+  if (riskLabel === "HIGH") {
+    return "text-rose-300";
+  }
+  if (riskLabel === "MEDIUM") {
+    return "text-amber-300";
+  }
+  return "text-emerald-300";
+}
+
+function zoneStyle(zone) {
+  if (zone?.avoided_by_safer) {
+    return {
+      color: "#22C55E",
+      fillColor: "#22C55E",
+      fillOpacity: 0.12,
+      opacity: 0.95,
+      weight: 2,
+    };
+  }
+  if (zone?.crossed_by_safer) {
+    return {
+      color: "#F97316",
+      fillColor: "#F97316",
+      fillOpacity: 0.2,
+      opacity: 0.95,
+      weight: 2,
+    };
+  }
+  if (zone?.crossed_by_fastest) {
+    return {
+      color: "#EF4444",
+      fillColor: "#EF4444",
+      fillOpacity: 0.18,
+      opacity: 0.95,
+      weight: 2,
+    };
+  }
+  return {
+    color: "#F59E0B",
+    fillColor: "#F59E0B",
+    fillOpacity: 0.1,
+    opacity: 0.8,
+    weight: 1.5,
+  };
+}
+
+function zoneTooltipLabel(zone) {
+  if (zone?.avoided_by_safer) {
+    return "Safer route avoids this accident-prone area";
+  }
+  if (zone?.crossed_by_safer) {
+    return "Fallback safer route still passes through this buffered zone";
+  }
+  if (zone?.crossed_by_fastest) {
+    return "Fastest route passes through this buffered accident zone";
+  }
+  return "Route comes close to this accident-prone area";
+}
+
+function selectionProfileLabel(profile) {
+  if (profile === "strict_safe_balanced") {
+    return "Strict avoidance";
+  }
+  if (profile === "least_risky_balanced_fallback") {
+    return "Balanced fallback";
+  }
+  if (profile === "least_risky_unbalanced_fallback") {
+    return "Least-risk fallback";
+  }
+  if (profile === "fast_only") {
+    return "Fast mode";
+  }
+  return "Comparison";
 }
 
 export default function TravelAdvisor() {
@@ -72,26 +167,69 @@ export default function TravelAdvisor() {
   });
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [taluksLoading, setTaluksLoading] = useState(false);
+  const [taluksError, setTaluksError] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [noticeMessage, setNoticeMessage] = useState("");
   const [trackLocation, setTrackLocation] = useState(false);
   const [userLocation, setUserLocation] = useState(null);
   const [locationError, setLocationError] = useState("");
 
-  useEffect(() => {
-    axios
-      .get(`${API_BASE_URL}/api/fir/taluks`)
-      .then((res) => {
-        setTaluks(res.data.taluks);
-        if (res.data.taluks.length >= 2) {
-          setForm({
-            origin_taluk_id: res.data.taluks[0].taluk_id,
-            destination_taluk_id: res.data.taluks[1].taluk_id,
-          });
-        }
-      })
-      .catch((err) => console.error("Travel taluk load error:", err));
+  const loadTaluks = useCallback(async () => {
+    setTaluksLoading(true);
+    setTaluksError("");
+    try {
+      const res = await axios.get(apiUrl("/api/fir/taluks"));
+      const nextTaluks = res.data.taluks || [];
+      setTaluks(nextTaluks);
+      if (nextTaluks.length >= 2) {
+        setForm((prev) => {
+          const talukIds = new Set(nextTaluks.map((taluk) => taluk.taluk_id));
+          const originValid = talukIds.has(prev.origin_taluk_id);
+          const destinationValid = talukIds.has(prev.destination_taluk_id);
+          if (originValid && destinationValid && prev.origin_taluk_id !== prev.destination_taluk_id) {
+            return prev;
+          }
+          return {
+            origin_taluk_id: nextTaluks[0].taluk_id,
+            destination_taluk_id: nextTaluks[1].taluk_id,
+          };
+        });
+      }
+      return nextTaluks.length >= 2;
+    } catch (err) {
+      console.error("Travel taluk load error:", err);
+      setTaluksError("We couldn't load the origin and destination zones.");
+      return false;
+    } finally {
+      setTaluksLoading(false);
+    }
   }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+    let retryTimer = null;
+
+    const loadWithRetry = async () => {
+      const loaded = await loadTaluks();
+      if (!loaded && !cancelled) {
+        retryTimer = globalThis.setTimeout(() => {
+          if (!cancelled) {
+            loadTaluks();
+          }
+        }, 2500);
+      }
+    };
+
+    loadWithRetry();
+
+    return () => {
+      cancelled = true;
+      if (retryTimer) {
+        globalThis.clearTimeout(retryTimer);
+      }
+    };
+  }, [loadTaluks]);
 
   useEffect(() => {
     if (!trackLocation) {
@@ -138,7 +276,7 @@ export default function TravelAdvisor() {
   );
 
   const accidentZones = useMemo(
-    () => (result?.accident_zones || []).slice(0, 30),
+    () => (result?.accident_zones || []).slice(0, 36),
     [result],
   );
 
@@ -163,25 +301,59 @@ export default function TravelAdvisor() {
       bounds.push([userLocation.lat, userLocation.lng]);
     }
     return bounds;
-  }, [currentPositions, destinationPoint, originPoint, routesDiffer, safePositions, userLocation]);
+  }, [currentPositions, destinationPoint, originPoint, safePositions, userLocation]);
 
+  const fastestRoute = result?.fastest_route ?? null;
+  const saferRoute = result?.safer_route ?? null;
+  const comparison = result?.comparison ?? null;
+  const routingPolicy = result?.routing_policy ?? null;
   const currentDistance =
-    result?.current_path?.distanceKm ?? result?.current_path?.distance_km ?? null;
+    fastestRoute?.distance_km ??
+    result?.current_path?.distanceKm ??
+    result?.current_path?.distance_km ??
+    null;
   const safeDistance =
-    result?.safer_path?.distanceKm ?? result?.safer_path?.distance_km ?? null;
+    saferRoute?.distance_km ??
+    result?.safer_path?.distanceKm ??
+    result?.safer_path?.distance_km ??
+    null;
   const currentDuration =
-    result?.current_path?.durationMin ?? result?.current_path?.duration_min ?? null;
+    fastestRoute?.eta_min ??
+    result?.current_path?.durationMin ??
+    result?.current_path?.duration_min ??
+    null;
   const safeDuration =
-    result?.safer_path?.durationMin ?? result?.safer_path?.duration_min ?? null;
-  const currentAccidentExposure = result?.current_path?.accidentExposure ?? 0;
-  const safeAccidentExposure = result?.safer_path?.accidentExposure ?? 0;
-  const currentAccidentHits = result?.current_path?.accidentZoneHits ?? 0;
-  const safeAccidentHits = result?.safer_path?.accidentZoneHits ?? 0;
-  const currentSafetyScore = result?.current_path?.safety_score ?? null;
-  const safeSafetyScore = result?.safer_path?.safety_score ?? null;
-  const riskReduction = result?.risk_reduction ?? 0;
-  const extraDistanceKm = result?.distance_delta_km ?? 0;
-  const extraDurationMin = result?.duration_delta_min ?? null;
+    saferRoute?.eta_min ??
+    result?.safer_path?.durationMin ??
+    result?.safer_path?.duration_min ??
+    null;
+  const currentAccidentHits =
+    fastestRoute?.accident_zones_crossed ?? result?.current_path?.accidentZoneHits ?? 0;
+  const safeAccidentHits =
+    saferRoute?.accident_zones_crossed ?? result?.safer_path?.accidentZoneHits ?? 0;
+  const currentNearbyHits =
+    fastestRoute?.accident_zones_nearby ?? result?.current_path?.nearZoneHits ?? 0;
+  const safeNearbyHits =
+    saferRoute?.accident_zones_nearby ?? result?.safer_path?.nearZoneHits ?? 0;
+  const currentRiskLabel = fastestRoute?.risk_score ?? result?.current_path?.risk_label ?? "n/a";
+  const safeRiskLabel = saferRoute?.risk_score ?? result?.safer_path?.risk_label ?? "n/a";
+  const currentRiskValue =
+    fastestRoute?.risk_score_value ?? result?.current_path?.riskScoreValue ?? null;
+  const safeRiskValue =
+    saferRoute?.risk_score_value ?? result?.safer_path?.riskScoreValue ?? null;
+  const riskReduction = comparison?.risk_reduction ?? result?.risk_reduction ?? 0;
+  const extraDistanceKm = comparison?.distance_delta_km ?? result?.distance_delta_km ?? 0;
+  const extraDurationMin = comparison?.duration_delta_min ?? result?.duration_delta_min ?? null;
+  const extraDistancePct =
+    comparison?.distance_increase_pct ?? saferRoute?.distance_increase_pct ?? null;
+  const extraEtaPct = comparison?.eta_increase_pct ?? saferRoute?.eta_increase_pct ?? null;
+  const zonesAvoided = comparison?.zones_avoided ?? saferRoute?.zones_avoided ?? 0;
+  const selectedRouteBalanced =
+    comparison?.selected_route_balanced ??
+    saferRoute?.within_balance_limits ??
+    true;
+  const selectionProfile =
+    comparison?.selection_profile ?? saferRoute?.selection_profile ?? null;
   const fastOriginSnap = result?.snap_debug?.fast?.origin ?? null;
   const fastDestinationSnap = result?.snap_debug?.fast?.destination ?? null;
   const isFallbackRoute =
@@ -199,7 +371,7 @@ export default function TravelAdvisor() {
 
     try {
       const advisoryResponse = await axios.get(
-        `${API_BASE_URL}/api/navigation/taluks/route`,
+        apiUrl("/api/navigation/taluks/route"),
         {
           params: {
             ...form,
@@ -257,8 +429,8 @@ export default function TravelAdvisor() {
 
   return (
     <div className="flex-1 overflow-hidden bg-gray-950 text-white">
-      <div className="grid h-full min-h-0 grid-cols-[340px_minmax(0,1fr)]">
-        <div className="min-h-0 overflow-y-auto border-r border-gray-800 bg-gray-950 p-5">
+      <div className="grid h-full min-h-0 grid-cols-1 lg:grid-cols-[360px_minmax(0,1fr)] xl:grid-cols-[400px_minmax(0,1fr)]">
+        <div className="min-h-0 overflow-y-auto border-b border-gray-800 bg-gray-950 p-5 lg:border-b-0 lg:border-r">
           <h2 className="mb-2 text-xl font-bold">Travel Safety Advisor</h2>
           <p className="mb-5 text-sm text-gray-400">
             Pick any two taluks, find the road route, and compare the fastest
@@ -274,7 +446,13 @@ export default function TravelAdvisor() {
               setForm((prev) => ({ ...prev, origin_taluk_id: event.target.value }))
             }
             className="mb-4 w-full rounded-lg border border-gray-700 bg-gray-900 px-3 py-2 text-sm"
+            disabled={taluksLoading || taluks.length === 0}
           >
+            {taluks.length === 0 && (
+              <option value="">
+                {taluksLoading ? "Loading zones..." : "No zones available"}
+              </option>
+            )}
             {taluks.map((taluk) => (
               <option key={taluk.taluk_id} value={taluk.taluk_id}>
                 {taluk.taluk}, {taluk.district}
@@ -291,13 +469,31 @@ export default function TravelAdvisor() {
               setForm((prev) => ({ ...prev, destination_taluk_id: event.target.value }))
             }
             className="mb-4 w-full rounded-lg border border-gray-700 bg-gray-900 px-3 py-2 text-sm"
+            disabled={taluksLoading || taluks.length === 0}
           >
+            {taluks.length === 0 && (
+              <option value="">
+                {taluksLoading ? "Loading zones..." : "No zones available"}
+              </option>
+            )}
             {taluks.map((taluk) => (
               <option key={taluk.taluk_id} value={taluk.taluk_id}>
                 {taluk.taluk}, {taluk.district}
               </option>
             ))}
           </select>
+
+          {taluksError && (
+            <div className="mb-4 rounded-xl border border-amber-500/30 bg-amber-500/10 p-3 text-sm text-amber-100">
+              <p>{taluksError}</p>
+              <button
+                onClick={loadTaluks}
+                className="mt-2 rounded-lg border border-amber-300/40 bg-amber-300/10 px-3 py-2 text-xs font-semibold text-amber-50 transition hover:bg-amber-300/20"
+              >
+                Retry loading zones
+              </button>
+            </div>
+          )}
 
           {sameZoneSelected && (
             <p className="mb-4 rounded-lg border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-xs text-amber-100">
@@ -307,7 +503,7 @@ export default function TravelAdvisor() {
 
           <button
             onClick={handleAnalyse}
-            disabled={loading || sameZoneSelected}
+            disabled={loading || sameZoneSelected || taluksLoading || taluks.length < 2}
             className="mb-3 w-full rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold hover:bg-blue-500 disabled:opacity-60"
           >
             {loading ? "Finding Route..." : "Find Route"}
@@ -341,80 +537,141 @@ export default function TravelAdvisor() {
           {result?.status === "ok" && (
             <div className="space-y-4">
               <div className="rounded-xl border border-gray-800 bg-gray-900/70 p-4">
-                <p className="text-xs font-semibold uppercase tracking-wide text-gray-400">
-                  Recommendation
-                </p>
+                <div className="flex items-center justify-between gap-3">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-gray-400">
+                    Recommendation
+                  </p>
+                  <span className="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2 py-1 text-[11px] font-semibold text-emerald-200">
+                    {selectionProfileLabel(selectionProfile)}
+                  </span>
+                </div>
                 <p className="mt-2 text-sm font-semibold text-emerald-300">
                   {result.recommendation}
                 </p>
+                <div className="mt-3 grid gap-2 text-xs text-slate-300">
+                  <div className="flex items-center justify-between">
+                    <span>Accident buffers</span>
+                    <span>{routingPolicy?.strict_buffer_m ?? "n/a"} m</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span>Warning radius</span>
+                    <span>{routingPolicy?.warning_buffer_m ?? "n/a"} m</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span>Safer route avoided</span>
+                    <span>{zonesAvoided} zones</span>
+                  </div>
+                </div>
               </div>
 
               <div className="rounded-xl border border-gray-800 bg-gray-900/70 p-4">
                 <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-gray-400">
-                  Route Comparison
+                  Fast vs Safe
                 </p>
-                <div className="mb-2 flex items-center justify-between text-sm">
-                  <span className="text-blue-300">Fastest route accident exposure</span>
-                  <span>{currentAccidentExposure}</span>
-                </div>
-                <div className="mb-2 flex items-center justify-between text-sm">
-                  <span className="text-blue-300">Fastest route accident zones</span>
-                  <span>{currentAccidentHits}</span>
-                </div>
-                <div className="mb-2 flex items-center justify-between text-sm">
-                  <span className="text-blue-300">Fastest route distance</span>
-                  <span>{currentDistance} km</span>
-                </div>
-                <div className="mb-3 flex items-center justify-between text-sm">
-                  <span className="text-blue-300">Fastest route safety score</span>
-                  <span>{currentSafetyScore ?? "n/a"}</span>
-                </div>
+                <div className="grid gap-3">
+                  <div className="rounded-xl border border-blue-500/25 bg-blue-500/10 p-4">
+                    <div className="mb-3 flex items-center justify-between">
+                      <p className="text-sm font-semibold text-blue-100">Fastest Route</p>
+                      <span className={`text-xs font-semibold ${routeRiskTone(currentRiskLabel)}`}>
+                        {currentRiskLabel}
+                      </span>
+                    </div>
+                    <div className="grid gap-2 text-sm">
+                      <div className="flex items-center justify-between">
+                        <span className="text-slate-300">Distance</span>
+                        <span>{formatDistance(currentDistance)}</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-slate-300">ETA</span>
+                        <span>{formatMinutes(currentDuration)}</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-slate-300">Crossed zones</span>
+                        <span>{currentAccidentHits}</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-slate-300">Nearby zones</span>
+                        <span>{currentNearbyHits}</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-slate-300">Risk score value</span>
+                        <span>{currentRiskValue ?? "n/a"}</span>
+                      </div>
+                    </div>
+                  </div>
 
-                <div className="mb-2 flex items-center justify-between text-sm">
-                  <span className="text-emerald-300">Safest route exposure</span>
-                  <span>{safeAccidentExposure}</span>
+                  <div className="rounded-xl border border-emerald-500/25 bg-emerald-500/10 p-4">
+                    <div className="mb-3 flex items-center justify-between">
+                      <p className="text-sm font-semibold text-emerald-100">Safer Route</p>
+                      <span className={`text-xs font-semibold ${routeRiskTone(safeRiskLabel)}`}>
+                        {safeRiskLabel}
+                      </span>
+                    </div>
+                    <div className="grid gap-2 text-sm">
+                      <div className="flex items-center justify-between">
+                        <span className="text-slate-300">Distance</span>
+                        <span>{formatDistance(safeDistance)}</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-slate-300">ETA</span>
+                        <span>{formatMinutes(safeDuration)}</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-slate-300">Crossed zones</span>
+                        <span>{safeAccidentHits}</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-slate-300">Nearby zones</span>
+                        <span>{safeNearbyHits}</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-slate-300">Zones avoided</span>
+                        <span>{zonesAvoided}</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-slate-300">Risk score value</span>
+                        <span>{safeRiskValue ?? "n/a"}</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div className="mb-2 flex items-center justify-between text-sm">
-                  <span className="text-emerald-300">Safest route accident zones</span>
-                  <span>{safeAccidentHits}</span>
-                </div>
-                <div className="mb-2 flex items-center justify-between text-sm">
-                  <span className="text-emerald-300">Safest route distance</span>
-                  <span>{safeDistance} km</span>
-                </div>
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-emerald-300">Safest route safety score</span>
-                  <span>{safeSafetyScore ?? "n/a"}</span>
-                </div>
+              </div>
 
-                <div className="mb-2 mt-3 flex items-center justify-between text-sm">
-                  <span className="text-blue-300">Fastest route ETA</span>
-                  <span>{formatMinutes(currentDuration)}</span>
-                </div>
-                <div className="mb-2 flex items-center justify-between text-sm">
-                  <span className="text-emerald-300">Safest route ETA</span>
-                  <span>{formatMinutes(safeDuration)}</span>
-                </div>
-                <div className="mb-2 flex items-center justify-between text-sm">
-                  <span className="text-cyan-300">Exposure reduction</span>
-                  <span>{riskReduction > 0 ? `${riskReduction} pts` : "No gain"}</span>
-                </div>
-                <div className="mb-2 flex items-center justify-between text-sm">
-                  <span className="text-cyan-300">Extra distance</span>
-                  <span>{extraDistanceKm > 0 ? `+${extraDistanceKm} km` : "None"}</span>
-                </div>
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-cyan-300">Extra drive time</span>
-                  <span>
-                    {Number.isFinite(extraDurationMin) && extraDurationMin > 0
-                      ? `+${extraDurationMin} min`
-                      : "None"}
-                  </span>
+              <div className="rounded-xl border border-gray-800 bg-gray-900/70 p-4">
+                <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-gray-400">
+                  Balance Guardrails
+                </p>
+                <div className="grid gap-2 text-sm">
+                  <div className="flex items-center justify-between">
+                    <span className="text-cyan-300">Exposure reduction</span>
+                    <span>{riskReduction > 0 ? `${riskReduction} pts` : "No gain"}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-cyan-300">Extra distance</span>
+                    <span>{formatDelta(extraDistanceKm, "km")}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-cyan-300">Distance increase</span>
+                    <span>{formatPercent(extraDistancePct)}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-cyan-300">Extra drive time</span>
+                    <span>{formatDelta(extraDurationMin, "min")}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-cyan-300">ETA increase</span>
+                    <span>{formatPercent(extraEtaPct)}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-cyan-300">Within route limits</span>
+                    <span className={selectedRouteBalanced ? "text-emerald-300" : "text-amber-300"}>
+                      {selectedRouteBalanced ? "Yes" : "Fallback"}
+                    </span>
+                  </div>
                 </div>
                 <div className="mt-3 rounded-lg bg-gray-950/60 px-3 py-2 text-xs text-slate-300">
-                  {routesDiffer
-                    ? "A safest-route corridor was found and scored against predicted accident zones before being recommended."
-                    : "No meaningfully safer detour was found for this origin-destination pair."}
+                  Max distance increase {routingPolicy?.max_distance_increase_pct ?? "n/a"}% and
+                  max ETA increase {routingPolicy?.max_eta_increase_pct ?? "n/a"}%.
                 </div>
               </div>
 
@@ -454,7 +711,7 @@ export default function TravelAdvisor() {
                 </p>
                 {(result.alerts || []).length === 0 ? (
                   <p className="text-sm text-gray-400">
-                    No accident-heavy zones were detected on the selected route.
+                    No buffered accident zones were detected on the fastest route.
                   </p>
                 ) : (
                   <div className="space-y-2">
@@ -468,7 +725,8 @@ export default function TravelAdvisor() {
                         </p>
                         <p className="text-gray-400">
                           Accident score: {alert.predicted_accident ?? "n/a"} | Route distance
-                          to zone: {alert.min_distance_km ?? "n/a"} km
+                          to zone: {alert.min_distance_km ?? "n/a"} km | Buffer{" "}
+                          {alert.strict_buffer_m ?? "n/a"} m
                         </p>
                       </div>
                     ))}
@@ -507,7 +765,7 @@ export default function TravelAdvisor() {
           )}
         </div>
 
-        <div className="relative min-h-0">
+        <div className="relative min-h-[440px] lg:min-h-0">
           <MapContainer
             center={[10.7905, 78.7047]}
             zoom={7}
@@ -524,32 +782,46 @@ export default function TravelAdvisor() {
               <Polyline
                 positions={safePositions}
                 pathOptions={{ color: ROUTE_COLORS.safe, weight: 8, opacity: 0.5 }}
-              />
+              >
+                <Tooltip sticky opacity={0.95}>
+                  {zonesAvoided > 0
+                    ? `Safer route avoids ${zonesAvoided} accident-prone areas`
+                    : "Safest available road route"}
+                </Tooltip>
+              </Polyline>
             )}
 
             {currentPositions.length > 1 && (
               <Polyline
                 positions={currentPositions}
                 pathOptions={{ color: ROUTE_COLORS.fast, weight: 4, opacity: 0.95 }}
-              />
+              >
+                <Tooltip sticky opacity={0.95}>
+                  Fastest route
+                </Tooltip>
+              </Polyline>
             )}
 
             {accidentZones.map((zone) => (
-              <CircleMarker
+              <Circle
                 key={`${zone.taluk_id || zone.taluk}-${zone.district}`}
                 center={[zone.lat, zone.lng]}
-                radius={accidentMarkerRadius(zone)}
-                pathOptions={{
-                  color: ROUTE_COLORS.accident,
-                  fillColor: ROUTE_COLORS.accident,
-                  fillOpacity: 0.65,
-                  opacity: 0.95,
-                }}
+                radius={Math.max(150, Number(zone.buffer_radius_m) || 350)}
+                pathOptions={zoneStyle(zone)}
               >
-                <Tooltip direction="top" offset={[0, -8]} opacity={0.95}>
-                  {zone.taluk}, {zone.district} | Accident score {zone.predicted_accident}
+                <Tooltip direction="top" opacity={0.95}>
+                  <div className="space-y-1 text-xs">
+                    <p className="font-semibold">
+                      {zone.taluk}, {zone.district}
+                    </p>
+                    <p>{zoneTooltipLabel(zone)}</p>
+                    <p>Accident score: {zone.predicted_accident ?? "n/a"}</p>
+                    <p>Buffer radius: {zone.buffer_radius_m ?? "n/a"} m</p>
+                    <p>Fastest route distance: {zone.fastest_distance_km ?? "n/a"} km</p>
+                    <p>Safer route distance: {zone.safer_distance_km ?? "n/a"} km</p>
+                  </div>
                 </Tooltip>
-              </CircleMarker>
+              </Circle>
             ))}
 
             {originPoint?.lat && originPoint?.lng && (
@@ -622,8 +894,12 @@ export default function TravelAdvisor() {
               <span>Safest route</span>
             </div>
             <div className="mb-2 flex items-center gap-2">
-              <div className="h-3 w-3 rounded-full bg-red-500" />
-              <span>Accident zones</span>
+              <div className="h-3 w-3 rounded-full border border-emerald-400 bg-emerald-500/20" />
+              <span>Avoided accident zones</span>
+            </div>
+            <div className="mb-2 flex items-center gap-2">
+              <div className="h-3 w-3 rounded-full border border-red-400 bg-red-500/20" />
+              <span>Crossed accident zones</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="h-3 w-3 rounded-full bg-white" />
@@ -642,6 +918,11 @@ export default function TravelAdvisor() {
             {!loading && result?.status === "ok" && !routesDiffer && (
               <p className="mt-3 text-[11px] text-slate-300">
                 The safest option follows the same road corridor as the fastest route.
+              </p>
+            )}
+            {!loading && result?.status === "ok" && zonesAvoided > 0 && (
+              <p className="mt-3 text-[11px] text-emerald-200">
+                Safer route avoids {zonesAvoided} accident-prone areas.
               </p>
             )}
           </div>

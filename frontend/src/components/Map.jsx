@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   Circle,
   CircleMarker,
@@ -12,6 +12,7 @@ import axios from "axios";
 import "leaflet/dist/leaflet.css";
 import { CATEGORY_COLORS, getCategoryColor } from "../lib/crimePalette";
 import { fetchRoadRoute } from "../lib/roadRouting";
+import { apiUrl } from "../lib/api";
 
 const RISK_COLORS = {
   HIGH: "#EF4444",
@@ -46,6 +47,21 @@ const MAP_STYLES = {
 
 const TN_CENTER = [10.7905, 78.7047];
 const FIR_BLINK_INTERVAL_MS = 650;
+const EMPTY_LAYERS = {
+  summary: {
+    districts: 0,
+    taluks: 0,
+    stations: 0,
+    incidents: 0,
+  },
+  districts: [],
+  zones: [],
+  stations: [],
+  hotspots: [],
+  women_zones: [],
+  accident_zones: [],
+  patrol_routes: [],
+};
 
 function buildQuery(filters = {}) {
   const params = new URLSearchParams();
@@ -106,11 +122,13 @@ export default function Map({
   highlightTarget = null,
 }) {
   const [mapStyle, setMapStyle] = useState("street");
-  const [layers, setLayers] = useState(null);
+  const [layers, setLayers] = useState(EMPTY_LAYERS);
   const [availableCategories, setAvailableCategories] = useState(
     Object.keys(CATEGORY_COLORS),
   );
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [loadError, setLoadError] = useState("");
+  const [initialLoadComplete, setInitialLoadComplete] = useState(false);
   const [activeDistrict, setActiveDistrict] = useState(null);
   const [showDistricts, setShowDistricts] = useState(true);
   const [showZones, setShowZones] = useState(true);
@@ -123,30 +141,47 @@ export default function Map({
   const [patrolRouteState, setPatrolRouteState] = useState("idle");
   const [blinkOn, setBlinkOn] = useState(true);
 
-  const fetchLayers = async (nextFilters = filters) => {
+  const fetchLayers = useCallback(async (nextFilters = filters) => {
     const query = buildQuery(nextFilters);
-    const url = `http://localhost:8000/api/fir/map-layers${query ? `?${query}` : ""}`;
+    const url = apiUrl(`/api/fir/map-layers${query ? `?${query}` : ""}`);
     setLoading(true);
+    setLoadError("");
     try {
       const response = await axios.get(url);
-      setLayers(response.data);
+      setLayers({
+        ...EMPTY_LAYERS,
+        ...response.data,
+        summary: {
+          ...EMPTY_LAYERS.summary,
+          ...(response.data?.summary || {}),
+        },
+        districts: response.data?.districts || [],
+        zones: response.data?.zones || [],
+        stations: response.data?.stations || [],
+        hotspots: response.data?.hotspots || [],
+        women_zones: response.data?.women_zones || [],
+        accident_zones: response.data?.accident_zones || [],
+        patrol_routes: response.data?.patrol_routes || [],
+      });
       if (nextFilters.district) {
         setActiveDistrict(nextFilters.district);
       }
     } catch (error) {
       console.error("Map layers error:", error);
+      setLoadError("We couldn't load operations layers. The basemap is still available, and you can retry.");
     } finally {
       setLoading(false);
+      setInitialLoadComplete(true);
     }
-  };
+  }, [filters]);
 
   useEffect(() => {
     fetchLayers(filters);
-  }, [filters, refreshKey]);
+  }, [fetchLayers, filters, refreshKey]);
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/fir/categories")
+      .get(apiUrl("/api/fir/categories"))
       .then((response) => {
         const categories = response.data.categories || [];
         if (categories.length) {
@@ -214,16 +249,6 @@ export default function Map({
     setActiveDistrict(district);
     onDistrictClick && onDistrictClick(district);
   };
-
-  if (loading || !layers) {
-    return (
-      <div className="flex-1 flex items-center justify-center bg-gray-950">
-        <p className="text-white text-lg animate-pulse">
-          Building Tamil Nadu operations picture...
-        </p>
-      </div>
-    );
-  }
 
   const focusDistrict =
     layers.districts.find((item) => item.district === (filters.district || activeDistrict)) ||
@@ -567,6 +592,35 @@ export default function Map({
           </div>
         </div>
       </div>
+
+      {loadError && (
+        <div className="absolute left-4 top-4 z-[1001] max-w-sm rounded-xl border border-amber-500/30 bg-amber-500/10 p-4 text-sm text-amber-100 shadow-xl backdrop-blur-md">
+          <p className="font-semibold">Operations data unavailable</p>
+          <p className="mt-1 leading-5 text-amber-50/90">{loadError}</p>
+          <button
+            onClick={() => fetchLayers(filters)}
+            className="mt-3 rounded-lg border border-amber-300/40 bg-amber-300/10 px-3 py-2 text-xs font-semibold text-amber-50 transition hover:bg-amber-300/20"
+          >
+            Retry loading layers
+          </button>
+        </div>
+      )}
+
+      {!loadError && !loading && initialLoadComplete && layers.districts.length === 0 && (
+        <div className="absolute left-4 top-4 z-[1001] max-w-sm rounded-xl border border-slate-700/70 bg-slate-950/85 p-4 text-sm text-slate-100 shadow-xl backdrop-blur-md">
+          No operational layers matched the current filters.
+        </div>
+      )}
+
+      {loading && (
+        <div className="absolute inset-0 z-[1000] flex items-center justify-center bg-gray-950/25 backdrop-blur-[1px]">
+          <p className="rounded-xl bg-gray-950/80 px-4 py-2 text-sm font-semibold text-white">
+            {initialLoadComplete
+              ? "Refreshing operations layers..."
+              : "Building Tamil Nadu operations picture..."}
+          </p>
+        </div>
+      )}
     </div>
   );
 }
