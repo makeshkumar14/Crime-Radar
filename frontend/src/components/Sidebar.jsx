@@ -65,14 +65,17 @@ export default function Sidebar({ onFilter, activeView, onViewChange }) {
 
   return (
     <aside className="flex h-full w-[320px] flex-col border-r border-gray-800 bg-gray-950 text-white">
-      <div className="border-b border-gray-800 px-5 py-5">
-        <p className="text-xs font-semibold uppercase tracking-[0.32em] text-cyan-400">
-          CrimeRadar
-        </p>
-        <h1 className="mt-2 text-xl font-bold">Tamil Nadu Crime Operations</h1>
-        <p className="mt-2 text-sm leading-6 text-gray-400">
-          Real geography, synthetic FIR intelligence, ML-assisted patrol focus, and
-          citizen safety tools built for the hackathon demo.
+      <div className="border-b border-blue-500/50 bg-[#0b1423] px-5 py-4">
+        <div className="leading-[0.92]">
+          <p className="text-[2.15rem] font-black uppercase tracking-[0.04em] text-white">
+            Crime
+          </p>
+          <p className="mt-1 text-[2.15rem] font-black uppercase tracking-[0.04em] text-amber-400">
+            Radar
+          </p>
+        </div>
+        <p className="mt-3 max-w-[15rem] text-[0.72rem] italic leading-5 text-slate-400">
+          Predictive Crime Hotspot Mapping for Smarter Policing
         </p>
       </div>
 
@@ -175,27 +178,6 @@ export default function Sidebar({ onFilter, activeView, onViewChange }) {
               </select>
             </div>
           </div>
-        </div>
-
-        <div className="mt-4 rounded-2xl border border-gray-800 bg-gray-900/70 p-4">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-gray-500">
-            Live Story
-          </p>
-          <div className="mt-3 space-y-3 text-sm text-gray-300">
-            <p>Every district and taluk is covered. No blank zones are left on the map.</p>
-            <p>Legal sections now include the full hackathon IPC and Act coverage set.</p>
-            <p>Citizen features use predicted taluk risk instead of only historical counts.</p>
-          </div>
-        </div>
-
-        <div className="mt-4 rounded-2xl border border-amber-500/20 bg-amber-500/10 p-4">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-amber-300">
-            Demo Honesty Line
-          </p>
-          <p className="mt-2 text-sm leading-6 text-amber-100/90">
-            Administrative geography is real. FIR activity is synthetic for hackathon
-            demonstration and aligned for future CCTNS-style integration.
-          </p>
         </div>
       </div>
     </aside>
