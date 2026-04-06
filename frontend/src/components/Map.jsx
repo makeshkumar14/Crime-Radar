@@ -98,7 +98,12 @@ function MapController({ focusDistrict, fallbackCenter }) {
   return null;
 }
 
-export default function Map({ filters = {}, onDistrictClick }) {
+export default function Map({
+  filters = {},
+  onDistrictClick,
+  refreshKey = 0,
+  highlightDistrict = null,
+}) {
   const [mapStyle, setMapStyle] = useState("street");
   const [layers, setLayers] = useState(null);
   const [availableCategories, setAvailableCategories] = useState(
@@ -113,9 +118,6 @@ export default function Map({ filters = {}, onDistrictClick }) {
   const [showWomenSafety, setShowWomenSafety] = useState(false);
   const [showAccident, setShowAccident] = useState(false);
   const [showPatrol, setShowPatrol] = useState(false);
-  const [demoCategory, setDemoCategory] = useState("Women Safety");
-  const [demoCount, setDemoCount] = useState(6);
-  const [submittingDemo, setSubmittingDemo] = useState(false);
   const [patrolRouteGeometry, setPatrolRouteGeometry] = useState({});
   const [patrolRouteState, setPatrolRouteState] = useState("idle");
 
@@ -138,7 +140,7 @@ export default function Map({ filters = {}, onDistrictClick }) {
 
   useEffect(() => {
     fetchLayers(filters);
-  }, [filters]);
+  }, [filters, refreshKey]);
 
   useEffect(() => {
     axios
@@ -147,15 +149,17 @@ export default function Map({ filters = {}, onDistrictClick }) {
         const categories = response.data.categories || [];
         if (categories.length) {
           setAvailableCategories(categories);
-          if (!categories.includes(demoCategory)) {
-            setDemoCategory(categories[0]);
-          }
         }
       })
       .catch((error) => {
         console.error("Category load error:", error);
       });
   }, []);
+
+  useEffect(() => {
+    if (!highlightDistrict) return;
+    setActiveDistrict(highlightDistrict);
+  }, [highlightDistrict]);
 
   useEffect(() => {
     let cancelled = false;
@@ -193,26 +197,6 @@ export default function Map({ filters = {}, onDistrictClick }) {
   const handleDistrictSelect = (district) => {
     setActiveDistrict(district);
     onDistrictClick && onDistrictClick(district);
-  };
-
-  const handleDemoEntry = async () => {
-    if (!layers?.districts?.length) return;
-    const targetDistrict =
-      activeDistrict || filters.district || layers.districts[0]?.district;
-    setSubmittingDemo(true);
-    try {
-      const response = await axios.post("http://localhost:8000/api/fir/demo-entry", {
-        district: targetDistrict,
-        category: demoCategory,
-        count: Number(demoCount),
-      });
-      handleDistrictSelect(response.data.entry.district);
-      await fetchLayers(filters);
-    } catch (error) {
-      console.error("Demo entry error:", error);
-    } finally {
-      setSubmittingDemo(false);
-    }
   };
 
   if (loading || !layers) {
@@ -465,46 +449,6 @@ export default function Map({ filters = {}, onDistrictClick }) {
             {patrolFallbackCount > 1 ? "s are" : " is"} still approximate.
           </p>
         )}
-
-        <div className="mb-2 h-px w-full bg-white/10" />
-
-        <p className="mb-1 text-[10px] font-black uppercase tracking-[0.3em] text-white/80">
-          DEMO FIR
-        </p>
-        <div className="mb-2 flex flex-col gap-1.5">
-            <div>
-                <label className="mb-0.5 block text-[10px] font-semibold text-gray-300">Category</label>
-                <select
-                  value={demoCategory}
-                  onChange={(event) => setDemoCategory(event.target.value)}
-                  className="w-full rounded border border-gray-700 bg-gray-900 px-1.5 py-1 text-[10px] text-white"
-                >
-                  {availableCategories.map((category) => (
-                    <option key={category} value={category}>
-                      {category}
-                    </option>
-                  ))}
-                </select>
-            </div>
-            <div>
-                <label className="mb-0.5 block text-[10px] font-semibold text-gray-300">Cases ({demoCount})</label>
-                <input
-                  type="range"
-                  min="1"
-                  max="20"
-                  value={demoCount}
-                  onChange={(event) => setDemoCount(event.target.value)}
-                  className="w-full accent-blue-500"
-                />
-            </div>
-        </div>
-        <button
-          onClick={handleDemoEntry}
-          disabled={submittingDemo}
-          className="w-full rounded bg-emerald-600 px-1.5 py-1.5 text-[11px] font-semibold text-white transition hover:bg-emerald-500 disabled:cursor-not-allowed disabled:opacity-60"
-        >
-          {submittingDemo ? "Wait..." : "Inject FIR"}
-        </button>
       </div>
 
       {/* COMBINED OPS & LEGEND - Positioned at bottom left */}

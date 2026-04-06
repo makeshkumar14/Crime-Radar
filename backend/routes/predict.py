@@ -1,10 +1,10 @@
 from datetime import date
 from typing import Optional
 
-from fastapi import APIRouter, Query
+from fastapi import APIRouter, HTTPException, Query
 
 from database import get_connection
-from ml_engine import patrol_ml_prediction, seasonal_ml_prediction
+from ml_engine import patrol_ml_prediction, scenario_zone_prediction, seasonal_ml_prediction
 from ops_queries import risk_level, risk_score
 
 router = APIRouter()
@@ -143,3 +143,24 @@ def get_patrol_prediction_ml(
         target_year=year or today.year,
         target_month=month or today.month,
     )
+
+
+@router.get("/scenario-zones")
+def get_scenario_zone_prediction(
+    scenario: str = Query(...),
+    district: Optional[str] = Query(None),
+    year: Optional[int] = Query(None),
+    month: Optional[int] = Query(None),
+    limit: int = Query(20, ge=1, le=60),
+):
+    today = date.today()
+    try:
+        return scenario_zone_prediction(
+            scenario=scenario,
+            district=district,
+            target_year=year or today.year,
+            target_month=month or today.month,
+            limit=limit,
+        )
+    except ValueError as error:
+        raise HTTPException(status_code=400, detail=str(error)) from error

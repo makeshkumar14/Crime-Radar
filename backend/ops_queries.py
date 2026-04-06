@@ -4,6 +4,9 @@ from collections import defaultdict
 from database import get_connection
 from ml_engine import patrol_ml_prediction
 
+STATEWIDE_ZONE_LAYER_LIMIT = 20
+STATEWIDE_PATROL_DISTRICT_LIMIT = 16
+
 
 def _filters_sql(year=None, category=None, district=None):
     clauses = []
@@ -161,8 +164,10 @@ def load_map_layers(year=None, category=None, district=None):
             }
         )
 
+    zone_layer_limit = len(zones) if district else STATEWIDE_ZONE_LAYER_LIMIT
+
     hotspots = []
-    for zone in sorted(zones, key=lambda item: item["total"], reverse=True)[:24]:
+    for zone in sorted(zones, key=lambda item: item["total"], reverse=True)[:zone_layer_limit]:
         if zone["total"] <= 0:
             continue
         hotspots.append(
@@ -190,7 +195,11 @@ def load_map_layers(year=None, category=None, district=None):
             "radius_km": round(max(5.0, zone["radius_km"] * 0.88), 2),
             "count": zone["women_safety_total"],
         }
-        for zone in sorted(zones, key=lambda item: item["women_safety_total"], reverse=True)[:18]
+        for zone in sorted(
+            zones,
+            key=lambda item: item["women_safety_total"],
+            reverse=True,
+        )[:zone_layer_limit]
         if zone["women_safety_total"] > 0
     ]
 
@@ -204,7 +213,11 @@ def load_map_layers(year=None, category=None, district=None):
             "radius_km": round(max(6.0, zone["radius_km"] * 0.95), 2),
             "count": zone["accident_total"],
         }
-        for zone in sorted(zones, key=lambda item: item["accident_total"], reverse=True)[:18]
+        for zone in sorted(
+            zones,
+            key=lambda item: item["accident_total"],
+            reverse=True,
+        )[:zone_layer_limit]
         if zone["accident_total"] > 0
     ]
 
@@ -213,7 +226,11 @@ def load_map_layers(year=None, category=None, district=None):
         key=lambda item: item[1],
         reverse=True,
     )
-    allowed_districts = {name for name, _ in district_ranking[:8]} if not district else {district}
+    allowed_districts = (
+        {name for name, _ in district_ranking[:STATEWIDE_PATROL_DISTRICT_LIMIT]}
+        if not district
+        else {district}
+    )
     patrol_routes = []
     for district_name in allowed_districts:
         patrol = patrol_ml_prediction(district_name)

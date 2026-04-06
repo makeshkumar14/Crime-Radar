@@ -3,6 +3,8 @@ import axios from "axios";
 
 const NAV_ITEMS = [
   { id: "map", label: "Operations Map", description: "Statewide zones, hotspots, patrols" },
+  { id: "women-safety", label: "Women Safety", description: "Top 20 forecast zones and derived safety markers" },
+  { id: "accident-zones", label: "Accident Zones", description: "Top 20 forecast corridors with isolated overlays" },
   { id: "analytics", label: "Analytics", description: "Trends, category mix, seasonal view" },
   { id: "travel", label: "Travel Advisor", description: "Safer route around crime corridors" },
   { id: "relocation", label: "Relocation Report", description: "Family safety assessment by area" },

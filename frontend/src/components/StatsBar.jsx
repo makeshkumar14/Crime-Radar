@@ -13,7 +13,13 @@ const CATEGORY_COLORS = [
   "#EC4899",
 ];
 
-export default function StatsBar({ activeView, is3D, setIs3D }) {
+export default function StatsBar({
+  activeView,
+  is3D,
+  setIs3D,
+  refreshKey,
+  onOpenFIRModal,
+}) {
   const [stats, setStats] = useState({
     total: 0,
     topCrime: "N/A",
@@ -41,7 +47,7 @@ export default function StatsBar({ activeView, is3D, setIs3D }) {
         });
       })
       .catch((error) => console.error(error));
-  }, []);
+  }, [refreshKey]);
 
   const cards = [
     {
@@ -122,6 +128,21 @@ export default function StatsBar({ activeView, is3D, setIs3D }) {
               }}
             >
               3D Map
+            </button>
+            <button
+              onClick={onOpenFIRModal}
+              style={{
+                fontSize: "11px",
+                padding: "2px 12px",
+                borderRadius: "4px",
+                border: "none",
+                cursor: "pointer",
+                background: "#059669",
+                color: "white",
+                marginLeft: "4px",
+              }}
+            >
+              Inject FIR
             </button>
             <span className="text-[#64748b] text-[11px] font-semibold ml-2">
               {is3D

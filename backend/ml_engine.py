@@ -1,4 +1,5 @@
 import heapq
+import hashlib
 import json
 import math
 from collections import defaultdict
@@ -39,6 +40,27 @@ CATEGORY_ALERT_WEIGHT = {
     "Fraud": 0.92,
     "NDPS": 1.04,
     "Arms Act": 1.08,
+}
+
+SCENARIO_CONFIG = {
+    "hotspot": {
+        "field": "predicted_total",
+        "label": "Hotspot",
+        "min_radius_km": 3.8,
+        "radius_scale": 0.94,
+    },
+    "women_safety": {
+        "field": "predicted_women_safety",
+        "label": "Women Safety",
+        "min_radius_km": 3.0,
+        "radius_scale": 0.86,
+    },
+    "accident": {
+        "field": "predicted_accident",
+        "label": "Accident",
+        "min_radius_km": 3.2,
+        "radius_scale": 0.9,
+    },
 }
 
 
@@ -171,6 +193,130 @@ def _prediction_snapshot(target_year, target_month, district=None):
         )
 
     return sorted(snapshot, key=lambda item: item["predicted_total"], reverse=True)
+
+
+def prediction_snapshot(target_year=None, target_month=None, district=None):
+    today = date.today()
+    return _prediction_snapshot(
+        target_year or today.year,
+        target_month or today.month,
+        district=district,
+    )
+
+
+def _stable_seed(value):
+    digest = hashlib.sha1(value.encode("utf-8")).hexdigest()
+    return int(digest[:8], 16)
+
+
+def _scenario_micro_points(zone, metric, scenario_name):
+    if metric <= 0:
+        return []
+
+    seed = _stable_seed(f"{scenario_name}:{zone['taluk_id']}")
+    samples = max(8, min(28, int(round(metric * 1.8)) + 4))
+    radial_limit_km = max(0.8, min(zone["radius_km"] * 0.58, 5.5))
+    lat_scale = max(math.cos(math.radians(zone["lat"])), 0.35)
+    points = []
+
+    for index in range(samples):
+        ring = 1 + index // 6
+        angle_deg = (seed % 360 + index * 137.5) % 360
+        angle = math.radians(angle_deg)
+        distance_km = min(
+            radial_limit_km,
+            0.35 + ring * 0.42 + ((seed + index) % 7) * 0.03,
+        )
+        lat = zone["lat"] + (distance_km / 111.0) * math.cos(angle)
+        lng = zone["lng"] + (distance_km / (111.0 * lat_scale)) * math.sin(angle)
+        local_weight = round(metric / samples * (1.0 + (index % 4) * 0.09), 2)
+        points.append(
+            {
+                "point_id": f"{scenario_name}-{zone['taluk_id']}-{index + 1}",
+                "district": zone["district"],
+                "taluk": zone["taluk"],
+                "lat": round(lat, 6),
+                "lng": round(lng, 6),
+                "weight": local_weight,
+                "scenario": scenario_name,
+            }
+        )
+
+    return points
+
+
+def scenario_zone_prediction(
+    scenario,
+    district=None,
+    target_year=None,
+    target_month=None,
+    limit=20,
+):
+    if scenario not in SCENARIO_CONFIG:
+        raise ValueError(f"Unsupported scenario: {scenario}")
+
+    today = date.today()
+    target_year = target_year or today.year
+    target_month = target_month or today.month
+    config = SCENARIO_CONFIG[scenario]
+    snapshot = _prediction_snapshot(target_year, target_month, district=district)
+    metric_field = config["field"]
+
+    ranked = [row for row in snapshot if row.get(metric_field, 0) > 0]
+    ranked.sort(key=lambda item: item[metric_field], reverse=True)
+    limited = ranked[:limit]
+    max_metric = max((row[metric_field] for row in limited), default=1.0)
+
+    zones = []
+    incident_points = []
+    for index, zone in enumerate(limited, start=1):
+        metric = round(zone[metric_field], 2)
+        prediction_index = round(24 + (metric / max_metric) * 76, 1) if max_metric else 24.0
+        zone_row = {
+            "rank": index,
+            "taluk_id": zone["taluk_id"],
+            "district": zone["district"],
+            "taluk": zone["taluk"],
+            "lat": zone["lat"],
+            "lng": zone["lng"],
+            "radius_km": round(
+                max(config["min_radius_km"], zone["radius_km"] * config["radius_scale"]),
+                2,
+            ),
+            "predicted_count": metric,
+            "predicted_total": zone["predicted_total"],
+            "prediction_index": prediction_index,
+            "risk_score": zone["risk_score"],
+            "risk_level": zone["risk_level"],
+            "predicted_top_category": zone["predicted_top_category"],
+            "categories": zone["categories"],
+        }
+        zones.append(zone_row)
+        incident_points.extend(_scenario_micro_points(zone_row, metric, scenario))
+
+    peak_zone = zones[0] if zones else None
+    return {
+        "scenario": scenario,
+        "scenario_label": config["label"],
+        "target_year": target_year,
+        "target_month": target_month,
+        "limit": limit,
+        "district_filter": district,
+        "summary": {
+            "zones": len(zones),
+            "derived_points": len(incident_points),
+            "peak_district": peak_zone["district"] if peak_zone else None,
+            "peak_zone": peak_zone["taluk"] if peak_zone else None,
+            "peak_prediction": peak_zone["predicted_count"] if peak_zone else 0,
+        },
+        "zones": zones,
+        "incident_points": incident_points,
+        "notes": [
+            "Derived incident points are generated at request time from the prediction engine.",
+            "These overlays align to seeded taluk centroids and radii, but they are not written into fir_records.",
+            "Use district filters for denser, more precise local reading of the prediction surface.",
+        ],
+    }
 
 
 def seasonal_ml_prediction(district=None, category=None, horizon=6):
