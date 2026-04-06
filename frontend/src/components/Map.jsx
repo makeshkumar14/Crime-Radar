@@ -367,8 +367,8 @@ export default function Map({ filters = {}, onDistrictClick }) {
 
 
       {/* CONTROLS (Map Style, Demo FIR, Layers) - Positioned at top right */}
-      <div className="absolute top-4 right-4 z-[1000] w-36 rounded-xl border border-white/10 bg-slate-900/40 p-2 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] backdrop-blur-xl transition-all hover:bg-slate-900/50">
-        <p className="mb-1.5 text-[8px] font-black uppercase tracking-[0.3em] text-white/50">
+      <div className="absolute top-4 right-4 z-[1000] w-44 rounded-xl border border-white/10 bg-slate-900/40 p-3 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] backdrop-blur-xl transition-all hover:bg-slate-900/50">
+        <p className="mb-1.5 text-[10px] font-black uppercase tracking-[0.3em] text-white/80">
           MAP STYLE
         </p>
         <div className="mb-2 flex flex-col gap-1">
@@ -376,7 +376,7 @@ export default function Map({ filters = {}, onDistrictClick }) {
             <button
               key={key}
               onClick={() => setMapStyle(key)}
-              className={`rounded px-1.5 py-1 text-[9px] font-semibold transition ${
+              className={`rounded px-1.5 py-1 text-[11px] font-semibold transition ${
                 mapStyle === key
                   ? "bg-blue-600 text-white"
                   : "bg-gray-900 text-gray-300 hover:bg-gray-800"
@@ -389,7 +389,7 @@ export default function Map({ filters = {}, onDistrictClick }) {
 
         <div className="mb-2 h-px w-full bg-white/10" />
 
-        <p className="mb-1.5 text-[8px] font-black uppercase tracking-[0.3em] text-white/50">
+        <p className="mb-1.5 text-[10px] font-black uppercase tracking-[0.3em] text-white/80">
           LAYERS
         </p>
         <div className="mb-2 flex flex-col gap-1 text-xs text-white">
@@ -407,9 +407,9 @@ export default function Map({ filters = {}, onDistrictClick }) {
                 type="checkbox"
                 checked={value}
                 onChange={(event) => setter(event.target.checked)}
-                className="h-2.5 w-2.5 accent-blue-500"
+                className="h-3 w-3 accent-blue-500"
               />
-              <span className="text-[9px] font-medium">{label}</span>
+              <span className="text-[11px] font-medium">{label}</span>
             </label>
           ))}
         </div>
@@ -427,16 +427,16 @@ export default function Map({ filters = {}, onDistrictClick }) {
 
         <div className="mb-2 h-px w-full bg-white/10" />
 
-        <p className="mb-1 text-[8px] font-black uppercase tracking-[0.3em] text-white/50">
+        <p className="mb-1 text-[10px] font-black uppercase tracking-[0.3em] text-white/80">
           DEMO FIR
         </p>
         <div className="mb-2 flex flex-col gap-1.5">
             <div>
-                <label className="mb-0.5 block text-[8px] font-semibold text-gray-400">Category</label>
+                <label className="mb-0.5 block text-[10px] font-semibold text-gray-300">Category</label>
                 <select
                   value={demoCategory}
                   onChange={(event) => setDemoCategory(event.target.value)}
-                  className="w-full rounded border border-gray-700 bg-gray-900 px-1.5 py-0.5 text-[8.5px] text-white"
+                  className="w-full rounded border border-gray-700 bg-gray-900 px-1.5 py-1 text-[10px] text-white"
                 >
                   {availableCategories.map((category) => (
                     <option key={category} value={category}>
@@ -446,7 +446,7 @@ export default function Map({ filters = {}, onDistrictClick }) {
                 </select>
             </div>
             <div>
-                <label className="mb-0.5 block text-[8px] font-semibold text-gray-400">Cases ({demoCount})</label>
+                <label className="mb-0.5 block text-[10px] font-semibold text-gray-300">Cases ({demoCount})</label>
                 <input
                   type="range"
                   min="1"
@@ -460,20 +460,20 @@ export default function Map({ filters = {}, onDistrictClick }) {
         <button
           onClick={handleDemoEntry}
           disabled={submittingDemo}
-          className="w-full rounded bg-emerald-600 px-1.5 py-1 text-[9px] font-semibold text-white transition hover:bg-emerald-500 disabled:cursor-not-allowed disabled:opacity-60"
+          className="w-full rounded bg-emerald-600 px-1.5 py-1.5 text-[11px] font-semibold text-white transition hover:bg-emerald-500 disabled:cursor-not-allowed disabled:opacity-60"
         >
           {submittingDemo ? "Wait..." : "Inject FIR"}
         </button>
       </div>
 
       {/* COMBINED OPS & LEGEND - Positioned at bottom left */}
-      <div className="absolute bottom-4 left-4 z-[1000] w-fit min-w-[220px] max-w-[280px] rounded-xl border border-white/10 bg-slate-900/40 p-2 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] backdrop-blur-xl transition-all hover:bg-slate-900/50">
+      <div className="absolute bottom-4 left-4 z-[1000] w-fit min-w-[260px] max-w-[320px] rounded-xl border border-white/10 bg-slate-900/40 p-3 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] backdrop-blur-xl transition-all hover:bg-slate-900/50">
         <div className="mb-1.5 flex items-center justify-between">
-          <p className="text-[8px] font-black uppercase tracking-[0.2em] text-cyan-400/90">
+          <p className="text-[11px] font-black uppercase tracking-[0.2em] text-cyan-400">
             TAMIL NADU OPS
           </p>
         </div>
-        <div className="mb-1.5 grid grid-cols-2 gap-1 text-[8.5px] uppercase tracking-wider text-gray-300">
+        <div className="mb-2 grid grid-cols-2 gap-1.5 text-[10px] uppercase tracking-wider text-gray-200">
           <div className="flex items-center justify-between rounded bg-white/5 px-1.5 py-0.5">
             <span>Dist:</span>
             <span className="font-bold text-white">{layers.summary.districts}</span>
@@ -494,9 +494,9 @@ export default function Map({ filters = {}, onDistrictClick }) {
 
         <div className="mb-1.5 h-px w-full bg-white/10" />
 
-        <div className="flex flex-col gap-1">
-          <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[8px]">
-            <span className="font-bold uppercase tracking-widest text-white/50">Risk:</span>
+        <div className="flex flex-col gap-1.5">
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px]">
+            <span className="font-bold uppercase tracking-widest text-white/80">Risk:</span>
             {Object.entries(RISK_COLORS).map(([level, color]) => (
               <div key={level} className="flex items-center gap-0.5">
                 <div className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: color }} />
@@ -504,8 +504,8 @@ export default function Map({ filters = {}, onDistrictClick }) {
               </div>
             ))}
           </div>
-          <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[8px]">
-            <span className="font-bold uppercase tracking-widest text-white/50">Crime:</span>
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px]">
+            <span className="font-bold uppercase tracking-widest text-white/80">Crime:</span>
             {availableCategories.slice(0, 8).map((label) => (
               <div key={label} className="flex items-center gap-0.5">
                 <div
