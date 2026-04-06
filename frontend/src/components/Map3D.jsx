@@ -71,7 +71,12 @@ function createMarkerElement({
   return wrapper;
 }
 
-export default function Map3D({ filters = {}, onDistrictClick }) {
+export default function Map3D({
+  filters = {},
+  onDistrictClick,
+  refreshKey = 0,
+  highlightDistrict = null,
+}) {
   const mapContainer = useRef(null);
   const map = useRef(null);
   const markersRef = useRef([]);
@@ -90,9 +95,6 @@ export default function Map3D({ filters = {}, onDistrictClick }) {
   const [showZones, setShowZones] = useState(true);
   const [showStations, setShowStations] = useState(false);
   const [showHotspots, setShowHotspots] = useState(true);
-  const [demoCategory, setDemoCategory] = useState("Women Safety");
-  const [demoCount, setDemoCount] = useState(5);
-  const [submittingDemo, setSubmittingDemo] = useState(false);
 
   const fetchLayers = async (nextFilters = filters) => {
     const query = buildQuery(nextFilters);
@@ -113,7 +115,7 @@ export default function Map3D({ filters = {}, onDistrictClick }) {
 
   useEffect(() => {
     fetchLayers(filters);
-  }, [filters]);
+  }, [filters, refreshKey]);
 
   useEffect(() => {
     axios
@@ -122,15 +124,17 @@ export default function Map3D({ filters = {}, onDistrictClick }) {
         const categories = response.data.categories || [];
         if (categories.length) {
           setAvailableCategories(categories);
-          if (!categories.includes(demoCategory)) {
-            setDemoCategory(categories[0]);
-          }
         }
       })
       .catch((error) => {
         console.error("Map3D category load error:", error);
       });
   }, []);
+
+  useEffect(() => {
+    if (!highlightDistrict) return;
+    setActiveDistrict(highlightDistrict);
+  }, [highlightDistrict]);
 
   useEffect(() => {
     if (map.current || !mapContainer.current) return;
@@ -180,9 +184,9 @@ export default function Map3D({ filters = {}, onDistrictClick }) {
       } else if (type === "station") {
         markerConfig = {
           size: 10,
-          color: item.source_type === "osm" ? "#e2e8f0" : "#94a3b8",
-          border: item.source_type === "osm" ? "#ffffff" : "#64748b",
-          glow: "#cbd5e1",
+          color: item.source_type === "osm" ? "#1E40AF" : "#1E3A8A",
+          border: item.source_type === "osm" ? "#3B82F6" : "#2563EB",
+          glow: "#2563EB",
         };
       } else {
         markerConfig = {
@@ -259,27 +263,6 @@ export default function Map3D({ filters = {}, onDistrictClick }) {
     });
   }, [activeDistrict, filters.district, layers]);
 
-  const handleDemoEntry = async () => {
-    if (!layers?.districts?.length) return;
-    const targetDistrict =
-      activeDistrict || filters.district || layers.districts[0]?.district;
-    setSubmittingDemo(true);
-    try {
-      const response = await axios.post("http://localhost:8000/api/fir/demo-entry", {
-        district: targetDistrict,
-        category: demoCategory,
-        count: Number(demoCount),
-      });
-      setActiveDistrict(response.data.entry.district);
-      onDistrictClick && onDistrictClick(response.data.entry.district);
-      await fetchLayers(filters);
-    } catch (error) {
-      console.error("Map3D demo entry error:", error);
-    } finally {
-      setSubmittingDemo(false);
-    }
-  };
-
   return (
     <div className="relative flex-1">
       <div ref={mapContainer} style={{ height: "100%", width: "100%" }} />
@@ -291,8 +274,8 @@ export default function Map3D({ filters = {}, onDistrictClick }) {
 
 
       {/* CONTROLS (Map Style, Demo FIR, Layers) - Positioned at top right */}
-      <div className="absolute top-4 right-4 z-50 w-36 rounded-xl border border-white/10 bg-slate-900/40 p-2 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] backdrop-blur-xl transition-all hover:bg-slate-900/50">
-        <p className="mb-1.5 text-[8px] font-black uppercase tracking-[0.3em] text-white/50">
+      <div className="absolute top-4 right-4 z-50 w-44 rounded-xl border border-white/10 bg-slate-900/40 p-3 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] backdrop-blur-xl transition-all hover:bg-slate-900/50">
+        <p className="mb-1.5 text-[10px] font-black uppercase tracking-[0.3em] text-white/80">
           STYLE
         </p>
         <div className="mb-2 flex flex-col gap-1">
@@ -300,7 +283,7 @@ export default function Map3D({ filters = {}, onDistrictClick }) {
             <button
               key={key}
               onClick={() => setMapStyle(key)}
-              className={`rounded px-1.5 py-1 text-[9px] font-semibold transition ${
+              className={`rounded px-1.5 py-1 text-[11px] font-semibold transition ${
                 mapStyle === key
                   ? "bg-blue-600 text-white"
                   : "bg-gray-900 text-gray-300 hover:bg-gray-800"
@@ -313,7 +296,7 @@ export default function Map3D({ filters = {}, onDistrictClick }) {
 
         <div className="mb-2 h-px w-full bg-white/10" />
 
-        <p className="mb-1.5 text-[8px] font-black uppercase tracking-[0.3em] text-white/50">
+        <p className="mb-1.5 text-[10px] font-black uppercase tracking-[0.3em] text-white/80">
           LAYERS
         </p>
         <div className="mb-2 flex flex-col gap-1 text-xs text-white">
@@ -328,62 +311,22 @@ export default function Map3D({ filters = {}, onDistrictClick }) {
                 type="checkbox"
                 checked={value}
                 onChange={(event) => setter(event.target.checked)}
-                className="h-2.5 w-2.5 accent-blue-500"
+                className="h-3 w-3 accent-blue-500"
               />
-              <span className="text-[9px] font-medium">{label}</span>
+              <span className="text-[11px] font-medium">{label}</span>
             </label>
           ))}
         </div>
-
-        <div className="mb-2 h-px w-full bg-white/10" />
-
-        <p className="mb-1 text-[8px] font-black uppercase tracking-[0.3em] text-white/50">
-          DEMO FIR
-        </p>
-        <div className="mb-2 flex flex-col gap-1.5">
-            <div>
-                <label className="mb-0.5 block text-[8px] font-semibold text-gray-400">Category</label>
-                <select
-                  value={demoCategory}
-                  onChange={(event) => setDemoCategory(event.target.value)}
-                  className="w-full rounded border border-gray-700 bg-gray-900 px-1.5 py-0.5 text-[8.5px] text-white"
-                >
-                  {availableCategories.map((category) => (
-                    <option key={category} value={category}>
-                      {category}
-                    </option>
-                  ))}
-                </select>
-            </div>
-            <div>
-                <label className="mb-0.5 block text-[8px] font-semibold text-gray-400">Cases ({demoCount})</label>
-                <input
-                  type="range"
-                  min="1"
-                  max="20"
-                  value={demoCount}
-                  onChange={(event) => setDemoCount(event.target.value)}
-                  className="w-full accent-blue-500"
-                />
-            </div>
-        </div>
-        <button
-          onClick={handleDemoEntry}
-          disabled={submittingDemo || loading}
-          className="w-full rounded bg-emerald-600 px-1.5 py-1 text-[9px] font-semibold text-white transition hover:bg-emerald-500 disabled:cursor-not-allowed disabled:opacity-60"
-        >
-          {submittingDemo ? "Wait..." : "Inject FIR"}
-        </button>
       </div>
 
       {/* COMBINED OPS & LEGEND - Positioned at bottom left */}
-      <div className="absolute bottom-4 left-4 z-50 w-fit min-w-[220px] max-w-[280px] rounded-xl border border-white/10 bg-slate-900/40 p-2 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] backdrop-blur-xl transition-all hover:bg-slate-900/50">
+      <div className="absolute bottom-4 left-4 z-50 w-fit min-w-[260px] max-w-[320px] rounded-xl border border-white/10 bg-slate-900/40 p-3 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] backdrop-blur-xl transition-all hover:bg-slate-900/50">
         <div className="mb-1.5 flex items-center justify-between">
-          <p className="text-[8px] font-black uppercase tracking-[0.2em] text-cyan-400/90">
+          <p className="text-[11px] font-black uppercase tracking-[0.2em] text-cyan-400">
             3D OPS VIEW
           </p>
         </div>
-        <div className="mb-1.5 grid grid-cols-2 gap-1 text-[8.5px] uppercase tracking-wider text-gray-300">
+        <div className="mb-2 grid grid-cols-2 gap-1.5 text-[10px] uppercase tracking-wider text-gray-200">
           <div className="flex items-center justify-between rounded bg-white/5 px-1.5 py-0.5">
             <span>Dist:</span>
             <span className="font-bold text-white">{layers?.summary?.districts || 0}</span>
@@ -404,9 +347,9 @@ export default function Map3D({ filters = {}, onDistrictClick }) {
 
         <div className="mb-1.5 h-px w-full bg-white/10" />
 
-        <div className="flex flex-col gap-1">
-          <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[8px]">
-            <span className="font-bold uppercase tracking-widest text-white/50">Risk:</span>
+        <div className="flex flex-col gap-1.5">
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px]">
+            <span className="font-bold uppercase tracking-widest text-white/80">Risk:</span>
             {Object.entries(RISK_COLORS).map(([level, color]) => (
               <div key={level} className="flex items-center gap-0.5">
                 <div className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: color }} />
@@ -414,8 +357,8 @@ export default function Map3D({ filters = {}, onDistrictClick }) {
               </div>
             ))}
           </div>
-          <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[8px]">
-            <span className="font-bold uppercase tracking-widest text-white/50">Crime:</span>
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px]">
+            <span className="font-bold uppercase tracking-widest text-white/80">Crime:</span>
             {availableCategories.slice(0, 6).map((label) => (
               <div key={label} className="flex items-center gap-0.5">
                 <div

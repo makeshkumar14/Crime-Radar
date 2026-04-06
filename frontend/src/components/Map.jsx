@@ -69,6 +69,21 @@ function getStationRadius(total) {
   return 3;
 }
 
+function getZoneDisplayRadiusKm(zone, districtMeta) {
+  const talukCount = districtMeta?.taluk_count || 0;
+
+  if (talukCount >= 15) {
+    return Math.max(1.8, zone.radius_km * 0.38);
+  }
+  if (talukCount >= 10) {
+    return Math.max(2.4, zone.radius_km * 0.52);
+  }
+  if (talukCount >= 7) {
+    return Math.max(3, zone.radius_km * 0.68);
+  }
+  return zone.radius_km;
+}
+
 function MapController({ focusDistrict, fallbackCenter }) {
   const map = useMap();
 
@@ -83,7 +98,12 @@ function MapController({ focusDistrict, fallbackCenter }) {
   return null;
 }
 
-export default function Map({ filters = {}, onDistrictClick }) {
+export default function Map({
+  filters = {},
+  onDistrictClick,
+  refreshKey = 0,
+  highlightDistrict = null,
+}) {
   const [mapStyle, setMapStyle] = useState("street");
   const [layers, setLayers] = useState(null);
   const [availableCategories, setAvailableCategories] = useState(
@@ -98,9 +118,6 @@ export default function Map({ filters = {}, onDistrictClick }) {
   const [showWomenSafety, setShowWomenSafety] = useState(false);
   const [showAccident, setShowAccident] = useState(false);
   const [showPatrol, setShowPatrol] = useState(false);
-  const [demoCategory, setDemoCategory] = useState("Women Safety");
-  const [demoCount, setDemoCount] = useState(6);
-  const [submittingDemo, setSubmittingDemo] = useState(false);
   const [patrolRouteGeometry, setPatrolRouteGeometry] = useState({});
   const [patrolRouteState, setPatrolRouteState] = useState("idle");
 
@@ -123,7 +140,7 @@ export default function Map({ filters = {}, onDistrictClick }) {
 
   useEffect(() => {
     fetchLayers(filters);
-  }, [filters]);
+  }, [filters, refreshKey]);
 
   useEffect(() => {
     axios
@@ -132,15 +149,17 @@ export default function Map({ filters = {}, onDistrictClick }) {
         const categories = response.data.categories || [];
         if (categories.length) {
           setAvailableCategories(categories);
-          if (!categories.includes(demoCategory)) {
-            setDemoCategory(categories[0]);
-          }
         }
       })
       .catch((error) => {
         console.error("Category load error:", error);
       });
   }, []);
+
+  useEffect(() => {
+    if (!highlightDistrict) return;
+    setActiveDistrict(highlightDistrict);
+  }, [highlightDistrict]);
 
   useEffect(() => {
     let cancelled = false;
@@ -180,26 +199,6 @@ export default function Map({ filters = {}, onDistrictClick }) {
     onDistrictClick && onDistrictClick(district);
   };
 
-  const handleDemoEntry = async () => {
-    if (!layers?.districts?.length) return;
-    const targetDistrict =
-      activeDistrict || filters.district || layers.districts[0]?.district;
-    setSubmittingDemo(true);
-    try {
-      const response = await axios.post("http://localhost:8000/api/fir/demo-entry", {
-        district: targetDistrict,
-        category: demoCategory,
-        count: Number(demoCount),
-      });
-      handleDistrictSelect(response.data.entry.district);
-      await fetchLayers(filters);
-    } catch (error) {
-      console.error("Demo entry error:", error);
-    } finally {
-      setSubmittingDemo(false);
-    }
-  };
-
   if (loading || !layers) {
     return (
       <div className="flex-1 flex items-center justify-center bg-gray-950">
@@ -213,6 +212,28 @@ export default function Map({ filters = {}, onDistrictClick }) {
   const focusDistrict =
     layers.districts.find((item) => item.district === (filters.district || activeDistrict)) ||
     null;
+  const focusedDistrictName = filters.district || activeDistrict || null;
+  const districtMetaByName = Object.fromEntries(
+    layers.districts.map((district) => [district.district, district]),
+  );
+  const visibleZones = focusedDistrictName
+    ? layers.zones.filter((zone) => zone.district === focusedDistrictName)
+    : layers.zones;
+  const visibleStations = focusedDistrictName
+    ? layers.stations.filter((station) => station.district === focusedDistrictName)
+    : layers.stations;
+  const visibleHotspots = focusedDistrictName
+    ? layers.hotspots.filter((hotspot) => hotspot.district === focusedDistrictName)
+    : layers.hotspots;
+  const visibleWomenZones = focusedDistrictName
+    ? layers.women_zones.filter((zone) => zone.district === focusedDistrictName)
+    : layers.women_zones;
+  const visibleAccidentZones = focusedDistrictName
+    ? layers.accident_zones.filter((zone) => zone.district === focusedDistrictName)
+    : layers.accident_zones;
+  const visiblePatrolRoutes = focusedDistrictName
+    ? layers.patrol_routes.filter((route) => route.district === focusedDistrictName)
+    : layers.patrol_routes;
   const patrolFallbackCount = Object.values(patrolRouteGeometry).filter(
     (route) => route?.source === "fallback",
   ).length;
@@ -239,14 +260,18 @@ export default function Map({ filters = {}, onDistrictClick }) {
         />
 
         {showZones &&
-          layers.zones.map((zone) => {
+          visibleZones.map((zone) => {
             const color = getCategoryColor(zone.dominant_category);
             const isActive = activeDistrict === zone.district;
+            const displayRadiusKm = getZoneDisplayRadiusKm(
+              zone,
+              districtMetaByName[zone.district],
+            );
             return (
               <Circle
                 key={zone.taluk_id}
                 center={[zone.lat, zone.lng]}
-                radius={zone.radius_km * 1000}
+                radius={displayRadiusKm * 1000}
                 pathOptions={{
                   color: isActive ? "#ffffff" : color,
                   fillColor: color,
@@ -282,14 +307,14 @@ export default function Map({ filters = {}, onDistrictClick }) {
           })}
 
         {showStations &&
-          layers.stations.map((station) => (
+          visibleStations.map((station) => (
             <CircleMarker
               key={station.station_id}
               center={[station.lat, station.lng]}
               radius={getStationRadius(station.total)}
               pathOptions={{
-                color: station.source_type === "osm" ? "#ffffff" : "#94A3B8",
-                fillColor: station.source_type === "osm" ? "#E2E8F0" : "#64748B",
+                color: station.source_type === "osm" ? "#3B82F6" : "#2563EB",
+                fillColor: station.source_type === "osm" ? "#1E40AF" : "#1E3A8A",
                 fillOpacity: 0.9,
                 weight: 1,
               }}
@@ -300,7 +325,7 @@ export default function Map({ filters = {}, onDistrictClick }) {
           ))}
 
         {showHotspots &&
-          layers.hotspots.map((hotspot) => (
+          visibleHotspots.map((hotspot) => (
             <Circle
               key={`hotspot-${hotspot.taluk_id}`}
               center={[hotspot.center_lat, hotspot.center_lng]}
@@ -316,7 +341,7 @@ export default function Map({ filters = {}, onDistrictClick }) {
           ))}
 
         {showWomenSafety &&
-          layers.women_zones.map((zone) => (
+          visibleWomenZones.map((zone) => (
             <Circle
               key={`women-${zone.taluk_id}`}
               center={[zone.lat, zone.lng]}
@@ -332,7 +357,7 @@ export default function Map({ filters = {}, onDistrictClick }) {
           ))}
 
         {showAccident &&
-          layers.accident_zones.map((zone) => (
+          visibleAccidentZones.map((zone) => (
             <Circle
               key={`accident-${zone.taluk_id}`}
               center={[zone.lat, zone.lng]}
@@ -348,7 +373,7 @@ export default function Map({ filters = {}, onDistrictClick }) {
           ))}
 
         {showPatrol &&
-          layers.patrol_routes.map((route) => (
+          visiblePatrolRoutes.map((route) => (
             <Polyline
               key={route.route_id}
               positions={patrolRouteGeometry[route.route_id]?.coordinates || []}
@@ -367,8 +392,8 @@ export default function Map({ filters = {}, onDistrictClick }) {
 
 
       {/* CONTROLS (Map Style, Demo FIR, Layers) - Positioned at top right */}
-      <div className="absolute top-4 right-4 z-[1000] w-36 rounded-xl border border-white/10 bg-slate-900/40 p-2 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] backdrop-blur-xl transition-all hover:bg-slate-900/50">
-        <p className="mb-1.5 text-[8px] font-black uppercase tracking-[0.3em] text-white/50">
+      <div className="absolute top-4 right-4 z-[1000] w-44 rounded-xl border border-white/10 bg-slate-900/40 p-3 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] backdrop-blur-xl transition-all hover:bg-slate-900/50">
+        <p className="mb-1.5 text-[10px] font-black uppercase tracking-[0.3em] text-white/80">
           MAP STYLE
         </p>
         <div className="mb-2 flex flex-col gap-1">
@@ -376,7 +401,7 @@ export default function Map({ filters = {}, onDistrictClick }) {
             <button
               key={key}
               onClick={() => setMapStyle(key)}
-              className={`rounded px-1.5 py-1 text-[9px] font-semibold transition ${
+              className={`rounded px-1.5 py-1 text-[11px] font-semibold transition ${
                 mapStyle === key
                   ? "bg-blue-600 text-white"
                   : "bg-gray-900 text-gray-300 hover:bg-gray-800"
@@ -389,7 +414,7 @@ export default function Map({ filters = {}, onDistrictClick }) {
 
         <div className="mb-2 h-px w-full bg-white/10" />
 
-        <p className="mb-1.5 text-[8px] font-black uppercase tracking-[0.3em] text-white/50">
+        <p className="mb-1.5 text-[10px] font-black uppercase tracking-[0.3em] text-white/80">
           LAYERS
         </p>
         <div className="mb-2 flex flex-col gap-1 text-xs text-white">
@@ -407,9 +432,9 @@ export default function Map({ filters = {}, onDistrictClick }) {
                 type="checkbox"
                 checked={value}
                 onChange={(event) => setter(event.target.checked)}
-                className="h-2.5 w-2.5 accent-blue-500"
+                className="h-3 w-3 accent-blue-500"
               />
-              <span className="text-[9px] font-medium">{label}</span>
+              <span className="text-[11px] font-medium">{label}</span>
             </label>
           ))}
         </div>
@@ -424,56 +449,16 @@ export default function Map({ filters = {}, onDistrictClick }) {
             {patrolFallbackCount > 1 ? "s are" : " is"} still approximate.
           </p>
         )}
-
-        <div className="mb-2 h-px w-full bg-white/10" />
-
-        <p className="mb-1 text-[8px] font-black uppercase tracking-[0.3em] text-white/50">
-          DEMO FIR
-        </p>
-        <div className="mb-2 flex flex-col gap-1.5">
-            <div>
-                <label className="mb-0.5 block text-[8px] font-semibold text-gray-400">Category</label>
-                <select
-                  value={demoCategory}
-                  onChange={(event) => setDemoCategory(event.target.value)}
-                  className="w-full rounded border border-gray-700 bg-gray-900 px-1.5 py-0.5 text-[8.5px] text-white"
-                >
-                  {availableCategories.map((category) => (
-                    <option key={category} value={category}>
-                      {category}
-                    </option>
-                  ))}
-                </select>
-            </div>
-            <div>
-                <label className="mb-0.5 block text-[8px] font-semibold text-gray-400">Cases ({demoCount})</label>
-                <input
-                  type="range"
-                  min="1"
-                  max="20"
-                  value={demoCount}
-                  onChange={(event) => setDemoCount(event.target.value)}
-                  className="w-full accent-blue-500"
-                />
-            </div>
-        </div>
-        <button
-          onClick={handleDemoEntry}
-          disabled={submittingDemo}
-          className="w-full rounded bg-emerald-600 px-1.5 py-1 text-[9px] font-semibold text-white transition hover:bg-emerald-500 disabled:cursor-not-allowed disabled:opacity-60"
-        >
-          {submittingDemo ? "Wait..." : "Inject FIR"}
-        </button>
       </div>
 
       {/* COMBINED OPS & LEGEND - Positioned at bottom left */}
-      <div className="absolute bottom-4 left-4 z-[1000] w-fit min-w-[220px] max-w-[280px] rounded-xl border border-white/10 bg-slate-900/40 p-2 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] backdrop-blur-xl transition-all hover:bg-slate-900/50">
+      <div className="absolute bottom-4 left-4 z-[1000] w-fit min-w-[260px] max-w-[320px] rounded-xl border border-white/10 bg-slate-900/40 p-3 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] backdrop-blur-xl transition-all hover:bg-slate-900/50">
         <div className="mb-1.5 flex items-center justify-between">
-          <p className="text-[8px] font-black uppercase tracking-[0.2em] text-cyan-400/90">
+          <p className="text-[11px] font-black uppercase tracking-[0.2em] text-cyan-400">
             TAMIL NADU OPS
           </p>
         </div>
-        <div className="mb-1.5 grid grid-cols-2 gap-1 text-[8.5px] uppercase tracking-wider text-gray-300">
+        <div className="mb-2 grid grid-cols-2 gap-1.5 text-[10px] uppercase tracking-wider text-gray-200">
           <div className="flex items-center justify-between rounded bg-white/5 px-1.5 py-0.5">
             <span>Dist:</span>
             <span className="font-bold text-white">{layers.summary.districts}</span>
@@ -494,9 +479,9 @@ export default function Map({ filters = {}, onDistrictClick }) {
 
         <div className="mb-1.5 h-px w-full bg-white/10" />
 
-        <div className="flex flex-col gap-1">
-          <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[8px]">
-            <span className="font-bold uppercase tracking-widest text-white/50">Risk:</span>
+        <div className="flex flex-col gap-1.5">
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px]">
+            <span className="font-bold uppercase tracking-widest text-white/80">Risk:</span>
             {Object.entries(RISK_COLORS).map(([level, color]) => (
               <div key={level} className="flex items-center gap-0.5">
                 <div className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: color }} />
@@ -504,8 +489,8 @@ export default function Map({ filters = {}, onDistrictClick }) {
               </div>
             ))}
           </div>
-          <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[8px]">
-            <span className="font-bold uppercase tracking-widest text-white/50">Crime:</span>
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px]">
+            <span className="font-bold uppercase tracking-widest text-white/80">Crime:</span>
             {availableCategories.slice(0, 8).map((label) => (
               <div key={label} className="flex items-center gap-0.5">
                 <div

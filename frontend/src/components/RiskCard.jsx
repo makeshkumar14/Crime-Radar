@@ -52,8 +52,8 @@ export default function RiskCard({ district }) {
         style={{
           width: "220px",
           height: "100%",
-          background: "#0a0a0a",
-          borderLeft: "1px solid #e2e8f033",
+          background: "#000000",
+          borderLeft: "1px solid rgba(255,255,255,0.05)",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -65,13 +65,16 @@ export default function RiskCard({ district }) {
         <div style={{ fontSize: "32px" }}>🗺</div>
         <p
           style={{
-            color: "#64748b",
-            fontSize: "12px",
+            color: "#999999",
+            fontSize: "11px",
             textAlign: "center",
             lineHeight: 1.6,
+            fontWeight: "bold",
+            textTransform: "uppercase",
+            letterSpacing: "0.1em"
           }}
         >
-          Click any district marker on the map to see its risk profile
+          Select a district
         </p>
       </div>
     );
@@ -82,20 +85,21 @@ export default function RiskCard({ district }) {
         style={{
           width: "220px",
           height: "100%",
-          background: "#0a0a0a",
-          borderLeft: "1px solid #e2e8f033",
+          background: "#000000",
+          borderLeft: "1px solid rgba(255,255,255,0.05)",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
         }}
       >
-        <p style={{ color: "#64748b", fontSize: "12px" }}>Analysing...</p>
+        <p style={{ color: "#999999", fontSize: "11px", fontWeight: "bold", textTransform: "uppercase" }}>Analysing...</p>
       </div>
     );
 
   if (!data) return null;
 
-  const color = RISK_COLORS[data.risk_level] || "#64748b";
+  const color = RISK_COLORS[data.risk_level] === "#EF4444" ? "#af1b1b" : 
+                RISK_COLORS[data.risk_level] === "#F59E0B" ? "#df2c2c" : "#999999";
   const icon = RISK_ICONS[data.risk_level] || "⚪";
 
   // Find peak month from breakdown
@@ -109,8 +113,8 @@ export default function RiskCard({ district }) {
       style={{
         width: "220px",
         minHeight: "100%",
-        background: "#0a0a0a",
-        borderLeft: "1px solid #e2e8f033",
+        background: "#000000",
+        borderLeft: "1px solid rgba(255,255,255,0.05)",
         display: "flex",
         flexDirection: "column",
         overflow: "hidden",

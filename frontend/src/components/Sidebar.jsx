@@ -1,11 +1,14 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
+import { FlowButton } from "./ui/FlowButton";
 
 const NAV_ITEMS = [
-  { id: "map", label: "Operations Map", description: "Statewide zones, hotspots, patrols" },
-  { id: "analytics", label: "Analytics", description: "Trends, category mix, seasonal view" },
-  { id: "travel", label: "Travel Advisor", description: "Safer route around crime corridors" },
-  { id: "relocation", label: "Relocation Report", description: "Family safety assessment by area" },
+  { id: "map", label: "Operations" },
+  { id: "women-safety", label: "Women Safety" },
+  { id: "accident-zones", label: "Accident Zones" },
+  { id: "analytics", label: "Analytics" },
+  { id: "travel", label: "Travel Advisor" },
+  { id: "relocation", label: "Relocation" },
 ];
 
 const INITIAL_FILTERS = {
@@ -15,7 +18,8 @@ const INITIAL_FILTERS = {
 };
 
 export default function Sidebar({ onFilter, activeView, onViewChange }) {
-  const [filters, setFilters] = useState(INITIAL_FILTERS);
+  const [pendingFilters, setPendingFilters] = useState(INITIAL_FILTERS);
+  const [appliedFilters, setAppliedFilters] = useState(INITIAL_FILTERS);
   const [options, setOptions] = useState({
     years: [],
     districts: [],
@@ -40,81 +44,74 @@ export default function Sidebar({ onFilter, activeView, onViewChange }) {
       });
   }, []);
 
-  const activeFilters = useMemo(() => {
-    const next = {};
-    if (filters.year) next.year = Number(filters.year);
-    if (filters.district) next.district = filters.district;
-    if (filters.category) next.category = filters.category;
-    return next;
-  }, [filters]);
-
   useEffect(() => {
-    onFilter(activeFilters);
-  }, [activeFilters, onFilter]);
+    const next = {};
+    if (appliedFilters.year) next.year = Number(appliedFilters.year);
+    if (appliedFilters.district) next.district = appliedFilters.district;
+    if (appliedFilters.category) next.category = appliedFilters.category;
+    onFilter(next);
+  }, [appliedFilters, onFilter]);
 
-  const setFilterValue = (key, value) => {
-    setFilters((prev) => ({
-      ...prev,
-      [key]: value,
-    }));
+  const setPendingValue = (key, value) => {
+    setPendingFilters((prev) => ({ ...prev, [key]: value }));
+  };
+
+  const applyFilters = () => {
+    setAppliedFilters(pendingFilters);
   };
 
   const resetFilters = () => {
-    setFilters(INITIAL_FILTERS);
+    setPendingFilters(INITIAL_FILTERS);
+    setAppliedFilters(INITIAL_FILTERS);
   };
 
+  const hasPendingChanges =
+    JSON.stringify(pendingFilters) !== JSON.stringify(appliedFilters);
+
   return (
-    <aside className="flex h-full w-[320px] flex-col border-r border-gray-800 bg-gray-950 text-white">
-      <div className="border-b border-gray-800 px-5 py-5">
-        <p className="text-xs font-semibold uppercase tracking-[0.32em] text-cyan-400">
-          CrimeRadar
-        </p>
-        <h1 className="mt-2 text-xl font-bold">Tamil Nadu Crime Operations</h1>
-        <p className="mt-2 text-sm leading-6 text-gray-400">
-          Real geography, synthetic FIR intelligence, ML-assisted patrol focus, and
-          citizen safety tools built for the hackathon demo.
-        </p>
-      </div>
-
-      <div className="border-b border-gray-800 px-4 py-4">
-        <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.28em] text-gray-500">
-          Views
-        </p>
-        <div className="space-y-2">
-          {NAV_ITEMS.map((item) => {
-            const active = activeView === item.id;
-            return (
-              <button
-                key={item.id}
-                onClick={() => onViewChange(item.id)}
-                className={`w-full rounded-xl border px-4 py-3 text-left transition ${
-                  active
-                    ? "border-blue-500 bg-blue-600/15"
-                    : "border-gray-800 bg-gray-900/60 hover:border-gray-700 hover:bg-gray-900"
-                }`}
-              >
-                <p className="text-sm font-semibold text-white">{item.label}</p>
-                <p className="mt-1 text-xs text-gray-400">{item.description}</p>
-              </button>
-            );
-          })}
+    <aside className="flex h-full w-[280px] flex-col border-r border-white/5 bg-black text-white">
+      <div className="border-b border-white/5 bg-black px-5 py-4">
+        <div className="leading-[0.92]">
+          <p className="text-[2.15rem] font-black uppercase tracking-[0.04em] text-white">
+            Crime
+          </p>
+          <p className="mt-1 text-[2.15rem] font-black uppercase tracking-[0.04em] text-[#af1b1b]">
+            Radar
+          </p>
         </div>
+        <p className="mt-3 max-w-[15rem] text-[0.72rem] italic leading-5 text-[#999999]">
+          Predictive Crime Hotspot Mapping for Smarter Policing
+        </p>
       </div>
 
-      <div className="flex-1 overflow-y-auto px-4 py-4">
-        <div className="rounded-2xl border border-gray-800 bg-gray-900/70 p-4">
+      <div className="flex-1 overflow-y-auto px-4 py-4 space-y-6">
+        <div>
+          <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.28em] text-[#999999]">
+            Target Views
+          </p>
+          <div className="space-y-3">
+            {NAV_ITEMS.map((item) => (
+              <FlowButton 
+                key={item.id}
+                text={item.label}
+                isActive={activeView === item.id}
+                onClick={() => onViewChange(item.id)}
+                className="w-full !px-3 !py-4 transition-all"
+              />
+            ))}
+          </div>
+        </div>
+
+        <div className="rounded-2xl border border-white/5 bg-white/5 p-4">
           <div className="mb-4 flex items-center justify-between">
             <div>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-gray-500">
-                Map Filters
-              </p>
-              <p className="mt-1 text-xs text-gray-400">
-                These filters apply to the operations map and 3D view.
+              <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#999999]">
+                Filters
               </p>
             </div>
             <button
               onClick={resetFilters}
-              className="rounded-lg border border-gray-700 px-3 py-1 text-xs font-semibold text-gray-300 transition hover:border-gray-600 hover:text-white"
+              className="rounded-lg border border-white/10 px-3 py-1 text-xs font-semibold text-[#999999] transition hover:border-white/20 hover:text-white"
             >
               Reset
             </button>
@@ -122,13 +119,13 @@ export default function Sidebar({ onFilter, activeView, onViewChange }) {
 
           <div className="space-y-4">
             <div>
-              <label className="mb-2 block text-xs font-semibold uppercase tracking-wide text-gray-400">
+              <label className="mb-2 block text-[10px] font-black uppercase tracking-widest text-[#999999]">
                 Year
               </label>
               <select
-                value={filters.year}
-                onChange={(event) => setFilterValue("year", event.target.value)}
-                className="w-full rounded-xl border border-gray-700 bg-gray-950 px-3 py-2.5 text-sm text-white"
+                value={pendingFilters.year}
+                onChange={(event) => setPendingValue("year", event.target.value)}
+                className="w-full rounded-xl border border-white/10 bg-black px-3 py-2 text-sm text-white"
               >
                 <option value="">All years</option>
                 {options.years.map((year) => (
@@ -140,13 +137,13 @@ export default function Sidebar({ onFilter, activeView, onViewChange }) {
             </div>
 
             <div>
-              <label className="mb-2 block text-xs font-semibold uppercase tracking-wide text-gray-400">
+              <label className="mb-2 block text-[10px] font-black uppercase tracking-widest text-[#999999]">
                 District
               </label>
               <select
-                value={filters.district}
-                onChange={(event) => setFilterValue("district", event.target.value)}
-                className="w-full rounded-xl border border-gray-700 bg-gray-950 px-3 py-2.5 text-sm text-white"
+                value={pendingFilters.district}
+                onChange={(event) => setPendingValue("district", event.target.value)}
+                className="w-full rounded-xl border border-white/10 bg-black px-3 py-2 text-sm text-white"
               >
                 <option value="">All districts</option>
                 {options.districts.map((district) => (
@@ -158,13 +155,13 @@ export default function Sidebar({ onFilter, activeView, onViewChange }) {
             </div>
 
             <div>
-              <label className="mb-2 block text-xs font-semibold uppercase tracking-wide text-gray-400">
-                Crime Category
+              <label className="mb-2 block text-[10px] font-black uppercase tracking-widest text-[#999999]">
+                Category
               </label>
               <select
-                value={filters.category}
-                onChange={(event) => setFilterValue("category", event.target.value)}
-                className="w-full rounded-xl border border-gray-700 bg-gray-950 px-3 py-2.5 text-sm text-white"
+                value={pendingFilters.category}
+                onChange={(event) => setPendingValue("category", event.target.value)}
+                className="w-full rounded-xl border border-white/10 bg-black px-3 py-2 text-sm text-white"
               >
                 <option value="">All categories</option>
                 {options.categories.map((category) => (
@@ -175,29 +172,21 @@ export default function Sidebar({ onFilter, activeView, onViewChange }) {
               </select>
             </div>
           </div>
-        </div>
 
-        <div className="mt-4 rounded-2xl border border-gray-800 bg-gray-900/70 p-4">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-gray-500">
-            Live Story
-          </p>
-          <div className="mt-3 space-y-3 text-sm text-gray-300">
-            <p>Every district and taluk is covered. No blank zones are left on the map.</p>
-            <p>Legal sections now include the full hackathon IPC and Act coverage set.</p>
-            <p>Citizen features use predicted taluk risk instead of only historical counts.</p>
+          <div className="mt-5">
+            <FlowButton
+              text={hasPendingChanges ? "Apply" : "Locked"}
+              onClick={hasPendingChanges ? applyFilters : undefined}
+              className={`w-full !px-3 !py-4 !rounded-2xl transition-all ${
+                hasPendingChanges 
+                  ? "border-[#af1b1b] bg-[#af1b1b]/20" 
+                  : "border-white/5 opacity-40 pointer-events-none"
+              }`}
+            />
           </div>
-        </div>
-
-        <div className="mt-4 rounded-2xl border border-amber-500/20 bg-amber-500/10 p-4">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-amber-300">
-            Demo Honesty Line
-          </p>
-          <p className="mt-2 text-sm leading-6 text-amber-100/90">
-            Administrative geography is real. FIR activity is synthetic for hackathon
-            demonstration and aligned for future CCTNS-style integration.
-          </p>
         </div>
       </div>
     </aside>
+
   );
 }

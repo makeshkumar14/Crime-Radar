@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Map from "./components/Map";
-import GoogleOperationsMap from "./components/GoogleOperationsMap";
 import Map3D from "./components/Map3D";
 import Sidebar from "./components/Sidebar";
 import StatsBar from "./components/StatsBar";
@@ -8,15 +7,27 @@ import Analytics from "./components/Analytics";
 import RiskCard from "./components/RiskCard";
 import TravelAdvisor from "./components/TravelAdvisor";
 import AreaSafetyReport from "./components/AreaSafetyReport";
+import FIRInjectModal from "./components/FIRInjectModal";
+import ScenarioZoneView from "./components/ScenarioZoneView";
 
 function App() {
-  const hasGoogleMaps = Boolean(import.meta.env.VITE_GOOGLE_MAPS_API_KEY);
   const [filters, setFilters] = useState({});
   const [activeView, setActiveView] = useState("map");
   const [selectedDistrict, setSelectedDistrict] = useState(null);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [riskCardOpen, setRiskCardOpen] = useState(true);
   const [is3D, setIs3D] = useState(false);
+  const [isFirModalOpen, setIsFirModalOpen] = useState(false);
+  const [dataRefreshKey, setDataRefreshKey] = useState(0);
+  const [highlightDistrict, setHighlightDistrict] = useState(null);
+
+  const handleFirCreated = (entry) => {
+    setDataRefreshKey((value) => value + 1);
+    if (entry?.district) {
+      setSelectedDistrict(entry.district);
+      setHighlightDistrict(entry.district);
+    }
+  };
 
   return (
     <div className="flex h-screen w-screen overflow-hidden bg-gray-950">
@@ -49,7 +60,13 @@ function App() {
       </div>
 
       <div className="flex flex-col flex-1 overflow-hidden">
-        <StatsBar activeView={activeView} is3D={is3D} setIs3D={setIs3D} />
+        <StatsBar
+          activeView={activeView}
+          is3D={is3D}
+          setIs3D={setIs3D}
+          refreshKey={dataRefreshKey}
+          onOpenFIRModal={() => setIsFirModalOpen(true)}
+        />
 
         <div className="flex flex-1 overflow-hidden">
           {activeView === "map" && (
@@ -58,19 +75,16 @@ function App() {
                 <Map3D
                   filters={filters}
                   onDistrictClick={setSelectedDistrict}
+                  refreshKey={dataRefreshKey}
+                  highlightDistrict={highlightDistrict}
                 />
               ) : (
-                hasGoogleMaps ? (
-                  <GoogleOperationsMap
-                    filters={filters}
-                    onDistrictClick={setSelectedDistrict}
-                  />
-                ) : (
-                  <Map
-                    filters={filters}
-                    onDistrictClick={setSelectedDistrict}
-                  />
-                )
+                <Map
+                  filters={filters}
+                  onDistrictClick={setSelectedDistrict}
+                  refreshKey={dataRefreshKey}
+                  highlightDistrict={highlightDistrict}
+                />
               )}
 
               <button
@@ -95,11 +109,35 @@ function App() {
               {riskCardOpen && <RiskCard district={selectedDistrict} />}
             </>
           )}
+          {activeView === "women-safety" && (
+            <ScenarioZoneView
+              scenario="women_safety"
+              title="Women Safety Prediction"
+              accentColor="#af1b1b"
+              pointColor="#999999"
+              limit={50}
+            />
+          )}
+          {activeView === "accident-zones" && (
+            <ScenarioZoneView
+              scenario="accident"
+              title="Accident Zone Prediction"
+              accentColor="#af1b1b"
+              pointColor="#999999"
+              limit={50}
+            />
+          )}
           {activeView === "analytics" && <Analytics />}
           {activeView === "travel" && <TravelAdvisor />}
           {activeView === "relocation" && <AreaSafetyReport />}
         </div>
       </div>
+
+      <FIRInjectModal
+        open={isFirModalOpen}
+        onClose={() => setIsFirModalOpen(false)}
+        onCreated={handleFirCreated}
+      />
     </div>
   );
 }
