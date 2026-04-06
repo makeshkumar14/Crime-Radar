@@ -429,7 +429,7 @@ export default function TravelAdvisor() {
 
   return (
     <div className="flex-1 overflow-hidden bg-gray-950 text-white">
-      <div className="grid h-full min-h-0 grid-cols-1 lg:grid-cols-[360px_1fr] xl:grid-cols-[400px_1fr]">
+      <div className="grid h-full min-h-0 grid-cols-1 lg:grid-cols-[360px_minmax(0,1fr)] xl:grid-cols-[400px_minmax(0,1fr)]">
         <div className="min-h-0 overflow-y-auto border-b border-gray-800 bg-gray-950 p-5 lg:border-b-0 lg:border-r">
           <h2 className="mb-2 text-xl font-bold">Travel Safety Advisor</h2>
           <p className="mb-5 text-sm text-gray-400">

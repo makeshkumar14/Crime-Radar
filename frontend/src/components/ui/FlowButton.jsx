@@ -1,5 +1,24 @@
 'use client';
-import { ArrowRight } from 'lucide-react';
+
+function ArrowRightIcon({ className = "" }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      className={className}
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M5 12H19M19 12L12 5M19 12L12 19"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
 
 export function FlowButton({ text = "Modern Button", onClick, className = "", isActive = false }) {
   return (
@@ -9,7 +28,7 @@ export function FlowButton({ text = "Modern Button", onClick, className = "", is
         isActive ? "border-transparent rounded-[12px]" : ""
       } ${className}`}
     >
-      <ArrowRight 
+      <ArrowRightIcon
         className={`absolute w-4 h-4 left-[-25%] stroke-white fill-none z-[9] group-hover:left-4 group-hover:stroke-white transition-all duration-[800ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
           isActive ? "left-4" : ""
         }`} 
@@ -23,7 +42,7 @@ export function FlowButton({ text = "Modern Button", onClick, className = "", is
         isActive ? "w-[220px] h-[220px] opacity-100" : ""
       }`}></span>
 
-      <ArrowRight 
+      <ArrowRightIcon
         className={`absolute w-4 h-4 right-4 stroke-white fill-none z-[9] group-hover:right-[-25%] group-hover:stroke-white transition-all duration-[800ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
           isActive ? "right-[-25%]" : ""
         }`} 
