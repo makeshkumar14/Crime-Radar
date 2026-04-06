@@ -288,8 +288,8 @@ export default function Map({ filters = {}, onDistrictClick }) {
               center={[station.lat, station.lng]}
               radius={getStationRadius(station.total)}
               pathOptions={{
-                color: station.source_type === "osm" ? "#ffffff" : "#94A3B8",
-                fillColor: station.source_type === "osm" ? "#E2E8F0" : "#64748B",
+                color: station.source_type === "osm" ? "#3B82F6" : "#2563EB",
+                fillColor: station.source_type === "osm" ? "#1E40AF" : "#1E3A8A",
                 fillOpacity: 0.9,
                 weight: 1,
               }}

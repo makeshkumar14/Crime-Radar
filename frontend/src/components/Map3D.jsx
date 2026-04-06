@@ -180,9 +180,9 @@ export default function Map3D({ filters = {}, onDistrictClick }) {
       } else if (type === "station") {
         markerConfig = {
           size: 10,
-          color: item.source_type === "osm" ? "#e2e8f0" : "#94a3b8",
-          border: item.source_type === "osm" ? "#ffffff" : "#64748b",
-          glow: "#cbd5e1",
+          color: item.source_type === "osm" ? "#1E40AF" : "#1E3A8A",
+          border: item.source_type === "osm" ? "#3B82F6" : "#2563EB",
+          glow: "#2563EB",
         };
       } else {
         markerConfig = {

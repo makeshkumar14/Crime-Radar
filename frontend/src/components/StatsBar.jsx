@@ -1,10 +1,23 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
+// Same COLORS array used in Analytics.jsx pie chart
+const CATEGORY_COLORS = [
+  "#EF4444",
+  "#F59E0B",
+  "#22C55E",
+  "#3B82F6",
+  "#A855F7",
+  "#06B6D4",
+  "#F97316",
+  "#EC4899",
+];
+
 export default function StatsBar({ activeView, is3D, setIs3D }) {
   const [stats, setStats] = useState({
     total: 0,
     topCrime: "N/A",
+    topCrimeColor: CATEGORY_COLORS[0],
     districts: 0,
     stations: 0,
   });
@@ -17,10 +30,12 @@ export default function StatsBar({ activeView, is3D, setIs3D }) {
       .then(([summaryRes, mapRes]) => {
         const summary = summaryRes.data.summary || [];
         const total = summary.reduce((sum, row) => sum + row.total_count, 0);
-        const topCrime = summary[0]?.category || "N/A";
+    const topCrime = summary[0]?.category || "N/A";
+        const topCrimeIndex = 0; // top crime is always index 0 (sorted by count)
         setStats({
           total,
           topCrime,
+          topCrimeColor: CATEGORY_COLORS[topCrimeIndex],
           districts: mapRes.data.summary.districts,
           stations: mapRes.data.summary.stations,
         });
@@ -47,7 +62,8 @@ export default function StatsBar({ activeView, is3D, setIs3D }) {
     {
       label: "Top Crime Type",
       value: stats.topCrime,
-      color: "text-amber-400",
+      color: "",
+      style: { color: stats.topCrimeColor },
     },
     {
       label: "Data Window",
@@ -65,10 +81,10 @@ export default function StatsBar({ activeView, is3D, setIs3D }) {
 
       <div className="h-8 w-px bg-gray-700" />
 
-      {cards.map(({ label, value, color }, index) => (
+      {cards.map(({ label, value, color, style }, index) => (
         <div key={index} className="flex flex-col">
           <span className="text-gray-500 text-xs">{label}</span>
-          <span className={`${color} text-sm font-bold`}>{value}</span>
+          <span className={`${color} text-sm font-bold`} style={style}>{value}</span>
         </div>
       ))}
 
