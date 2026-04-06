@@ -257,8 +257,8 @@ export default function TravelAdvisor() {
 
   return (
     <div className="flex-1 overflow-hidden bg-gray-950 text-white">
-      <div className="grid h-full grid-cols-[340px_1fr]">
-        <div className="border-r border-gray-800 bg-gray-950 p-5">
+      <div className="grid h-full min-h-0 grid-cols-[340px_minmax(0,1fr)]">
+        <div className="min-h-0 overflow-y-auto border-r border-gray-800 bg-gray-950 p-5">
           <h2 className="mb-2 text-xl font-bold">Travel Safety Advisor</h2>
           <p className="mb-5 text-sm text-gray-400">
             Pick any two taluks, find the road route, and compare the fastest
@@ -507,7 +507,7 @@ export default function TravelAdvisor() {
           )}
         </div>
 
-        <div className="relative">
+        <div className="relative min-h-0">
           <MapContainer
             center={[10.7905, 78.7047]}
             zoom={7}
