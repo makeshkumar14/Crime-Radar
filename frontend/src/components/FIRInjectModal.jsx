@@ -136,7 +136,7 @@ export default function FIRInjectModal({ open, onClose, onCreated }) {
         time_slot: form.time_slot,
       });
 
-      onCreated?.(response.data.entry);
+      onCreated?.(response.data);
       handleClose();
     } catch (submitError) {
       setError(

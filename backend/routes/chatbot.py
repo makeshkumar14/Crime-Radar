@@ -37,14 +37,25 @@ class RelocationContextPayload(BaseModel):
     has_report: bool = False
 
 
+class CompareContextPayload(BaseModel):
+    left_district: Optional[str] = None
+    right_district: Optional[str] = None
+    year: Optional[int] = None
+    category: Optional[str] = None
+    target_year: Optional[int] = None
+    target_month: Optional[int] = None
+
+
 class ChatRequest(BaseModel):
     message: str = Field(..., min_length=1)
     active_view: str = "map"
+    language: str = "en"
     filters: dict[str, Any] = Field(default_factory=dict)
     history: list[ChatMessage] = Field(default_factory=list)
     scenario_context: Optional[ScenarioContextPayload] = None
     travel_context: Optional[TravelContextPayload] = None
     relocation_context: Optional[RelocationContextPayload] = None
+    compare_context: Optional[CompareContextPayload] = None
 
 
 @router.post("/ask")
@@ -52,6 +63,7 @@ def ask_chatbot(payload: ChatRequest = Body(...)):
     return answer_chat_message(
         message=payload.message,
         history=[item.model_dump() for item in payload.history],
+        language=payload.language,
         context_payload={
             "active_view": payload.active_view,
             "filters": payload.filters,
@@ -63,6 +75,9 @@ def ask_chatbot(payload: ChatRequest = Body(...)):
             else None,
             "relocation_context": payload.relocation_context.model_dump()
             if payload.relocation_context
+            else None,
+            "compare_context": payload.compare_context.model_dump()
+            if payload.compare_context
             else None,
         },
     )

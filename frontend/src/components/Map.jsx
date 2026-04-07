@@ -128,6 +128,7 @@ function MapController({ focusDistrict, fallbackCenter }) {
 export default function Map({
   filters = {},
   onDistrictClick,
+  onTalukClick,
   refreshKey = 0,
   highlightTarget = null,
 }) {
@@ -358,7 +359,10 @@ export default function Map({
                   weight: isActive ? 2.5 : 1.2,
                 }}
                 eventHandlers={{
-                  click: () => handleDistrictSelect(zone.district),
+                  click: () => {
+                    handleDistrictSelect(zone.district);
+                    onTalukClick && onTalukClick(zone);
+                  },
                 }}
               />
             );

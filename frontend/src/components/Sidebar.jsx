@@ -5,6 +5,7 @@ import { apiUrl } from "../lib/api";
 
 const NAV_ITEMS = [
   { id: "map", label: "Operations" },
+  { id: "compare", label: "District Compare" },
   { id: "women-safety", label: "Women Safety" },
   { id: "accident-zones", label: "Accident Zones" },
   { id: "analytics", label: "Analytics" },
@@ -36,6 +37,9 @@ export default function Sidebar({ onFilter, activeView, onViewChange, externalFi
   });
   const [optionsLoading, setOptionsLoading] = useState(false);
   const [optionsError, setOptionsError] = useState("");
+  const [naturalQuery, setNaturalQuery] = useState("");
+  const [naturalLoading, setNaturalLoading] = useState(false);
+  const [naturalFeedback, setNaturalFeedback] = useState("");
 
   const loadOptions = useCallback(async () => {
     setOptionsLoading(true);
@@ -93,6 +97,43 @@ export default function Sidebar({ onFilter, activeView, onViewChange, externalFi
   const resetFilters = () => {
     setPendingFilters(INITIAL_FILTERS);
     setAppliedFilters(INITIAL_FILTERS);
+    setNaturalFeedback("");
+  };
+
+  const applyNaturalLanguageFilters = async () => {
+    const trimmed = naturalQuery.trim();
+    if (!trimmed) {
+      return;
+    }
+
+    setNaturalLoading(true);
+    setNaturalFeedback("");
+    try {
+      const response = await axios.get(apiUrl("/api/insights/parse-filters"), {
+        params: { text: trimmed },
+      });
+      const parsed = response.data || {};
+      const nextFilters = {
+        year: parsed.filters?.year ? String(parsed.filters.year) : "",
+        district: parsed.filters?.district || "",
+        category: parsed.filters?.category || "",
+      };
+      setPendingFilters(nextFilters);
+      setAppliedFilters(nextFilters);
+      if (parsed.active_view) {
+        onViewChange(parsed.active_view);
+      }
+      setNaturalFeedback(
+        parsed.summary
+          ? `Applied: ${parsed.summary}`
+          : "No exact structured filters were detected from that request.",
+      );
+    } catch (error) {
+      console.error("Natural language filter error:", error);
+      setNaturalFeedback("Natural language filter parsing failed.");
+    } finally {
+      setNaturalLoading(false);
+    }
   };
 
   const hasPendingChanges =
@@ -148,6 +189,29 @@ export default function Sidebar({ onFilter, activeView, onViewChange, externalFi
           </div>
 
           <div className="space-y-4">
+            <div className="rounded-2xl border border-[#af1b1b]/20 bg-black/40 p-3">
+              <label className="mb-2 block text-[10px] font-black uppercase tracking-widest text-[#f0b0b0]">
+                Natural Language Filters
+              </label>
+              <textarea
+                value={naturalQuery}
+                onChange={(event) => setNaturalQuery(event.target.value)}
+                rows={3}
+                placeholder="show 2026 accident risk in Chennai"
+                className="w-full resize-none rounded-2xl border border-white/10 bg-black px-3 py-3 text-sm text-white outline-none placeholder:text-[#7a7a7a]"
+              />
+              <button
+                onClick={applyNaturalLanguageFilters}
+                disabled={naturalLoading || !naturalQuery.trim()}
+                className="mt-3 w-full rounded-2xl border border-[#af1b1b]/35 bg-[#7f1d1d]/35 px-4 py-3 text-[11px] font-black uppercase tracking-[0.18em] text-white transition hover:bg-[#991b1b]/45 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {naturalLoading ? "Parsing..." : "Apply Smart Filter"}
+              </button>
+              {naturalFeedback && (
+                <p className="mt-3 text-xs leading-5 text-slate-300">{naturalFeedback}</p>
+              )}
+            </div>
+
             {optionsError && (
               <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 p-3 text-xs text-amber-100">
                 <p>{optionsError}</p>

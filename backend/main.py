@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from chatbot_service import load_local_env
 from database import init_db
 from models import seed_ipc_categories
-from routes import chatbot, citizen, crimes, fir, heatmap, hotspots, navigation, predict, reports
+from routes import chatbot, citizen, crimes, fir, heatmap, hotspots, insights, navigation, predict, reports
 from seed_operational_data import seed_operational_data
 
 LOCAL_DEV_ORIGIN_REGEX = r"https?://(localhost|127\.0\.0\.1|\[::1\])(:\d+)?$"
@@ -47,3 +47,4 @@ app.include_router(navigation.router, prefix="/api/navigation", tags=["Navigatio
 app.include_router(heatmap.router, prefix="/api/heatmap", tags=["Heatmap"])
 app.include_router(chatbot.router, prefix="/api/chatbot", tags=["Chatbot"])
 app.include_router(reports.router, prefix="/api/reports", tags=["Reports"])
+app.include_router(insights.router, prefix="/api/insights", tags=["Insights"])

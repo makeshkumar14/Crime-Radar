@@ -7,6 +7,7 @@ const BOTTOM_SCROLL_THRESHOLD_PX = 36;
 
 const VIEW_TITLES = {
   map: "Radar AI Operations",
+  compare: "Radar AI Compare Desk",
   "women-safety": "Radar AI Women Safety",
   "accident-zones": "Radar AI Accident Desk",
   travel: "Radar AI Travel Desk",
@@ -19,6 +20,11 @@ const VIEW_PROMPTS = {
     "Summarize the current operations picture from these filters.",
     "Which districts and taluks need the most attention right now?",
     "What category is dominating in the current operations view?",
+  ],
+  compare: [
+    "Summarize this district comparison.",
+    "Which district looks riskier right now and why?",
+    "How do women safety and accident pressure differ between these districts?",
   ],
   "women-safety": [
     "Summarize the current women safety forecast.",
@@ -60,7 +66,14 @@ function createWelcomeMessage(activeView) {
   };
 }
 
-function buildContextLine(activeView, filters, scenarioContext, travelContext, relocationContext) {
+function buildContextLine(activeView, filters, compareContext, scenarioContext, travelContext, relocationContext) {
+  if (activeView === "compare") {
+    if (!compareContext?.left_district || !compareContext?.right_district) {
+      return "Select two districts to compare";
+    }
+    return `${compareContext.left_district} vs ${compareContext.right_district}`;
+  }
+
   if (activeView === "travel") {
     if (!travelContext?.origin_taluk_id || !travelContext?.destination_taluk_id) {
       return "No route selected yet";
@@ -129,12 +142,15 @@ function clamp(value, min, max) {
 export default function OpsAssistant({
   activeView,
   filters,
+  compareContext,
   scenarioContext,
   travelContext,
   relocationContext,
+  onAction,
 }) {
   const [isOpen, setIsOpen] = useState(true);
   const [draft, setDraft] = useState("");
+  const [language, setLanguage] = useState("en");
   const [messages, setMessages] = useState([createWelcomeMessage(activeView)]);
   const [loading, setLoading] = useState(false);
   const [showJumpToLatest, setShowJumpToLatest] = useState(false);
@@ -150,11 +166,12 @@ export default function OpsAssistant({
       buildContextLine(
         activeView,
         filters,
+        compareContext,
         scenarioContext,
         travelContext,
         relocationContext,
       ),
-    [activeView, filters, relocationContext, scenarioContext, travelContext],
+    [activeView, compareContext, filters, relocationContext, scenarioContext, travelContext],
   );
 
   useEffect(() => {
@@ -218,6 +235,7 @@ export default function OpsAssistant({
       const response = await axios.post(apiUrl("/api/chatbot/ask"), {
         message: trimmed,
         active_view: activeView,
+        language,
         filters,
         history: nextMessages
           .filter((message) => message.role === "user" || message.role === "assistant")
@@ -226,6 +244,7 @@ export default function OpsAssistant({
             role: message.role,
             content: message.content,
           })),
+        compare_context: compareContext || null,
         scenario_context: scenarioContext || null,
         travel_context: travelContext || null,
         relocation_context: relocationContext || null,
@@ -243,6 +262,7 @@ export default function OpsAssistant({
           source: data?.source || "unknown",
           warning: data?.warning || "",
           viewLabel: data?.view_label || VIEW_TITLES[activeView] || "Radar AI",
+          actions: data?.actions || [],
         },
       ]);
     } catch (error) {
@@ -256,6 +276,7 @@ export default function OpsAssistant({
             "I couldn't reach the chatbot service just now. Please try again after the backend is running.",
           source: "error",
           viewLabel: VIEW_TITLES[activeView] || "Radar AI",
+          actions: [],
         },
       ]);
     } finally {
@@ -321,6 +342,25 @@ export default function OpsAssistant({
               </div>
 
               <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1 rounded-full border border-[#f26666]/18 bg-[#ffffff0d] p-1">
+                  {[
+                    ["en", "EN"],
+                    ["ta", "தமிழ்"],
+                  ].map(([value, label]) => (
+                    <button
+                      key={value}
+                      type="button"
+                      onClick={() => setLanguage(value)}
+                      className={`rounded-full px-2 py-1 text-[10px] font-black uppercase tracking-[0.14em] transition ${
+                        language === value
+                          ? "bg-[#af1b1b] text-white"
+                          : "text-[#f2d4d4] hover:bg-[#af1b1b]/20"
+                      }`}
+                    >
+                      {label}
+                    </button>
+                  ))}
+                </div>
                 <button
                   onClick={resetConversation}
                   className="rounded-xl border border-[#f26666]/18 bg-[#ffffff0d] p-2 text-[#f2d4d4] transition hover:bg-[#af1b1b]/25 hover:text-white"
@@ -405,6 +445,20 @@ export default function OpsAssistant({
                         {message.warning && (
                           <span className="text-amber-200/90">{message.warning}</span>
                         )}
+                      </div>
+                    )}
+                    {message.role === "assistant" && Array.isArray(message.actions) && message.actions.length > 0 && (
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        {message.actions.map((action, index) => (
+                          <button
+                            key={`${message.id}-action-${index}-${action.label}`}
+                            type="button"
+                            onClick={() => onAction?.(action)}
+                            className="rounded-full border border-[#ef4444]/35 bg-[#7f1d1d]/35 px-3 py-2 text-[10px] font-black uppercase tracking-[0.16em] text-white transition hover:bg-[#991b1b]/50"
+                          >
+                            {action.label}
+                          </button>
+                        ))}
                       </div>
                     )}
                   </div>

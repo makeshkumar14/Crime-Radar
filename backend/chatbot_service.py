@@ -7,6 +7,7 @@ from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
 from database import get_connection
+from insights_service import build_district_compare
 from ml_engine import area_safety_snapshot, scenario_zone_prediction, seasonal_ml_prediction
 from navigation_service import build_navigation_from_taluks, normalize_target_period
 from ops_queries import load_map_layers
@@ -40,6 +41,7 @@ DEFAULT_HISTORY_LIMIT = max(2, min(12, int(os.getenv("CHAT_HISTORY_LIMIT", "8"))
 
 VIEW_LABELS = {
     "map": "Operations",
+    "compare": "District Compare",
     "women-safety": "Women Safety Prediction",
     "accident-zones": "Accident Zone Prediction",
     "travel": "Travel Advisor",
@@ -63,6 +65,13 @@ def _normalize_int(value):
 
 def _normalize_message_text(value):
     return " ".join(str(value or "").lower().split())
+
+
+def _normalize_language(value):
+    text = _normalize_message_text(value)
+    if text in {"ta", "tamil", "தமிழ்"}:
+        return "ta"
+    return "en"
 
 
 def _normalize_filters(filters=None):
@@ -438,14 +447,43 @@ def build_analytics_context():
     }
 
 
+def build_compare_context(payload=None):
+    payload = payload or {}
+    left_district = _normalize_text(payload.get("left_district"))
+    right_district = _normalize_text(payload.get("right_district"))
+    if not left_district or not right_district:
+        return {
+            "status": "unavailable",
+            "view_label": VIEW_LABELS["compare"],
+            "message": "Select two districts in the compare view first.",
+        }
+
+    comparison = build_district_compare(
+        left_district,
+        right_district,
+        year=_normalize_int(payload.get("year")),
+        category=_normalize_text(payload.get("category")),
+        target_year=_normalize_int(payload.get("target_year")),
+        target_month=_normalize_int(payload.get("target_month")),
+    )
+    return {
+        "status": "ok",
+        "view_label": VIEW_LABELS["compare"],
+        "comparison": comparison,
+    }
+
+
 def build_chat_grounding(payload):
     active_view = _normalize_text(payload.get("active_view")) or "map"
     filters = payload.get("filters") or {}
     scenario_context = payload.get("scenario_context") or {}
     travel_context = payload.get("travel_context") or {}
     relocation_context = payload.get("relocation_context") or {}
+    compare_context = payload.get("compare_context") or {}
 
-    if active_view == "women-safety":
+    if active_view == "compare":
+        grounding = build_compare_context(compare_context)
+    elif active_view == "women-safety":
         grounding = build_scenario_context(
             {
                 **scenario_context,
@@ -489,13 +527,15 @@ def build_system_instruction():
     )
 
 
-def build_user_prompt(message, grounding_payload):
+def build_user_prompt(message, grounding_payload, language="en"):
     grounded_json = json.dumps(grounding_payload, ensure_ascii=False, indent=2)
+    response_language = "Tamil" if language == "ta" else "English"
     return (
         "Current grounded application data:\n"
         f"{grounded_json}\n\n"
         "User question:\n"
         f"{message.strip()}\n\n"
+        f"Respond in {response_language}.\n"
         "Answer using only the grounded application data above. "
         "If a detail is unavailable in the data, say so clearly."
     )
@@ -511,7 +551,7 @@ def _extract_text_from_gemini(payload):
     return "\n".join(chunk for chunk in text_chunks if chunk).strip()
 
 
-def request_gemini_response(message, history, grounding_payload):
+def request_gemini_response(message, history, grounding_payload, language="en"):
     load_local_env()
     api_key = os.getenv("GEMINI_API_KEY", "").strip()
     if not api_key:
@@ -535,7 +575,7 @@ def request_gemini_response(message, history, grounding_payload):
     contents.append(
         {
             "role": "user",
-            "parts": [{"text": build_user_prompt(message, grounding_payload)}],
+            "parts": [{"text": build_user_prompt(message, grounding_payload, language=language)}],
         }
     )
 
@@ -741,12 +781,31 @@ def build_local_answer(message, grounding_payload):
     return None
 
 
+def _build_compare_fallback_answer(grounding):
+    comparison = grounding.get("comparison", {})
+    left = comparison.get("left", {})
+    right = comparison.get("right", {})
+    summary = comparison.get("comparison", {})
+    if not left or not right:
+        return "District compare is not ready yet."
+    return (
+        f"District compare is live for {left.get('district')} and {right.get('district')}. "
+        f"{summary.get('higher_live_load')} currently carries the higher live load, "
+        f"{summary.get('higher_risk')} has the higher risk score, "
+        f"{summary.get('higher_women_safety_pressure')} shows stronger women safety pressure, "
+        f"and {summary.get('higher_accident_pressure')} shows stronger accident pressure."
+    )
+
+
 def build_fallback_answer(grounding_payload):
     grounding = grounding_payload.get("grounding", {})
     status = grounding.get("status")
     view_label = grounding.get("view_label") or grounding_payload.get("view_label") or "current view"
     if status in {"unavailable", "error"}:
         return grounding.get("message") or f"I need more data from the {view_label} before I can answer accurately."
+
+    if grounding_payload.get("active_view") == "compare":
+        return _build_compare_fallback_answer(grounding)
 
     if grounding_payload.get("active_view") == "travel":
         fastest = grounding.get("fastest_route", {})
@@ -798,18 +857,178 @@ def build_fallback_answer(grounding_payload):
     )
 
 
-def answer_chat_message(message, history=None, context_payload=None):
+def _build_action_cards(grounding_payload):
+    active_view = grounding_payload.get("active_view")
+    grounding = grounding_payload.get("grounding", {})
+    if grounding.get("status") not in {"ok", None}:
+        return []
+
+    actions = []
+    if active_view == "map":
+        top_district = (grounding.get("top_districts") or [None])[0]
+        top_taluk = (grounding.get("top_taluks") or [None])[0]
+        filters = grounding.get("filters") or {}
+        if top_district:
+            actions.append(
+                {
+                    "type": "focus_district",
+                    "label": f"Focus {top_district.get('district')}",
+                    "district": top_district.get("district"),
+                }
+            )
+        if top_taluk:
+            actions.append(
+                {
+                    "type": "highlight_taluk",
+                    "label": f"Highlight {top_taluk.get('taluk')}",
+                    "district": top_taluk.get("district"),
+                    "taluk_id": top_taluk.get("taluk_id"),
+                    "taluk": top_taluk.get("taluk"),
+                }
+            )
+        actions.append(
+            {
+                "type": "download_report",
+                "label": "Download Ops PDF",
+                "report": "operations",
+                "params": {
+                    "year": filters.get("year"),
+                    "district": filters.get("district"),
+                    "category": filters.get("category"),
+                },
+            }
+        )
+        top_districts = grounding.get("top_districts") or []
+        if len(top_districts) >= 2:
+            actions.append(
+                {
+                    "type": "compare_districts",
+                    "label": f"Compare {top_districts[0].get('district')} vs {top_districts[1].get('district')}",
+                    "left_district": top_districts[0].get("district"),
+                    "right_district": top_districts[1].get("district"),
+                    "filters": {
+                        "year": filters.get("year"),
+                        "category": filters.get("category"),
+                    },
+                }
+            )
+    elif active_view in {"women-safety", "accident-zones"}:
+        top_zone = (grounding.get("top_zones") or [None])[0]
+        scenario = grounding.get("scenario")
+        if top_zone:
+            actions.append(
+                {
+                    "type": "highlight_taluk",
+                    "label": f"Highlight {top_zone.get('taluk')}",
+                    "district": top_zone.get("district"),
+                    "taluk_id": top_zone.get("taluk_id"),
+                    "taluk": top_zone.get("taluk"),
+                }
+            )
+        actions.append(
+            {
+                "type": "download_report",
+                "label": "Download Scenario PDF",
+                "report": "scenario",
+                "params": {
+                    "scenario": scenario,
+                    "district": grounding.get("district_filter"),
+                    "year": grounding.get("target_year"),
+                    "month": grounding.get("target_month"),
+                },
+            }
+        )
+    elif active_view == "travel":
+        actions.append(
+            {
+                "type": "switch_view",
+                "label": "Open Travel Advisor",
+                "view": "travel",
+            }
+        )
+    elif active_view == "compare":
+        comparison = grounding.get("comparison", {})
+        actions.append(
+            {
+                "type": "switch_view",
+                "label": "Open Compare View",
+                "view": "compare",
+            }
+        )
+        actions.append(
+            {
+                "type": "focus_district",
+                "label": f"Focus {comparison.get('comparison', {}).get('higher_risk')}",
+                "district": comparison.get("comparison", {}).get("higher_risk"),
+            }
+        )
+
+    return [action for action in actions if action.get("label")]
+
+
+def request_gemini_translation(text, language):
+    load_local_env()
+    api_key = os.getenv("GEMINI_API_KEY", "").strip()
+    if not api_key or language == "en":
+        return text
+
+    model = os.getenv("GEMINI_MODEL", DEFAULT_GEMINI_MODEL).strip() or DEFAULT_GEMINI_MODEL
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
+    prompt = (
+        "Translate the following operational answer into Tamil. "
+        "Keep all numbers, district names, taluk names, risk labels, and factual meaning unchanged. "
+        "Return only the translated answer.\n\n"
+        f"{text}"
+    )
+    request_body = {
+        "contents": [
+            {
+                "role": "user",
+                "parts": [{"text": prompt}],
+            }
+        ],
+        "generationConfig": {
+            "temperature": 0.1,
+            "topP": 0.8,
+            "maxOutputTokens": 700,
+        },
+        "store": False,
+    }
+    request = Request(
+        url,
+        data=json.dumps(request_body).encode("utf-8"),
+        headers={
+            "Content-Type": "application/json",
+            "x-goog-api-key": api_key,
+        },
+        method="POST",
+    )
+    try:
+        with urlopen(request, timeout=DEFAULT_GEMINI_TIMEOUT_SECONDS) as response:
+            payload = json.load(response)
+        translated = _extract_text_from_gemini(payload)
+        return translated or text
+    except (HTTPError, URLError, TimeoutError, ValueError):
+        return text
+
+
+def answer_chat_message(message, history=None, context_payload=None, language="en"):
     grounding_payload = build_chat_grounding(context_payload or {})
+    language = _normalize_language(language)
+    actions = _build_action_cards(grounding_payload)
     local_answer = build_local_answer(message, grounding_payload)
     if local_answer:
+        localized_answer = request_gemini_translation(local_answer, language)
         return {
             "status": "ok",
-            "answer": local_answer,
+            "answer": localized_answer,
             "source": "local",
             "model": None,
             "view": grounding_payload["active_view"],
             "view_label": grounding_payload["view_label"],
             "grounding_status": grounding_payload["grounding"].get("status"),
+            "actions": actions,
+            "language": language,
         }
 
     try:
@@ -817,6 +1036,7 @@ def answer_chat_message(message, history=None, context_payload=None):
             message=message,
             history=history or [],
             grounding_payload=grounding_payload,
+            language=language,
         )
         return {
             "status": "ok",
@@ -826,15 +1046,21 @@ def answer_chat_message(message, history=None, context_payload=None):
             "view": grounding_payload["active_view"],
             "view_label": grounding_payload["view_label"],
             "grounding_status": grounding_payload["grounding"].get("status"),
+            "actions": actions,
+            "language": language,
         }
     except RuntimeError as error:
+        fallback_answer = build_fallback_answer(grounding_payload)
+        localized_answer = request_gemini_translation(fallback_answer, language)
         return {
             "status": "ok",
-            "answer": build_fallback_answer(grounding_payload),
+            "answer": localized_answer,
             "source": "fallback",
             "model": None,
             "view": grounding_payload["active_view"],
             "view_label": grounding_payload["view_label"],
             "grounding_status": grounding_payload["grounding"].get("status"),
             "warning": str(error),
+            "actions": actions,
+            "language": language,
         }

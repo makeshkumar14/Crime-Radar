@@ -6,6 +6,7 @@ from pydantic import BaseModel
 
 from crime_catalog import catalog_by_category
 from database import get_connection
+from insights_service import build_fir_impact_summary
 from ops_queries import load_map_layers
 
 router = APIRouter()
@@ -196,6 +197,7 @@ def create_demo_entry(payload: DemoEntry = Body(...)):
     incident_month = payload.month or today.month
     time_slot = payload.time_slot or "EVENING"
     count = max(1, min(payload.count, 25))
+    before_layers = load_map_layers(year=incident_year)
 
     cursor.execute(
         """
@@ -233,6 +235,18 @@ def create_demo_entry(payload: DemoEntry = Body(...)):
         year=incident_year,
         district=taluk_row["district"],
     )
+    after_statewide_layers = load_map_layers(year=incident_year)
+    impact_summary = build_fir_impact_summary(
+        {
+            "district": taluk_row["district"],
+            "taluk_id": taluk_row["taluk_id"],
+            "taluk": taluk_row["taluk"],
+            "category": category,
+            "count": count,
+        },
+        before_layers,
+        after_statewide_layers,
+    )
 
     return {
         "status": "ok",
@@ -247,5 +261,6 @@ def create_demo_entry(payload: DemoEntry = Body(...)):
             "lat": taluk_row["lat"],
             "lng": taluk_row["lng"],
         },
+        "impact_summary": impact_summary,
         "impact": layers,
     }
