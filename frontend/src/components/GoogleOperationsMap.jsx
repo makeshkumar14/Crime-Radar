@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { CATEGORY_COLORS, getCategoryColor } from "../lib/crimePalette";
 import { loadGoogleMapsApi } from "../lib/googleMapsLoader";
-import { fetchRoadRoute } from "../lib/roadRouting";
+import { apiUrl } from "../lib/api";
 
 const RISK_COLORS = {
   HIGH: "#EF4444",
@@ -103,12 +103,12 @@ export default function GoogleOperationsMap({
   const [demoCategory, setDemoCategory] = useState("Women Safety");
   const [demoCount, setDemoCount] = useState(6);
   const [submittingDemo, setSubmittingDemo] = useState(false);
-  const [patrolRouteGeometry, setPatrolRouteGeometry] = useState({});
+  const [patrolUnits, setPatrolUnits] = useState([]);
   const [patrolRouteState, setPatrolRouteState] = useState("idle");
 
   const fetchLayers = async (nextFilters = filters) => {
     const query = buildQuery(nextFilters);
-    const url = `http://localhost:8000/api/fir/map-layers${query ? `?${query}` : ""}`;
+    const url = apiUrl(`/api/fir/map-layers${query ? `?${query}` : ""}`);
     setLoading(true);
     try {
       const response = await axios.get(url);
@@ -129,7 +129,7 @@ export default function GoogleOperationsMap({
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/fir/categories")
+      .get(apiUrl("/api/fir/categories"))
       .then((response) => {
         const categories = response.data.categories || [];
         if (categories.length) {
@@ -147,35 +147,41 @@ export default function GoogleOperationsMap({
   useEffect(() => {
     let cancelled = false;
 
-    if (!showPatrol || !layers?.patrol_routes?.length) {
-      setPatrolRouteGeometry({});
+    if (!showPatrol) {
+      setPatrolUnits([]);
       setPatrolRouteState("idle");
+      return undefined;
+    }
+
+    const patrolDistrict = filters.district || activeDistrict || null;
+    if (!patrolDistrict) {
+      setPatrolUnits([]);
+      setPatrolRouteState("needs-district");
       return undefined;
     }
 
     setPatrolRouteState("loading");
 
-    Promise.all(
-      layers.patrol_routes.map(async (route) => [
-        route.route_id,
-        await fetchRoadRoute(route.path),
-      ]),
-    )
-      .then((entries) => {
+    axios
+      .post(apiUrl("/api/patrol/routes/generate"), {
+        district: patrolDistrict,
+        target_year: filters.year || undefined,
+      })
+      .then((response) => {
         if (cancelled) return;
-        setPatrolRouteGeometry(Object.fromEntries(entries));
+        setPatrolUnits(response.data?.patrol_units || []);
         setPatrolRouteState("ready");
       })
       .catch(() => {
         if (cancelled) return;
-        setPatrolRouteGeometry({});
-        setPatrolRouteState("idle");
+        setPatrolUnits([]);
+        setPatrolRouteState("error");
       });
 
     return () => {
       cancelled = true;
     };
-  }, [layers, showPatrol]);
+  }, [activeDistrict, filters.district, filters.year, showPatrol]);
 
   useEffect(() => {
     let active = true;
@@ -400,8 +406,9 @@ export default function GoogleOperationsMap({
     }
 
     if (showPatrol) {
-      layers.patrol_routes.forEach((route) => {
-        const path = patrolRouteGeometry[route.route_id]?.coordinates || [];
+      patrolUnits.forEach((route) => {
+        const path =
+          route.route_geometry?.coordinates?.map(([lng, lat]) => [lat, lng]) || [];
         if (path.length < 2) return;
 
         registerOverlay(
@@ -425,7 +432,7 @@ export default function GoogleOperationsMap({
     activeDistrict,
     apiState,
     layers,
-    patrolRouteGeometry,
+    patrolUnits,
     showAccident,
     showDistricts,
     showHotspots,
@@ -442,7 +449,7 @@ export default function GoogleOperationsMap({
     setSubmittingDemo(true);
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/fir/demo-entry",
+        apiUrl("/api/fir/demo-entry"),
         {
           district: targetDistrict,
           category: demoCategory,
@@ -457,10 +464,6 @@ export default function GoogleOperationsMap({
       setSubmittingDemo(false);
     }
   };
-
-  const patrolFallbackCount = Object.values(patrolRouteGeometry).filter(
-    (route) => route?.source === "fallback",
-  ).length;
 
   if (loading || !layers) {
     return (
@@ -553,13 +556,17 @@ export default function GoogleOperationsMap({
         </div>
         {showPatrol && patrolRouteState === "loading" && (
           <p className="mb-2 text-[8px] leading-4 text-cyan-100/80">
-            Snapping patrol routes to real roads...
+            Generating continuous road-based patrol loops...
           </p>
         )}
-        {showPatrol && patrolRouteState === "ready" && patrolFallbackCount > 0 && (
+        {showPatrol && patrolRouteState === "needs-district" && (
+          <p className="mb-2 text-[8px] leading-4 text-cyan-100/80">
+            Select a district to generate patrol loops.
+          </p>
+        )}
+        {showPatrol && patrolRouteState === "error" && (
           <p className="mb-2 text-[8px] leading-4 text-amber-200/90">
-            {patrolFallbackCount} patrol route
-            {patrolFallbackCount > 1 ? "s are" : " is"} still approximate.
+            Patrol routing failed. Check OSRM connectivity.
           </p>
         )}
 

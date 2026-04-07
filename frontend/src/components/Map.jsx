@@ -11,7 +11,6 @@ import {
 import axios from "axios";
 import "leaflet/dist/leaflet.css";
 import { CATEGORY_COLORS, getCategoryColor } from "../lib/crimePalette";
-import { fetchRoadRoute } from "../lib/roadRouting";
 import { apiUrl } from "../lib/api";
 import { downloadApiPdf } from "../lib/download";
 
@@ -147,7 +146,7 @@ export default function Map({
   const [showWomenSafety, setShowWomenSafety] = useState(false);
   const [showAccident, setShowAccident] = useState(false);
   const [showPatrol, setShowPatrol] = useState(false);
-  const [patrolRouteGeometry, setPatrolRouteGeometry] = useState({});
+  const [patrolUnits, setPatrolUnits] = useState([]);
   const [patrolRouteState, setPatrolRouteState] = useState("idle");
   const [blinkOn, setBlinkOn] = useState(true);
   const [downloadingReport, setDownloadingReport] = useState(false);
@@ -210,6 +209,8 @@ export default function Map({
     setActiveDistrict(highlightTarget.district);
   }, [highlightTarget]);
 
+  const patrolDistrict = filters.district || activeDistrict || null;
+
   useEffect(() => {
     if (!highlightTarget) {
       setBlinkOn(true);
@@ -227,35 +228,40 @@ export default function Map({
   useEffect(() => {
     let cancelled = false;
 
-    if (!showPatrol || !layers?.patrol_routes?.length) {
-      setPatrolRouteGeometry({});
+    if (!showPatrol) {
+      setPatrolUnits([]);
       setPatrolRouteState("idle");
+      return undefined;
+    }
+
+    if (!patrolDistrict) {
+      setPatrolUnits([]);
+      setPatrolRouteState("needs-district");
       return undefined;
     }
 
     setPatrolRouteState("loading");
 
-    Promise.all(
-      layers.patrol_routes.map(async (route) => [
-        route.route_id,
-        await fetchRoadRoute(route.path),
-      ]),
-    )
-      .then((entries) => {
+    axios
+      .post(apiUrl("/api/patrol/routes/generate"), {
+        district: patrolDistrict,
+        target_year: filters.year || undefined,
+      })
+      .then((response) => {
         if (cancelled) return;
-        setPatrolRouteGeometry(Object.fromEntries(entries));
+        setPatrolUnits(response.data?.patrol_units || []);
         setPatrolRouteState("ready");
       })
       .catch(() => {
         if (cancelled) return;
-        setPatrolRouteGeometry({});
-        setPatrolRouteState("idle");
+        setPatrolUnits([]);
+        setPatrolRouteState("error");
       });
 
     return () => {
       cancelled = true;
     };
-  }, [layers, showPatrol]);
+  }, [filters.year, patrolDistrict, refreshKey, showPatrol]);
 
   const handleDistrictSelect = (district) => {
     setActiveDistrict(district);
@@ -304,19 +310,13 @@ export default function Map({
   const visibleAccidentZones = focusedDistrictName
     ? layers.accident_zones.filter((zone) => zone.district === focusedDistrictName)
     : layers.accident_zones;
-  const visiblePatrolRoutes = focusedDistrictName
-    ? layers.patrol_routes.filter((route) => route.district === focusedDistrictName)
-    : layers.patrol_routes;
+  const visiblePatrolRoutes = patrolUnits;
   const highlightedDistrict = highlightTarget?.district
     ? layers.districts.find((item) => item.district === highlightTarget.district) || null
     : null;
   const highlightedZone = highlightTarget?.taluk_id
     ? layers.zones.find((item) => item.taluk_id === highlightTarget.taluk_id) || null
     : null;
-  const patrolFallbackCount = Object.values(patrolRouteGeometry).filter(
-    (route) => route?.source === "fallback",
-  ).length;
-
   return (
     <div className="flex-1 relative">
       <MapContainer
@@ -454,12 +454,13 @@ export default function Map({
         {showPatrol &&
           visiblePatrolRoutes.map((route) => (
             <Polyline
-              key={route.route_id}
-              positions={patrolRouteGeometry[route.route_id]?.coordinates || []}
+              key={route.unit_id}
+              positions={
+                route.route_geometry?.coordinates?.map(([lng, lat]) => [lat, lng]) || []
+              }
               pathOptions={{
                 color: "#38BDF8",
                 weight: 3,
-                dashArray: "8 6",
               }}
             />
           ))}
@@ -577,13 +578,17 @@ export default function Map({
         </div>
         {showPatrol && patrolRouteState === "loading" && (
           <p className="mb-2 text-[8px] leading-4 text-cyan-100/80">
-            Snapping patrol routes to real roads...
+            Generating continuous road-based patrol loops...
           </p>
         )}
-        {showPatrol && patrolRouteState === "ready" && patrolFallbackCount > 0 && (
+        {showPatrol && patrolRouteState === "needs-district" && (
+          <p className="mb-2 text-[8px] leading-4 text-cyan-100/80">
+            Select a district to generate patrol loops.
+          </p>
+        )}
+        {showPatrol && patrolRouteState === "error" && (
           <p className="mb-2 text-[8px] leading-4 text-amber-200/90">
-            {patrolFallbackCount} patrol route
-            {patrolFallbackCount > 1 ? "s are" : " is"} still approximate.
+            Patrol routing failed. Check OSRM connectivity.
           </p>
         )}
       </div>
