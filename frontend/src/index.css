@@ -25,6 +25,39 @@ input, textarea, select {
   caret-color: var(--accent);
 }
 
+/* ── Themed scrollbar ── */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #6b1e1e #0a0a0a;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #7a2222, #4a1515);
+  border-radius: 8px;
+  border: 2px solid #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #af1b1b, #df2c2c);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: #af1b1b;
+}
+
+::-webkit-scrollbar-corner {
+  background: #0a0a0a;
+}
+
 @keyframes radarAiBounce {
   0%, 100% {
     transform: translateY(0) scale(1);
