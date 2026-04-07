@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { apiUrl } from "../lib/api";
 
-export default function AreaSafetyReport() {
+export default function AreaSafetyReport({ onContextChange }) {
   const [taluks, setTaluks] = useState([]);
   const [selectedTaluk, setSelectedTaluk] = useState("");
   const [report, setReport] = useState(null);
@@ -9,7 +10,7 @@ export default function AreaSafetyReport() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/fir/taluks")
+      .get(apiUrl("/api/fir/taluks"))
       .then((res) => {
         setTaluks(res.data.taluks);
         if (res.data.taluks.length > 0) {
@@ -19,11 +20,23 @@ export default function AreaSafetyReport() {
       .catch((err) => console.error("Area safety taluk load error:", err));
   }, []);
 
+  useEffect(() => {
+    if (!onContextChange) {
+      return;
+    }
+    onContextChange({
+      taluk_id: selectedTaluk,
+      year: report?.target_year ?? null,
+      month: report?.target_month ?? null,
+      has_report: Boolean(report),
+    });
+  }, [onContextChange, report, selectedTaluk]);
+
   const handleCheck = async () => {
     if (!selectedTaluk) return;
     setLoading(true);
     try {
-      const response = await axios.get("http://localhost:8000/api/citizen/area-safety", {
+      const response = await axios.get(apiUrl("/api/citizen/area-safety"), {
         params: { taluk_id: selectedTaluk },
       });
       setReport(response.data.report);
@@ -37,7 +50,7 @@ export default function AreaSafetyReport() {
   const handleDownload = () => {
     if (!selectedTaluk) return;
     window.open(
-      `http://localhost:8000/api/citizen/area-safety-report?taluk_id=${selectedTaluk}`,
+      apiUrl(`/api/citizen/area-safety-report?taluk_id=${selectedTaluk}`),
       "_blank",
       "noopener,noreferrer",
     );

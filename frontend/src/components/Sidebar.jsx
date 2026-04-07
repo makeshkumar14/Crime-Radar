@@ -87,7 +87,7 @@ export default function Sidebar({ onFilter, activeView, onViewChange, externalFi
   };
 
   const applyFilters = () => {
-    setAppliedFilters(pendingFilters);
+    setAppliedFilters({ ...pendingFilters });
   };
 
   const resetFilters = () => {
@@ -219,14 +219,19 @@ export default function Sidebar({ onFilter, activeView, onViewChange, externalFi
 
           <div className="mt-5">
             <FlowButton
-              text={hasPendingChanges ? "Apply" : "Locked"}
-              onClick={hasPendingChanges ? applyFilters : undefined}
+              text="Apply Filters"
+              onClick={applyFilters}
               className={`w-full !px-3 !py-4 !rounded-2xl transition-all ${
                 hasPendingChanges 
                   ? "border-[#af1b1b] bg-[#af1b1b]/20" 
-                  : "border-white/5 opacity-40 pointer-events-none"
+                  : "border-white/10 bg-white/5 opacity-80"
               }`}
             />
+            <p className="mt-2 text-center text-[10px] font-medium uppercase tracking-[0.18em] text-[#777777]">
+              {hasPendingChanges
+                ? "Pending changes ready"
+                : "All years and categories can stay blank"}
+            </p>
           </div>
         </div>
       </div>

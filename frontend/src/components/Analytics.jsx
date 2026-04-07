@@ -14,6 +14,7 @@ import {
   Pie,
   Cell,
 } from "recharts";
+import { apiUrl } from "../lib/api";
 
 const COLORS = [
   "#EF4444",
@@ -35,10 +36,10 @@ export default function Analytics() {
 
   useEffect(() => {
     Promise.all([
-      axios.get("http://localhost:8000/api/crimes/trend"),
-      axios.get("http://localhost:8000/api/crimes/summary"),
-      axios.get("http://localhost:8000/api/predict/seasonal-ml"),
-      axios.get("http://localhost:8000/api/predict/high-risk-districts"),
+      axios.get(apiUrl("/api/crimes/trend")),
+      axios.get(apiUrl("/api/crimes/summary")),
+      axios.get(apiUrl("/api/predict/seasonal-ml")),
+      axios.get(apiUrl("/api/predict/high-risk-districts")),
     ])
       .then(([trendRes, summaryRes, seasonalRes, highRiskRes]) => {
         setTrend(trendRes.data.trend);

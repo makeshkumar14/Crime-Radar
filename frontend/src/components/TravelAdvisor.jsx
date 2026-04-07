@@ -162,7 +162,7 @@ function selectionProfileLabel(profile) {
   return "Comparison";
 }
 
-export default function TravelAdvisor() {
+export default function TravelAdvisor({ onContextChange }) {
   const [taluks, setTaluks] = useState([]);
   const [form, setForm] = useState({
     origin_taluk_id: "",
@@ -363,6 +363,26 @@ export default function TravelAdvisor() {
     result?.current_path?.source?.startsWith("fallback") ||
     result?.safer_path?.source?.startsWith("fallback");
   const noSaferDetourFound = !routesDiffer && currentAccidentHits > 0;
+
+  useEffect(() => {
+    if (!onContextChange) {
+      return;
+    }
+    onContextChange({
+      origin_taluk_id: form.origin_taluk_id,
+      destination_taluk_id: form.destination_taluk_id,
+      has_result: result?.status === "ok",
+      year: result?.target_year ?? null,
+      month: result?.target_month ?? null,
+    });
+  }, [
+    form.destination_taluk_id,
+    form.origin_taluk_id,
+    onContextChange,
+    result?.status,
+    result?.target_month,
+    result?.target_year,
+  ]);
 
   const handleAnalyse = async () => {
     if (!form.origin_taluk_id || !form.destination_taluk_id || sameZoneSelected) {

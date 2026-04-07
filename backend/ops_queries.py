@@ -8,6 +8,14 @@ STATEWIDE_HOTSPOT_LAYER_LIMIT = 20
 STATEWIDE_WOMEN_ZONE_LAYER_LIMIT = 50
 STATEWIDE_ACCIDENT_ZONE_LAYER_LIMIT = 50
 STATEWIDE_PATROL_DISTRICT_LIMIT = 16
+DISTRICT_TALUK_LAYER_LIMITS = {
+    "CHENNAI": 10,
+}
+HOTSPOT_RISK_MIX = (
+    ("HIGH", 0.40),
+    ("MEDIUM", 0.35),
+    ("LOW", 0.25),
+)
 
 
 def _filters_sql(year=None, category=None, district=None):
@@ -41,6 +49,75 @@ def risk_level(score):
     if score >= 42:
         return "MEDIUM"
     return "LOW"
+
+
+def _normalize_district_name(value):
+    return str(value or "").strip().upper()
+
+
+def _resolve_zone_limit(district, zone_count, default_limit=None):
+    if zone_count <= 0:
+        return 0
+
+    district_cap = DISTRICT_TALUK_LAYER_LIMITS.get(_normalize_district_name(district))
+    if default_limit is None:
+        return min(zone_count, district_cap) if district_cap else zone_count
+    if district_cap:
+        return min(zone_count, district_cap)
+    return min(zone_count, default_limit)
+
+
+def _select_balanced_zones(zones, limit, metric_key, risk_key, balanced=False):
+    if limit <= 0:
+        return []
+
+    ranked_zones = [
+        zone
+        for zone in sorted(
+            zones,
+            key=lambda item: (-item[metric_key], item["district"], item["taluk"]),
+        )
+        if zone[metric_key] > 0
+    ]
+    if not balanced or len(ranked_zones) <= limit:
+        return ranked_zones[:limit]
+
+    by_risk = {
+        "HIGH": [zone for zone in ranked_zones if zone[risk_key] == "HIGH"],
+        "MEDIUM": [zone for zone in ranked_zones if zone[risk_key] == "MEDIUM"],
+        "LOW": [zone for zone in ranked_zones if zone[risk_key] == "LOW"],
+    }
+
+    selected = []
+    selected_ids = set()
+    allocated = 0
+    mix_targets = []
+    for index, (risk_name, share) in enumerate(HOTSPOT_RISK_MIX):
+        if index == len(HOTSPOT_RISK_MIX) - 1:
+            target = max(0, limit - allocated)
+        else:
+            target = int(limit * share)
+            allocated += target
+        mix_targets.append((risk_name, target))
+
+    for risk_name, target in mix_targets:
+        bucket = by_risk[risk_name]
+        if not bucket or target <= 0:
+            continue
+        for zone in bucket[:target]:
+            selected.append(zone)
+            selected_ids.add(zone["taluk_id"])
+
+    if len(selected) < limit:
+        for zone in ranked_zones:
+            if zone["taluk_id"] in selected_ids:
+                continue
+            selected.append(zone)
+            selected_ids.add(zone["taluk_id"])
+            if len(selected) >= limit:
+                break
+
+    return selected[:limit]
 
 
 def load_map_layers(year=None, category=None, district=None):
@@ -98,6 +175,7 @@ def load_map_layers(year=None, category=None, district=None):
     max_zone_total = max(zone_totals.values(), default=1)
     max_district_total = max(district_totals.values(), default=1)
     max_station_total = max(station_totals.values(), default=1)
+    show_only_reported_areas = bool(year or category or district)
 
     districts = []
     for row in district_rows:
@@ -121,6 +199,8 @@ def load_map_layers(year=None, category=None, district=None):
     for row in taluk_rows:
         totals = zone_categories.get(row["taluk_id"], {})
         total = zone_totals.get(row["taluk_id"], 0)
+        if show_only_reported_areas and total <= 0:
+            continue
         dominant = max(totals, key=totals.get) if totals else "Property"
         score = risk_score(total, max_zone_total)
         women_total = totals.get("Women Safety", 0)
@@ -146,9 +226,21 @@ def load_map_layers(year=None, category=None, district=None):
             }
         )
 
+    max_women_total = max((zone["women_safety_total"] for zone in zones), default=1)
+    max_accident_total = max((zone["accident_total"] for zone in zones), default=1)
+    for zone in zones:
+        women_score = risk_score(zone["women_safety_total"], max_women_total)
+        accident_score = risk_score(zone["accident_total"], max_accident_total)
+        zone["women_safety_risk_score"] = women_score
+        zone["women_safety_risk_level"] = risk_level(women_score)
+        zone["accident_risk_score"] = accident_score
+        zone["accident_risk_level"] = risk_level(accident_score)
+
     stations = []
     for row in station_rows:
         total = station_totals.get(row["station_id"], 0)
+        if show_only_reported_areas and total <= 0:
+            continue
         score = risk_score(total, max_station_total)
         stations.append(
             {
@@ -166,14 +258,54 @@ def load_map_layers(year=None, category=None, district=None):
             }
         )
 
-    hotspot_layer_limit = len(zones) if district else STATEWIDE_HOTSPOT_LAYER_LIMIT
-    women_zone_layer_limit = len(zones) if district else STATEWIDE_WOMEN_ZONE_LAYER_LIMIT
-    accident_zone_layer_limit = len(zones) if district else STATEWIDE_ACCIDENT_ZONE_LAYER_LIMIT
+    all_zones = zones
+    zone_layer_limit = _resolve_zone_limit(district, len(all_zones))
+    zones = _select_balanced_zones(
+        all_zones,
+        zone_layer_limit,
+        metric_key="total",
+        risk_key="risk_level",
+        balanced=bool(district and zone_layer_limit < len(all_zones)),
+    )
 
+    if district and zones:
+        visible_station_ids = {
+            zone["primary_station_id"]
+            for zone in zones
+            if zone.get("primary_station_id")
+        }
+        if visible_station_ids:
+            stations = [
+                station
+                for station in stations
+                if station["station_id"] in visible_station_ids
+            ]
+
+    hotspot_layer_limit = _resolve_zone_limit(
+        district,
+        len(all_zones),
+        STATEWIDE_HOTSPOT_LAYER_LIMIT,
+    )
+    women_zone_layer_limit = _resolve_zone_limit(
+        district,
+        len(all_zones),
+        STATEWIDE_WOMEN_ZONE_LAYER_LIMIT,
+    )
+    accident_zone_layer_limit = _resolve_zone_limit(
+        district,
+        len(all_zones),
+        STATEWIDE_ACCIDENT_ZONE_LAYER_LIMIT,
+    )
+
+    hotspot_source_zones = _select_balanced_zones(
+        all_zones,
+        hotspot_layer_limit,
+        metric_key="total",
+        risk_key="risk_level",
+        balanced=not district or hotspot_layer_limit < len(all_zones),
+    )
     hotspots = []
-    for zone in sorted(zones, key=lambda item: item["total"], reverse=True)[:hotspot_layer_limit]:
-        if zone["total"] <= 0:
-            continue
+    for zone in hotspot_source_zones:
         hotspots.append(
             {
                 "taluk_id": zone["taluk_id"],
@@ -189,6 +321,13 @@ def load_map_layers(year=None, category=None, district=None):
             }
         )
 
+    women_zone_source = _select_balanced_zones(
+        all_zones,
+        women_zone_layer_limit,
+        metric_key="women_safety_total",
+        risk_key="women_safety_risk_level",
+        balanced=not district or women_zone_layer_limit < len(all_zones),
+    )
     women_zones = [
         {
             "taluk_id": zone["taluk_id"],
@@ -198,15 +337,19 @@ def load_map_layers(year=None, category=None, district=None):
             "lng": zone["lng"],
             "radius_km": round(max(5.0, zone["radius_km"] * 0.88), 2),
             "count": zone["women_safety_total"],
+            "risk_score": zone["women_safety_risk_score"],
+            "risk_level": zone["women_safety_risk_level"],
         }
-        for zone in sorted(
-            zones,
-            key=lambda item: item["women_safety_total"],
-            reverse=True,
-        )[:women_zone_layer_limit]
-        if zone["women_safety_total"] > 0
+        for zone in women_zone_source
     ]
 
+    accident_zone_source = _select_balanced_zones(
+        all_zones,
+        accident_zone_layer_limit,
+        metric_key="accident_total",
+        risk_key="accident_risk_level",
+        balanced=not district or accident_zone_layer_limit < len(all_zones),
+    )
     accident_zones = [
         {
             "taluk_id": zone["taluk_id"],
@@ -216,13 +359,10 @@ def load_map_layers(year=None, category=None, district=None):
             "lng": zone["lng"],
             "radius_km": round(max(6.0, zone["radius_km"] * 0.95), 2),
             "count": zone["accident_total"],
+            "risk_score": zone["accident_risk_score"],
+            "risk_level": zone["accident_risk_level"],
         }
-        for zone in sorted(
-            zones,
-            key=lambda item: item["accident_total"],
-            reverse=True,
-        )[:accident_zone_layer_limit]
-        if zone["accident_total"] > 0
+        for zone in accident_zone_source
     ]
 
     district_ranking = sorted(
@@ -264,8 +404,8 @@ def load_map_layers(year=None, category=None, district=None):
     return {
         "summary": {
             "districts": len(district_rows),
-            "taluks": len(taluk_rows),
-            "stations": len(station_rows),
+            "taluks": len(zones),
+            "stations": len(stations),
             "incidents": sum(zone_totals.values()),
         },
         "districts": sorted(districts, key=lambda item: item["total"], reverse=True),

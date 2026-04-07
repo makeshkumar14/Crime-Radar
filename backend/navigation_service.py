@@ -1,6 +1,7 @@
 import json
 import math
 import os
+from copy import deepcopy
 from datetime import date
 from functools import lru_cache
 from urllib.error import HTTPError, URLError
@@ -264,6 +265,17 @@ def parse_coordinate_pair(raw_value):
         raise ValueError("Coordinates are out of range.")
 
     return {"lat": lat, "lng": lng}
+
+
+def normalize_target_period(target_year=None, target_month=None):
+    today = date.today()
+    year = today.year if target_year is None else int(target_year)
+    month = today.month if target_month is None else int(target_month)
+    if year < 1:
+        raise ValueError("Year must be a positive integer.")
+    if not 1 <= month <= 12:
+        raise ValueError("Month must be between 1 and 12.")
+    return year, month
 
 
 def get_taluk_location(taluk_id):
@@ -1173,6 +1185,10 @@ def coordinate_label(point):
     return f"{point['lat']:.5f}, {point['lng']:.5f}"
 
 
+def clone_route_candidate(candidate):
+    return deepcopy(candidate) if candidate else None
+
+
 def build_navigation_payload(
     origin,
     destination,
@@ -1185,9 +1201,7 @@ def build_navigation_payload(
     max_eta_increase_pct=None,
     alternatives=None,
 ):
-    today = date.today()
-    target_year = target_year or today.year
-    target_month = target_month or today.month
+    target_year, target_month = normalize_target_period(target_year, target_month)
     policy = build_routing_policy(
         accident_buffer_m=accident_buffer_m,
         warning_buffer_m=warning_buffer_m,
@@ -1322,6 +1336,8 @@ def build_navigation_payload(
         policy=policy,
         mode=mode,
     )
+    if safe_path is current_path:
+        safe_path = clone_route_candidate(safe_path)
 
     accident_zones, avoided_zone_ids = build_zone_overlays(accident_zones, current_path, safe_path)
     zones_avoided = len(avoided_zone_ids)
@@ -1462,6 +1478,8 @@ def build_navigation_from_coordinates(
 ):
     origin = parse_coordinate_pair(source)
     dest = parse_coordinate_pair(destination)
+    if origin == dest:
+        raise ValueError("Origin and destination must be different.")
     return build_navigation_payload(
         origin,
         dest,

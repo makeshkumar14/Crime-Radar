@@ -161,6 +161,62 @@ class NavigationServiceTests(unittest.TestCase):
             payload["safer_path"]["maps_waypoint_queries"],
         )
 
+    def test_fast_mode_keeps_current_and_safe_paths_as_distinct_payload_objects(self):
+        origin = {"lat": 0.0, "lng": 0.0, "label": "Origin"}
+        destination = {"lat": 0.0, "lng": 0.1, "label": "Destination"}
+
+        with patch.object(ns, "build_accident_zone_snapshot", return_value=[]), patch.object(
+            ns,
+            "request_osrm_nearest",
+            return_value={
+                "status": "ok",
+                "source": "mock-nearest",
+                "request_url": "mock://nearest",
+                "input": origin,
+                "snapped": origin,
+                "snap_distance_m": 0.0,
+                "name": "Mock road",
+            },
+        ), patch.object(ns, "request_osrm_candidates") as mock_candidates:
+            mock_candidates.side_effect = (
+                lambda base_url, request_points, alternatives, source_label: build_mock_candidate(
+                    request_points,
+                    source_label,
+                )
+            )
+
+            payload = ns.build_navigation_payload(
+                origin,
+                destination,
+                mode="fast",
+                target_year=2026,
+                target_month=4,
+            )
+
+        self.assertEqual(payload["status"], "ok")
+        self.assertIsNot(payload["current_path"], payload["safer_path"])
+        self.assertEqual(
+            payload["current_path"]["signature"],
+            payload["safer_path"]["signature"],
+        )
+        self.assertEqual(payload["comparison"]["selection_profile"], "fast_only")
+
+    def test_build_navigation_payload_rejects_invalid_month(self):
+        with self.assertRaisesRegex(ValueError, "Month must be between 1 and 12"):
+            ns.build_navigation_payload(
+                {"lat": 0.0, "lng": 0.0},
+                {"lat": 0.0, "lng": 0.1},
+                target_year=2026,
+                target_month=13,
+            )
+
+    def test_build_navigation_from_coordinates_rejects_same_origin_and_destination(self):
+        with self.assertRaisesRegex(ValueError, "Origin and destination must be different"):
+            ns.build_navigation_from_coordinates(
+                "80.1281511,12.9272685",
+                "80.1281511,12.9272685",
+            )
+
 
 if __name__ == "__main__":
     unittest.main()

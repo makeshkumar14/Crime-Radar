@@ -10,6 +10,8 @@ import {
   useMap,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import { apiUrl } from "../lib/api";
+import { downloadApiPdf } from "../lib/download";
 
 const TN_CENTER = [10.7905, 78.7047];
 
@@ -81,6 +83,7 @@ export default function ScenarioZoneView({
   accentColor,
   pointColor,
   limit = 20,
+  onContextChange,
 }) {
   const currentYear = new Date().getFullYear();
   const currentMonth = new Date().getMonth() + 1;
@@ -92,11 +95,13 @@ export default function ScenarioZoneView({
   const [options, setOptions] = useState({ districts: [], years: [] });
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [downloadingReport, setDownloadingReport] = useState(false);
+  const [downloadError, setDownloadError] = useState("");
 
   useEffect(() => {
     Promise.all([
-      axios.get("http://localhost:8000/api/fir/districts"),
-      axios.get("http://localhost:8000/api/fir/years"),
+      axios.get(apiUrl("/api/fir/districts")),
+      axios.get(apiUrl("/api/fir/years")),
     ])
       .then(([districtRes, yearRes]) => {
         const yearValues = new Set([
@@ -124,7 +129,7 @@ export default function ScenarioZoneView({
 
     setLoading(true);
     axios
-      .get(`http://localhost:8000/api/predict/scenario-zones?${query}`)
+      .get(apiUrl(`/api/predict/scenario-zones?${query}`))
       .then((response) => {
         setData(response.data);
       })
@@ -166,6 +171,45 @@ export default function ScenarioZoneView({
       MONTH_OPTIONS.find((item) => String(item.value) === String(month))?.label || "Current month";
     return `${monthLabel} ${year}`;
   }, [month, year]);
+
+  useEffect(() => {
+    if (!onContextChange) {
+      return;
+    }
+    onContextChange({
+      scenario,
+      title,
+      district,
+      year: Number(year),
+      month: Number(month),
+      limit,
+      loaded: !loading,
+      has_data: Boolean(data?.zones?.length),
+      summary: data?.summary || null,
+    });
+  }, [data, district, limit, loading, month, onContextChange, scenario, title, year]);
+
+  const handleDownloadReport = async () => {
+    setDownloadingReport(true);
+    setDownloadError("");
+    try {
+      await downloadApiPdf("/api/reports/scenario-pdf", {
+        params: {
+          scenario,
+          district: district || undefined,
+          year: Number(year),
+          month: Number(month),
+          limit,
+        },
+        filename: `${scenario.replaceAll("_", "-")}-report-${district || "statewide"}-${year}-${month}.pdf`,
+      });
+    } catch (error) {
+      console.error("Scenario report download error:", error);
+      setDownloadError("Scenario PDF could not be downloaded right now.");
+    } finally {
+      setDownloadingReport(false);
+    }
+  };
 
   if (loading) {
     return (
@@ -262,6 +306,18 @@ export default function ScenarioZoneView({
               />
               Show derived incident markers
             </label>
+
+            <button
+              onClick={handleDownloadReport}
+              disabled={downloadingReport || loading}
+              className="w-full rounded-2xl px-4 py-3 text-sm font-black uppercase tracking-[0.16em] text-white transition disabled:cursor-not-allowed disabled:opacity-60"
+              style={{ backgroundColor: accentColor }}
+            >
+              {downloadingReport ? "Building PDF..." : "Download PDF Report"}
+            </button>
+            {downloadError && (
+              <p className="text-xs leading-5 text-amber-200/90">{downloadError}</p>
+            )}
           </div>
         </div>
 

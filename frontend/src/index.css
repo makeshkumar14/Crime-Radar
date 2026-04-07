@@ -24,3 +24,110 @@ a, button, [role="button"], select, .cursor-pointer,
 input, textarea, select {
   caret-color: var(--accent);
 }
+
+@keyframes radarAiBounce {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  18% {
+    transform: translateY(-8px) scale(1.03);
+  }
+  36% {
+    transform: translateY(0) scale(0.98);
+  }
+  54% {
+    transform: translateY(-4px) scale(1.01);
+  }
+  72% {
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes radarAiWidgetFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(-5px);
+  }
+  50% {
+    transform: translateY(0);
+  }
+  75% {
+    transform: translateY(-2px);
+  }
+}
+
+@keyframes radarAiGlow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(175, 27, 27, 0.22);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(175, 27, 27, 0);
+  }
+}
+
+.radar-ai-badge {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.18), transparent 40%),
+    radial-gradient(circle at center, rgba(223, 44, 44, 0.35), rgba(175, 27, 27, 0.78) 58%, rgba(0, 0, 0, 0.96) 100%);
+  color: #fff4f4;
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  overflow: hidden;
+}
+
+.radar-ai-logo {
+  width: 70%;
+  height: 70%;
+  object-fit: contain;
+  filter: drop-shadow(0 3px 10px rgba(0, 0, 0, 0.35));
+}
+
+.radar-ai-badge::before,
+.radar-ai-badge::after {
+  content: "";
+  position: absolute;
+  inset: 0.26rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.radar-ai-badge::after {
+  inset: -0.18rem;
+  border-color: rgba(223, 44, 44, 0.18);
+  animation: radarAiGlow 1.8s ease-in-out infinite;
+}
+
+.radar-ai-badge--compact {
+  width: 2rem;
+  height: 2rem;
+  font-size: 0.68rem;
+}
+
+.radar-ai-badge--bounce {
+  animation: radarAiBounce 1.8s ease-in-out infinite;
+  transform-origin: center bottom;
+}
+
+.radar-ai-widget--bounce {
+  animation: radarAiWidgetFloat 2.8s ease-in-out infinite;
+  transform-origin: center bottom;
+  will-change: transform;
+}
+
+.radar-ai-widget--bounce:hover,
+.radar-ai-widget--bounce:focus-within,
+.radar-ai-widget--bounce:active {
+  animation-play-state: paused;
+}

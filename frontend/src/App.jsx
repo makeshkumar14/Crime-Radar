@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Map from "./components/Map";
 import Map3D from "./components/Map3D";
 import Sidebar from "./components/Sidebar";
@@ -9,6 +9,7 @@ import TravelAdvisor from "./components/TravelAdvisor";
 import AreaSafetyReport from "./components/AreaSafetyReport";
 import FIRInjectModal from "./components/FIRInjectModal";
 import ScenarioZoneView from "./components/ScenarioZoneView";
+import OpsAssistant from "./components/OpsAssistant";
 
 const FIR_HIGHLIGHT_DURATION_MS = 30000;
 
@@ -22,6 +23,10 @@ function App() {
   const [isFirModalOpen, setIsFirModalOpen] = useState(false);
   const [dataRefreshKey, setDataRefreshKey] = useState(0);
   const [firHighlight, setFirHighlight] = useState(null);
+  const [womenSafetyContext, setWomenSafetyContext] = useState(null);
+  const [accidentContext, setAccidentContext] = useState(null);
+  const [travelContext, setTravelContext] = useState(null);
+  const [relocationContext, setRelocationContext] = useState(null);
 
   useEffect(() => {
     if (!firHighlight) {
@@ -52,8 +57,24 @@ function App() {
     });
   };
 
+  const handleWomenSafetyContextChange = useCallback((context) => {
+    setWomenSafetyContext(context);
+  }, []);
+
+  const handleAccidentContextChange = useCallback((context) => {
+    setAccidentContext(context);
+  }, []);
+
+  const handleTravelContextChange = useCallback((context) => {
+    setTravelContext(context);
+  }, []);
+
+  const handleRelocationContextChange = useCallback((context) => {
+    setRelocationContext(context);
+  }, []);
+
   return (
-    <div className="flex h-screen w-screen overflow-hidden bg-gray-950">
+    <div className="relative flex h-screen w-screen overflow-hidden bg-gray-950">
       <div style={{ display: "flex", transition: "width 0.3s ease" }}>
         {sidebarOpen && (
           <Sidebar
@@ -140,6 +161,7 @@ function App() {
               accentColor="#af1b1b"
               pointColor="#999999"
               limit={50}
+              onContextChange={handleWomenSafetyContextChange}
             />
           )}
           {activeView === "accident-zones" && (
@@ -149,11 +171,16 @@ function App() {
               accentColor="#af1b1b"
               pointColor="#999999"
               limit={50}
+              onContextChange={handleAccidentContextChange}
             />
           )}
           {activeView === "analytics" && <Analytics />}
-          {activeView === "travel" && <TravelAdvisor />}
-          {activeView === "relocation" && <AreaSafetyReport />}
+          {activeView === "travel" && (
+            <TravelAdvisor onContextChange={handleTravelContextChange} />
+          )}
+          {activeView === "relocation" && (
+            <AreaSafetyReport onContextChange={handleRelocationContextChange} />
+          )}
         </div>
       </div>
 
@@ -161,6 +188,16 @@ function App() {
         open={isFirModalOpen}
         onClose={() => setIsFirModalOpen(false)}
         onCreated={handleFirCreated}
+      />
+
+      <OpsAssistant
+        activeView={activeView}
+        filters={filters}
+        scenarioContext={
+          activeView === "accident-zones" ? accidentContext : womenSafetyContext
+        }
+        travelContext={travelContext}
+        relocationContext={relocationContext}
       />
     </div>
   );

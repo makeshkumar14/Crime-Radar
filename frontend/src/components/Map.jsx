@@ -13,6 +13,7 @@ import "leaflet/dist/leaflet.css";
 import { CATEGORY_COLORS, getCategoryColor } from "../lib/crimePalette";
 import { fetchRoadRoute } from "../lib/roadRouting";
 import { apiUrl } from "../lib/api";
+import { downloadApiPdf } from "../lib/download";
 
 const RISK_COLORS = {
   HIGH: "#EF4444",
@@ -69,6 +70,15 @@ function buildQuery(filters = {}) {
   if (filters.district) params.append("district", filters.district);
   if (filters.category) params.append("category", filters.category);
   return params.toString();
+}
+
+function slugify(value, fallback) {
+  const normalized = String(value || "")
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+  return normalized || fallback;
 }
 
 function getDistrictRadius(total) {
@@ -140,6 +150,8 @@ export default function Map({
   const [patrolRouteGeometry, setPatrolRouteGeometry] = useState({});
   const [patrolRouteState, setPatrolRouteState] = useState("idle");
   const [blinkOn, setBlinkOn] = useState(true);
+  const [downloadingReport, setDownloadingReport] = useState(false);
+  const [downloadError, setDownloadError] = useState("");
 
   const fetchLayers = useCallback(async (nextFilters = filters) => {
     const query = buildQuery(nextFilters);
@@ -248,6 +260,26 @@ export default function Map({
   const handleDistrictSelect = (district) => {
     setActiveDistrict(district);
     onDistrictClick && onDistrictClick(district);
+  };
+
+  const handleDownloadReport = async () => {
+    setDownloadingReport(true);
+    setDownloadError("");
+    try {
+      await downloadApiPdf("/api/reports/operations-pdf", {
+        params: {
+          year: filters.year || undefined,
+          district: filters.district || undefined,
+          category: filters.category || undefined,
+        },
+        filename: `operations-report-${slugify(filters.district, "statewide")}-${slugify(filters.category, "all-categories")}-${filters.year || "all-years"}.pdf`,
+      });
+    } catch (error) {
+      console.error("Operations report download error:", error);
+      setDownloadError("Operations PDF could not be downloaded right now.");
+    } finally {
+      setDownloadingReport(false);
+    }
   };
 
   const focusDistrict =
@@ -394,8 +426,8 @@ export default function Map({
               center={[zone.lat, zone.lng]}
               radius={zone.radius_km * 1000}
               pathOptions={{
-                color: "#EC4899",
-                fillColor: "#EC4899",
+                color: RISK_COLORS[zone.risk_level] || "#EC4899",
+                fillColor: RISK_COLORS[zone.risk_level] || "#EC4899",
                 fillOpacity: 0.18,
                 weight: 2,
                 dashArray: "4 3",
@@ -410,8 +442,8 @@ export default function Map({
               center={[zone.lat, zone.lng]}
               radius={zone.radius_km * 1000}
               pathOptions={{
-                color: "#F97316",
-                fillColor: "#F97316",
+                color: RISK_COLORS[zone.risk_level] || "#F97316",
+                fillColor: RISK_COLORS[zone.risk_level] || "#F97316",
                 fillOpacity: 0.18,
                 weight: 2,
                 dashArray: "4 3",
@@ -482,6 +514,22 @@ export default function Map({
 
       {/* CONTROLS (Map Style, Demo FIR, Layers) - Positioned at top right */}
       <div className="absolute top-4 right-4 z-[1000] w-44 rounded-xl border border-white/10 bg-slate-900/40 p-3 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] backdrop-blur-xl transition-all hover:bg-slate-900/50">
+        <p className="mb-1.5 text-[10px] font-black uppercase tracking-[0.3em] text-white/80">
+          REPORT
+        </p>
+        <button
+          onClick={handleDownloadReport}
+          disabled={downloadingReport || loading}
+          className="mb-2 w-full rounded-md border border-[#ef4444]/35 bg-[#8f1d1d] px-2 py-2 text-[11px] font-black uppercase tracking-[0.18em] text-white transition hover:bg-[#b91c1c] disabled:cursor-not-allowed disabled:opacity-60"
+        >
+          {downloadingReport ? "Building PDF..." : "Download PDF"}
+        </button>
+        {downloadError && (
+          <p className="mb-2 text-[9px] leading-4 text-amber-200/90">{downloadError}</p>
+        )}
+
+        <div className="mb-2 h-px w-full bg-white/10" />
+
         <p className="mb-1.5 text-[10px] font-black uppercase tracking-[0.3em] text-white/80">
           MAP STYLE
         </p>
